@@ -1,5 +1,5 @@
 ---
 title: "End Device Templates"
 description: ""
-weight: 1
+weight: 2
 ---

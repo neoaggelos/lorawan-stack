@@ -1,5 +1,5 @@
 ---
 title: "Email Templates"
 description: ""
-weight: 2
+weight: 3
 ---
