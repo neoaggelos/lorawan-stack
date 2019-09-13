@@ -466,6 +466,77 @@
       ]
     }
   },
+  "ApplicationPackageRegistry": {
+    "GetPackages": {
+      "file": "lorawan-stack/api/applicationserver_packages.proto",
+      "http": [
+        {
+          "method": "get",
+          "pattern": "/as/applications/{application_ids.application_id}/devices/{device_id}/packages",
+          "parameters": [
+            "application_ids.application_id",
+            "device_id"
+          ]
+        }
+      ]
+    },
+    "Get": {
+      "file": "lorawan-stack/api/applicationserver_packages.proto",
+      "http": [
+        {
+          "method": "get",
+          "pattern": "/as/applications/{ids.end_device_ids.application_ids.application_id}/devices/{ids.end_device_ids.device_id}/associations/{ids.f_port}",
+          "parameters": [
+            "ids.end_device_ids.application_ids.application_id",
+            "ids.end_device_ids.device_id",
+            "ids.f_port"
+          ]
+        }
+      ]
+    },
+    "List": {
+      "file": "lorawan-stack/api/applicationserver_packages.proto",
+      "http": [
+        {
+          "method": "get",
+          "pattern": "/as/applications/{ids.application_ids.application_id}/devices/{ids.device_id}/associations",
+          "parameters": [
+            "ids.application_ids.application_id",
+            "ids.device_id"
+          ]
+        }
+      ]
+    },
+    "Set": {
+      "file": "lorawan-stack/api/applicationserver_packages.proto",
+      "http": [
+        {
+          "method": "put",
+          "pattern": "/as/applications/{association.ids.end_device_ids.application_ids.application_id}/devices/{association.ids.end_device_ids.device_id}/associations/{association.ids.f_port}",
+          "body": "*",
+          "parameters": [
+            "association.ids.end_device_ids.application_ids.application_id",
+            "association.ids.end_device_ids.device_id",
+            "association.ids.f_port"
+          ]
+        }
+      ]
+    },
+    "Delete": {
+      "file": "lorawan-stack/api/applicationserver_packages.proto",
+      "http": [
+        {
+          "method": "delete",
+          "pattern": "/as/applications/{end_device_ids.application_ids.application_id}/devices/{end_device_ids.device_id}/associations/{f_port}",
+          "parameters": [
+            "end_device_ids.application_ids.application_id",
+            "end_device_ids.device_id",
+            "f_port"
+          ]
+        }
+      ]
+    }
+  },
   "ApplicationPubSubRegistry": {
     "GetFormats": {
       "file": "lorawan-stack/api/applicationserver_pubsub.proto",
