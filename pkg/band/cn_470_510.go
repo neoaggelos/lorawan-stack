@@ -162,7 +162,7 @@ func init() {
 }
 
 var cn470BeaconFrequencies = func() [8]uint32 {
-	freqs := [8]uint32{}
+	var freqs [8]uint32
 	for i := 0; i < 8; i++ {
 		freqs[i] = 508300000 + uint32(i*200000)
 	}

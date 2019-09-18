@@ -43,14 +43,14 @@ func TestTasks(t *testing.T) {
 	a.So(err, should.BeNil)
 
 	// Register a one-off task.
-	oneOffWg := sync.WaitGroup{}
+	var oneOffWg sync.WaitGroup
 	oneOffWg.Add(1)
 	c.RegisterTask(ctx, "one_off", func(_ context.Context) error {
 		oneOffWg.Done()
 		return nil
 	}, TaskRestartNever)
 	// Register an always restarting task.
-	restartingWg := sync.WaitGroup{}
+	var restartingWg sync.WaitGroup
 	restartingWg.Add(5)
 	i := 0
 	c.RegisterTask(ctx, "restarts", func(_ context.Context) error {
@@ -62,7 +62,7 @@ func TestTasks(t *testing.T) {
 	}, TaskRestartAlways)
 
 	// Register a task that restarts on failure.
-	failingWg := sync.WaitGroup{}
+	var failingWg sync.WaitGroup
 	failingWg.Add(1)
 	j := 0
 	c.RegisterTask(ctx, "restarts_on_failure", func(_ context.Context) error {

@@ -186,7 +186,7 @@ func organizationAPIKeys(organizationID *ttnpb.OrganizationIdentifiers) ttnpb.AP
 }
 
 func userApplications(userID *ttnpb.UserIdentifiers) ttnpb.Applications {
-	applications := []*ttnpb.Application{}
+	var applications []*ttnpb.Application
 	for _, app := range population.Applications {
 		for id, collaborators := range population.Memberships {
 			if app.IDString() == id.IDString() {
@@ -205,7 +205,7 @@ func userApplications(userID *ttnpb.UserIdentifiers) ttnpb.Applications {
 }
 
 func userClients(userID *ttnpb.UserIdentifiers) ttnpb.Clients {
-	clients := []*ttnpb.Client{}
+	var clients []*ttnpb.Client
 	for _, client := range population.Clients {
 		for id, collaborators := range population.Memberships {
 			if client.IDString() == id.IDString() {
@@ -224,7 +224,7 @@ func userClients(userID *ttnpb.UserIdentifiers) ttnpb.Clients {
 }
 
 func userGateways(userID *ttnpb.UserIdentifiers) ttnpb.Gateways {
-	gateways := []*ttnpb.Gateway{}
+	var gateways []*ttnpb.Gateway
 	for _, gateway := range population.Gateways {
 		for id, collaborators := range population.Memberships {
 			if gateway.IDString() == id.IDString() {
@@ -243,7 +243,7 @@ func userGateways(userID *ttnpb.UserIdentifiers) ttnpb.Gateways {
 }
 
 func userOrganizations(userID *ttnpb.UserIdentifiers) ttnpb.Organizations {
-	organizations := []*ttnpb.Organization{}
+	var organizations []*ttnpb.Organization
 	for _, organization := range population.Organizations {
 		for id, collaborators := range population.Memberships {
 			if organization.IDString() == id.IDString() {

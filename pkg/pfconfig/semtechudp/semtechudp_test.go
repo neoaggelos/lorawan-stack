@@ -54,7 +54,7 @@ func TestBuild(t *testing.T) {
 		}
 	}
 
-	var shouldResembleReference = func(actual interface{}, expected ...interface{}) string {
+	shouldResembleReference := func(actual interface{}, expected ...interface{}) string {
 		referenceBytes, err := referenceFetcher.File(expected[0].(string))
 		if err != nil {
 			panic(err)

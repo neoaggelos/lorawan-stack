@@ -156,7 +156,7 @@ func GetRouterConfig(fp frequencyplans.FrequencyPlan, isProd bool, dlTime time.T
 		return RouterConfig{}, errFrequencyPlan
 	}
 
-	cfg := RouterConfig{}
+	var cfg RouterConfig
 	cfg.JoinEUI = nil
 	cfg.NetID = nil
 

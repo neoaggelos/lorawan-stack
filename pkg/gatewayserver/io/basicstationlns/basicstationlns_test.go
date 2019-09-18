@@ -142,7 +142,7 @@ func TestClientTokenAuth(t *testing.T) {
 	} {
 		t.Run(fmt.Sprintf("%s", tc.Name), func(t *testing.T) {
 			a := assertions.New(t)
-			h := http.Header{}
+			var h http.Header
 			h.Set("Authorization", fmt.Sprintf("%s%s", tc.TokenPrefix, tc.AuthToken))
 			conn, _, err := websocket.DefaultDialer.Dial(servAddr+connectionRootEndPoint+tc.GatewayID, h)
 			if err != nil {

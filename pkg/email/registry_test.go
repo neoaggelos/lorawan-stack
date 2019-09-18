@@ -76,7 +76,7 @@ func ExampleTemplateRegistry() {
 	// This can fetch templates from the filesystem, github, S3, ...
 	registry := email.NewTemplateRegistry(fetcher)
 
-	data := welcomeEmail{}
+	var data welcomeEmail
 	data.User.Name = "John Doe"
 	data.User.Email = "john.doe@example.com"
 	data.Network.Name = "The Things Network"

@@ -54,7 +54,7 @@ func TestFailedPackets(t *testing.T) {
 
 	a := assertions.New(t)
 
-	b := []byte{}
+	var b []byte
 	err := p.UnmarshalBinary(b)
 	a.So(err, should.NotBeNil)
 

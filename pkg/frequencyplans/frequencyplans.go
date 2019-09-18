@@ -486,7 +486,7 @@ func (d FrequencyPlanDescription) content(f fetch.Interface) ([]byte, error) {
 var errParseFile = errors.DefineCorruption("parse_file", "could not parse file")
 
 func (d FrequencyPlanDescription) proto(f fetch.Interface) (FrequencyPlan, error) {
-	fp := FrequencyPlan{}
+	var fp FrequencyPlan
 	content, err := d.content(f)
 	if err != nil {
 		return fp, err
@@ -665,7 +665,7 @@ func (s *Store) GetAllIDs() ([]string, error) {
 		return nil, errReadList.WithCause(err)
 	}
 
-	ids := []string{}
+	var ids []string
 	for _, description := range descriptions {
 		ids = append(ids, description.ID)
 	}

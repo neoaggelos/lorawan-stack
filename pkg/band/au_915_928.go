@@ -152,7 +152,7 @@ func init() {
 
 		DefaultMaxEIRP: 30,
 		TxOffset: func() [16]float32 {
-			offset := [16]float32{}
+			var offset [16]float32
 			for i := 0; i < 15; i++ {
 				offset[i] = float32(0 - 2*i)
 			}

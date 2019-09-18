@@ -164,7 +164,7 @@ func TestGenerateDevAddr(t *testing.T) {
 				return false
 			}
 
-			seen := map[types.DevAddrPrefix]int{}
+			seen := make(map[types.DevAddrPrefix]int)
 			for i := 0; i < 100; i++ {
 				devAddr, err := ttnpb.NewNsClient(ns.LoopbackConn()).GenerateDevAddr(test.Context(), ttnpb.Empty)
 				a.So(err, should.BeNil)

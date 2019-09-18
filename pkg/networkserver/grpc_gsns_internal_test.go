@@ -86,7 +86,7 @@ func TestNewDevAddr(t *testing.T) {
 				},
 			})).(*NetworkServer)
 
-		seen := map[types.DevAddrPrefix]int{}
+		seen := make(map[types.DevAddrPrefix]int)
 		for i := 0; i < 100; i++ {
 			devAddr := ns.newDevAddr(test.Context(), nil)
 			for _, prefix := range ns.devAddrPrefixes {

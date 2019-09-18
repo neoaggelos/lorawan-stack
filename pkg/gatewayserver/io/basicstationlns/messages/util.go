@@ -98,7 +98,7 @@ func getDataRatesFromBandID(id string) (DataRates, error) {
 	}
 
 	// Set the default values.
-	drs := DataRates{}
+	var drs DataRates
 	for _, dr := range drs {
 		dr[0] = -1
 		dr[1] = 0

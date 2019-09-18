@@ -797,7 +797,7 @@ func TestGatewayServer(t *testing.T) {
 					t.Run(tc.Name, func(t *testing.T) {
 						a := assertions.New(t)
 
-						upEvents := map[string]events.Channel{}
+						upEvents := make(map[string]events.Channel)
 						for _, event := range []string{"gs.up.receive", "gs.down.tx.success", "gs.down.tx.fail", "gs.status.receive"} {
 							upEvents[event] = make(events.Channel, 5)
 						}

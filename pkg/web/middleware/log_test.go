@@ -51,7 +51,7 @@ func TestLogging(t *testing.T) {
 
 	logger, _ := log.NewLogger(log.WithHandler(log.NoopHandler))
 
-	messages := []log.Entry{}
+	var messages []log.Entry
 
 	// collect is a middleware that collects the messages
 	collect := log.MiddlewareFunc(func(next log.Handler) log.Handler {

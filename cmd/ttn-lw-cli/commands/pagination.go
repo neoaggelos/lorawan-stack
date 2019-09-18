@@ -32,7 +32,7 @@ func paginationFlags() *pflag.FlagSet {
 func withPagination(flagSet *pflag.FlagSet) (limit, page uint32, opt grpc.CallOption, getTotal func() uint64) {
 	limit, _ = flagSet.GetUint32("limit")
 	page, _ = flagSet.GetUint32("page")
-	responseHeaders := metadata.MD{}
+	responseHeaders := make(metadata.MD)
 	opt = grpc.Header(&responseHeaders)
 	getTotal = func() uint64 {
 		totalHeader := responseHeaders.Get("x-total-count")

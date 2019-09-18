@@ -216,7 +216,7 @@ func (s *Server) UpdateInfo(c echo.Context) error {
 		}
 	}
 
-	res := UpdateInfoResponse{}
+	var res UpdateInfoResponse
 
 	if gtw.Attributes[cupsURIAttribute] == "" {
 		gtw.Attributes[cupsURIAttribute] = req.CUPSURI

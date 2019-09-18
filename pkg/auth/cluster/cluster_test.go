@@ -48,7 +48,7 @@ func TestVerify(t *testing.T) {
 	ctxWithAuthorization := cluster.VerifySource(context.Background(), keys)
 	a.So(cluster.Authorized(ctxWithAuthorization), should.NotBeNil)
 
-	md := metadata.MD{}
+	md := make(metadata.MD)
 
 	for _, tc := range []struct {
 		key     []byte

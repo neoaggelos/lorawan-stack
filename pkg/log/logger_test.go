@@ -98,8 +98,8 @@ func TestMiddleware(t *testing.T) {
 		Handler: rec,
 	}
 
-	before := []int{}
-	after := []int{}
+	var before []int
+	var after []int
 
 	logger.Use(MiddlewareFunc(func(next Handler) Handler {
 		return HandlerFunc(func(entry Entry) error {

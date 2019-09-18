@@ -248,7 +248,7 @@ func (b Band) downgrades() []swapParameters {
 
 // Version returns the band parameters for a given version.
 func (b Band) Version(wantedVersion ttnpb.PHYVersion) (Band, error) {
-	supportedRegionalParameters := []string{}
+	var supportedRegionalParameters []string
 	for _, swapParameter := range b.downgrades() {
 		if swapParameter.downgrade == nil {
 			return b, errUnsupportedLoRaWANRegionalParameters.WithAttributes("supported", strings.Join(supportedRegionalParameters, ", "))
@@ -294,7 +294,7 @@ func beaconChannelFromFrequencies(frequencies [8]uint32) func(float64) uint32 {
 }
 
 var usAuBeaconFrequencies = func() [8]uint32 {
-	freqs := [8]uint32{}
+	var freqs [8]uint32
 	for i := 0; i < 8; i++ {
 		freqs[i] = 923300000 + uint32(i*600000)
 	}
@@ -367,7 +367,7 @@ func generateChMaskBlock(mask []bool) ([16]bool, error) {
 		return [16]bool{}, errInvalidChannelCount
 	}
 
-	block := [16]bool{}
+	var block [16]bool
 	for j, on := range mask {
 		block[j] = on
 	}

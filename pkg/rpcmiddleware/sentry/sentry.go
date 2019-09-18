@@ -50,7 +50,7 @@ func (fw *forwarder) forward(ctx context.Context, method string, err error) {
 	}
 
 	// Request Tags
-	var tags = map[string]string{
+	tags := map[string]string{
 		"grpc.method": method,
 		"grpc.code":   code.String(),
 	}

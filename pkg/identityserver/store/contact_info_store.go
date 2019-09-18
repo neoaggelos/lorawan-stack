@@ -98,7 +98,7 @@ func (s *contactInfoStore) SetContactInfo(ctx context.Context, entityID ttnpb.Id
 			existing.deleted = false
 			existing.fromPB(pb)
 		} else {
-			model := ContactInfo{}
+			var model ContactInfo
 			model.fromPB(pb)
 			toCreate = append(toCreate, &model)
 		}

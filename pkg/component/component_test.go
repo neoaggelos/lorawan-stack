@@ -78,7 +78,7 @@ func TestHTTP(t *testing.T) {
 	a := assertions.New(t)
 
 	httpAddress, httpsAddress := "0.0.0.0:9185", "0.0.0.0:9186"
-	baseConfig := component.Config{}
+	var baseConfig component.Config
 
 	workingRoutePath := "/ok"
 	workingRoute := registererFunc(func(s *web.Server) {
@@ -240,7 +240,7 @@ func TestGRPC(t *testing.T) {
 func TestContext(t *testing.T) {
 	a := assertions.New(t)
 
-	config := component.Config{}
+	var config component.Config
 
 	c, err := component.New(test.GetLogger(t), &config)
 	a.So(err, should.BeNil)

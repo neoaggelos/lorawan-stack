@@ -27,7 +27,7 @@ func From(err error) (out *Error, ok bool) {
 	}
 	defer func() {
 		if out != nil {
-			var copy = *out
+			copy := *out
 			out = &copy
 		}
 	}()

@@ -25,7 +25,7 @@ import (
 func TestKEK(t *testing.T) {
 	a := assertions.New(t)
 
-	var table = []struct {
+	table := []struct {
 		plaintext  string
 		kek        string
 		ciphertext string

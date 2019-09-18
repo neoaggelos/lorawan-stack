@@ -154,7 +154,7 @@ func (s *Scheduler) ScheduleAt(ctx context.Context, payloadSize int, settings tt
 	if !s.clock.IsSynced() {
 		return Emission{}, errNoClockSync
 	}
-	var minScheduleTime = ScheduleTimeShort
+	minScheduleTime := ScheduleTimeShort
 	var medianRTT *time.Duration
 	if rtts != nil {
 		if _, max, median, n := rtts.Stats(); n > 0 {
@@ -222,7 +222,7 @@ func (s *Scheduler) ScheduleAnytime(ctx context.Context, payloadSize int, settin
 	if !s.clock.IsSynced() {
 		return Emission{}, errNoClockSync
 	}
-	var minScheduleTime = ScheduleTimeShort
+	minScheduleTime := ScheduleTimeShort
 	if rtts != nil {
 		if _, max, _, n := rtts.Stats(); n > 0 {
 			minScheduleTime = max + QueueDelay

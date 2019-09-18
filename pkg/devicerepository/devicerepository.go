@@ -155,7 +155,7 @@ func (c Client) DeviceVersions(brandID, modelID string) ([]ttnpb.EndDeviceVersio
 				}
 			}
 
-			formatters := ttnpb.MessagePayloadFormatters{}
+			var formatters ttnpb.MessagePayloadFormatters
 			if version.PayloadFormats.Up != nil {
 				formatters.UpFormatter, formatters.UpFormatterParameter, err = parseFormatter(*version.PayloadFormats.Up)
 				if err != nil {

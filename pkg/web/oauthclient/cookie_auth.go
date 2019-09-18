@@ -44,7 +44,7 @@ type authCookie struct {
 }
 
 func (oc *OAuthClient) getAuthCookie(c echo.Context) (authCookie, error) {
-	value := authCookie{}
+	var value authCookie
 	ok, err := oc.AuthCookie().Get(c, &value)
 	if err != nil {
 		return authCookie{}, err

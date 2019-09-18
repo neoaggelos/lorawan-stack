@@ -25,7 +25,7 @@ import (
 )
 
 func buildLoRaDownlinkFromParameters(payloadSize int, frequency uint64, dataRate ttnpb.DataRate, codingRate string) (downlink ttnpb.DownlinkMessage, err error) {
-	payload := []byte{}
+	var payload []byte
 	for i := 0; i < payloadSize; i++ {
 		payload = append(payload, 0)
 	}

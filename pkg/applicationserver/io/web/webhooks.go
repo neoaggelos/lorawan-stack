@@ -88,7 +88,7 @@ func (s *QueuedSink) Run(ctx context.Context) error {
 	if s.Workers < 1 {
 		s.Workers = 1
 	}
-	wg := sync.WaitGroup{}
+	var wg sync.WaitGroup
 	if controllable, ok := s.Target.(ControllableSink); ok {
 		wg.Add(1)
 		go func() {
@@ -297,7 +297,7 @@ func (w *webhooks) handleUp(ctx context.Context, msg *ttnpb.ApplicationUp) error
 	if err != nil {
 		return err
 	}
-	wg := sync.WaitGroup{}
+	var wg sync.WaitGroup
 	for i := range hooks {
 		hook := hooks[i]
 		logger := log.FromContext(ctx).WithField("hook", hook.WebhookID)

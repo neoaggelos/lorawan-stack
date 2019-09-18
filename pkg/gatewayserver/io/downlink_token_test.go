@@ -25,9 +25,9 @@ import (
 
 func TestDownlinkTokens(t *testing.T) {
 	a := assertions.New(t)
-	tokens := DownlinkTokens{}
+	var tokens DownlinkTokens
 
-	all := []uint16{}
+	var all []uint16
 	for i := 0; i < downlinkTokenItems*2; i++ {
 		cids := []string{fmt.Sprintf("message_%d", i)}
 		all = append(all, tokens.Next(cids, time.Unix(int64(i), 0)))
