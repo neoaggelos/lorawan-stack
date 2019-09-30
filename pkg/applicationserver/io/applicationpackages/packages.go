@@ -23,7 +23,7 @@ import (
 	"go.thethings.network/lorawan-stack/pkg/ttnpb"
 )
 
-// ApplicationPackageHandler handles upstream trafic from the Application Server.
+// ApplicationPackageHandler handles upstream traffic from the Application Server.
 type ApplicationPackageHandler interface {
 	rpcserver.Registerer
 	HandleUp(context.Context, *ttnpb.ApplicationPackageAssociation, *ttnpb.ApplicationUp) error
