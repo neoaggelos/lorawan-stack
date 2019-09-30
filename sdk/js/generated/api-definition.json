@@ -492,6 +492,21 @@
             "ids.f_port"
           ]
         }
+      ],
+      "allowedFieldMaskPaths": [
+        "created_at",
+        "data",
+        "ids",
+        "ids.end_device_ids",
+        "ids.end_device_ids.application_ids",
+        "ids.end_device_ids.application_ids.application_id",
+        "ids.end_device_ids.dev_addr",
+        "ids.end_device_ids.dev_eui",
+        "ids.end_device_ids.device_id",
+        "ids.end_device_ids.join_eui",
+        "ids.f_port",
+        "package_name",
+        "updated_at"
       ]
     },
     "List": {
@@ -505,6 +520,21 @@
             "ids.device_id"
           ]
         }
+      ],
+      "allowedFieldMaskPaths": [
+        "created_at",
+        "data",
+        "ids",
+        "ids.end_device_ids",
+        "ids.end_device_ids.application_ids",
+        "ids.end_device_ids.application_ids.application_id",
+        "ids.end_device_ids.dev_addr",
+        "ids.end_device_ids.dev_eui",
+        "ids.end_device_ids.device_id",
+        "ids.end_device_ids.join_eui",
+        "ids.f_port",
+        "package_name",
+        "updated_at"
       ]
     },
     "Set": {
@@ -520,6 +550,21 @@
             "association.ids.f_port"
           ]
         }
+      ],
+      "allowedFieldMaskPaths": [
+        "created_at",
+        "data",
+        "ids",
+        "ids.end_device_ids",
+        "ids.end_device_ids.application_ids",
+        "ids.end_device_ids.application_ids.application_id",
+        "ids.end_device_ids.dev_addr",
+        "ids.end_device_ids.dev_eui",
+        "ids.end_device_ids.device_id",
+        "ids.end_device_ids.join_eui",
+        "ids.f_port",
+        "package_name",
+        "updated_at"
       ]
     },
     "Delete": {
