@@ -886,6 +886,8 @@ The AsEndDeviceRegistry service allows clients to manage their end devices on th
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | `ids` | [`EndDeviceIdentifiers`](#ttn.lorawan.v3.EndDeviceIdentifiers) |  |  |
+| `limit` | [`uint32`](#uint32) |  | Limit the number of results per page. Each page is ordered by the FPort. |
+| `page` | [`uint32`](#uint32) |  | Page number for pagination. 0 is interpreted as 1. |
 | `field_mask` | [`google.protobuf.FieldMask`](#google.protobuf.FieldMask) |  |  |
 
 #### Field Rules
@@ -893,6 +895,7 @@ The AsEndDeviceRegistry service allows clients to manage their end devices on th
 | Field | Validations |
 | ----- | ----------- |
 | `ids` | <p>`message.required`: `true`</p> |
+| `limit` | <p>`uint32.lte`: `10`</p> |
 
 ### <a name="ttn.lorawan.v3.SetApplicationPackageAssociationRequest">Message `SetApplicationPackageAssociationRequest`</a>
 
@@ -911,21 +914,21 @@ The AsEndDeviceRegistry service allows clients to manage their end devices on th
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| `GetPackages` | [`EndDeviceIdentifiers`](#ttn.lorawan.v3.EndDeviceIdentifiers) | [`ApplicationPackages`](#ttn.lorawan.v3.ApplicationPackages) | GetPackages returns the available packages for the end device. |
-| `Get` | [`GetApplicationPackageAssociationRequest`](#ttn.lorawan.v3.GetApplicationPackageAssociationRequest) | [`ApplicationPackageAssociation`](#ttn.lorawan.v3.ApplicationPackageAssociation) | Get returns the application package association registered on the FPort of the end device. |
-| `List` | [`ListApplicationPackageAssociationRequest`](#ttn.lorawan.v3.ListApplicationPackageAssociationRequest) | [`ApplicationPackageAssociations`](#ttn.lorawan.v3.ApplicationPackageAssociations) | List returns all of the application package associations of the end device. |
-| `Set` | [`SetApplicationPackageAssociationRequest`](#ttn.lorawan.v3.SetApplicationPackageAssociationRequest) | [`ApplicationPackageAssociation`](#ttn.lorawan.v3.ApplicationPackageAssociation) | Set updates or creates the application package association on the FPort of the end device. |
-| `Delete` | [`ApplicationPackageAssociationIdentifiers`](#ttn.lorawan.v3.ApplicationPackageAssociationIdentifiers) | [`.google.protobuf.Empty`](#google.protobuf.Empty) | Delete removes the application package association on the FPort of the end device. |
+| `List` | [`EndDeviceIdentifiers`](#ttn.lorawan.v3.EndDeviceIdentifiers) | [`ApplicationPackages`](#ttn.lorawan.v3.ApplicationPackages) | List returns the available packages for the end device. |
+| `GetAssociation` | [`GetApplicationPackageAssociationRequest`](#ttn.lorawan.v3.GetApplicationPackageAssociationRequest) | [`ApplicationPackageAssociation`](#ttn.lorawan.v3.ApplicationPackageAssociation) | Get returns the application package association registered on the FPort of the end device. |
+| `ListAssociations` | [`ListApplicationPackageAssociationRequest`](#ttn.lorawan.v3.ListApplicationPackageAssociationRequest) | [`ApplicationPackageAssociations`](#ttn.lorawan.v3.ApplicationPackageAssociations) | ListAssociations returns all of the application package associations of the end device. |
+| `SetAssociation` | [`SetApplicationPackageAssociationRequest`](#ttn.lorawan.v3.SetApplicationPackageAssociationRequest) | [`ApplicationPackageAssociation`](#ttn.lorawan.v3.ApplicationPackageAssociation) | SetAssociation updates or creates the application package association on the FPort of the end device. |
+| `DeleteAssociation` | [`ApplicationPackageAssociationIdentifiers`](#ttn.lorawan.v3.ApplicationPackageAssociationIdentifiers) | [`.google.protobuf.Empty`](#google.protobuf.Empty) | DeleteAssociation removes the application package association on the FPort of the end device. |
 
 #### HTTP bindings
 
 | Method Name | Method | Pattern | Body |
 | ----------- | ------ | ------- | ---- |
-| `GetPackages` | `GET` | `/api/v3/as/applications/{application_ids.application_id}/devices/{device_id}/packages` |  |
-| `Get` | `GET` | `/api/v3/as/applications/{ids.end_device_ids.application_ids.application_id}/devices/{ids.end_device_ids.device_id}/associations/{ids.f_port}` |  |
-| `List` | `GET` | `/api/v3/as/applications/{ids.application_ids.application_id}/devices/{ids.device_id}/associations` |  |
-| `Set` | `PUT` | `/api/v3/as/applications/{association.ids.end_device_ids.application_ids.application_id}/devices/{association.ids.end_device_ids.device_id}/associations/{association.ids.f_port}` | `*` |
-| `Delete` | `DELETE` | `/api/v3/as/applications/{end_device_ids.application_ids.application_id}/devices/{end_device_ids.device_id}/associations/{f_port}` |  |
+| `List` | `GET` | `/api/v3/as/applications/{application_ids.application_id}/devices/{device_id}/packages` |  |
+| `GetAssociation` | `GET` | `/api/v3/as/applications/{ids.end_device_ids.application_ids.application_id}/devices/{ids.end_device_ids.device_id}/packages/associations/{ids.f_port}` |  |
+| `ListAssociations` | `GET` | `/api/v3/as/applications/{ids.application_ids.application_id}/devices/{ids.device_id}/packages/associations` |  |
+| `SetAssociation` | `PUT` | `/api/v3/as/applications/{association.ids.end_device_ids.application_ids.application_id}/devices/{association.ids.end_device_ids.device_id}/packages/associations/{association.ids.f_port}` | `*` |
+| `DeleteAssociation` | `DELETE` | `/api/v3/as/applications/{end_device_ids.application_ids.application_id}/devices/{end_device_ids.device_id}/packages/associations/{f_port}` |  |
 
 ## <a name="lorawan-stack/api/applicationserver_pubsub.proto">File `lorawan-stack/api/applicationserver_pubsub.proto`</a>
 

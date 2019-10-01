@@ -89,11 +89,15 @@ var ListApplicationPackageAssociationRequestFieldPathsNested = []string{
 	"ids.dev_eui",
 	"ids.device_id",
 	"ids.join_eui",
+	"limit",
+	"page",
 }
 
 var ListApplicationPackageAssociationRequestFieldPathsTopLevel = []string{
 	"field_mask",
 	"ids",
+	"limit",
+	"page",
 }
 var SetApplicationPackageAssociationRequestFieldPathsNested = []string{
 	"association",

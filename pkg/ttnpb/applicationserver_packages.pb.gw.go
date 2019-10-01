@@ -29,215 +29,11 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 
 var (
-	filter_ApplicationPackageRegistry_GetPackages_0 = &utilities.DoubleArray{Encoding: map[string]int{"application_ids": 0, "application_id": 1, "device_id": 2}, Base: []int{1, 1, 1, 2, 0, 0}, Check: []int{0, 1, 2, 1, 3, 4}}
-)
-
-func request_ApplicationPackageRegistry_GetPackages_0(ctx context.Context, marshaler runtime.Marshaler, client ApplicationPackageRegistryClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq EndDeviceIdentifiers
-	var metadata runtime.ServerMetadata
-
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["application_ids.application_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "application_ids.application_id")
-	}
-
-	err = runtime.PopulateFieldFromPath(&protoReq, "application_ids.application_id", val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "application_ids.application_id", err)
-	}
-
-	val, ok = pathParams["device_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "device_id")
-	}
-
-	protoReq.DeviceID, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "device_id", err)
-	}
-
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ApplicationPackageRegistry_GetPackages_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-
-	msg, err := client.GetPackages(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
-	return msg, metadata, err
-
-}
-
-func local_request_ApplicationPackageRegistry_GetPackages_0(ctx context.Context, marshaler runtime.Marshaler, server ApplicationPackageRegistryServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq EndDeviceIdentifiers
-	var metadata runtime.ServerMetadata
-
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["application_ids.application_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "application_ids.application_id")
-	}
-
-	err = runtime.PopulateFieldFromPath(&protoReq, "application_ids.application_id", val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "application_ids.application_id", err)
-	}
-
-	val, ok = pathParams["device_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "device_id")
-	}
-
-	protoReq.DeviceID, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "device_id", err)
-	}
-
-	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_ApplicationPackageRegistry_GetPackages_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-
-	msg, err := server.GetPackages(ctx, &protoReq)
-	return msg, metadata, err
-
-}
-
-var (
-	filter_ApplicationPackageRegistry_Get_0 = &utilities.DoubleArray{Encoding: map[string]int{"ids": 0, "end_device_ids": 1, "application_ids": 2, "application_id": 3, "device_id": 4, "f_port": 5}, Base: []int{1, 4, 1, 1, 1, 2, 2, 0, 0, 4, 0}, Check: []int{0, 1, 2, 3, 4, 2, 6, 5, 7, 2, 10}}
-)
-
-func request_ApplicationPackageRegistry_Get_0(ctx context.Context, marshaler runtime.Marshaler, client ApplicationPackageRegistryClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq GetApplicationPackageAssociationRequest
-	var metadata runtime.ServerMetadata
-
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["ids.end_device_ids.application_ids.application_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "ids.end_device_ids.application_ids.application_id")
-	}
-
-	err = runtime.PopulateFieldFromPath(&protoReq, "ids.end_device_ids.application_ids.application_id", val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "ids.end_device_ids.application_ids.application_id", err)
-	}
-
-	val, ok = pathParams["ids.end_device_ids.device_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "ids.end_device_ids.device_id")
-	}
-
-	err = runtime.PopulateFieldFromPath(&protoReq, "ids.end_device_ids.device_id", val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "ids.end_device_ids.device_id", err)
-	}
-
-	val, ok = pathParams["ids.f_port"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "ids.f_port")
-	}
-
-	err = runtime.PopulateFieldFromPath(&protoReq, "ids.f_port", val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "ids.f_port", err)
-	}
-
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ApplicationPackageRegistry_Get_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-
-	msg, err := client.Get(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
-	return msg, metadata, err
-
-}
-
-func local_request_ApplicationPackageRegistry_Get_0(ctx context.Context, marshaler runtime.Marshaler, server ApplicationPackageRegistryServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq GetApplicationPackageAssociationRequest
-	var metadata runtime.ServerMetadata
-
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["ids.end_device_ids.application_ids.application_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "ids.end_device_ids.application_ids.application_id")
-	}
-
-	err = runtime.PopulateFieldFromPath(&protoReq, "ids.end_device_ids.application_ids.application_id", val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "ids.end_device_ids.application_ids.application_id", err)
-	}
-
-	val, ok = pathParams["ids.end_device_ids.device_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "ids.end_device_ids.device_id")
-	}
-
-	err = runtime.PopulateFieldFromPath(&protoReq, "ids.end_device_ids.device_id", val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "ids.end_device_ids.device_id", err)
-	}
-
-	val, ok = pathParams["ids.f_port"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "ids.f_port")
-	}
-
-	err = runtime.PopulateFieldFromPath(&protoReq, "ids.f_port", val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "ids.f_port", err)
-	}
-
-	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_ApplicationPackageRegistry_Get_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-
-	msg, err := server.Get(ctx, &protoReq)
-	return msg, metadata, err
-
-}
-
-var (
-	filter_ApplicationPackageRegistry_List_0 = &utilities.DoubleArray{Encoding: map[string]int{"ids": 0, "application_ids": 1, "application_id": 2, "device_id": 3}, Base: []int{1, 1, 1, 1, 2, 0, 0}, Check: []int{0, 1, 2, 3, 2, 4, 5}}
+	filter_ApplicationPackageRegistry_List_0 = &utilities.DoubleArray{Encoding: map[string]int{"application_ids": 0, "application_id": 1, "device_id": 2}, Base: []int{1, 1, 1, 2, 0, 0}, Check: []int{0, 1, 2, 1, 3, 4}}
 )
 
 func request_ApplicationPackageRegistry_List_0(ctx context.Context, marshaler runtime.Marshaler, client ApplicationPackageRegistryClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ListApplicationPackageAssociationRequest
+	var protoReq EndDeviceIdentifiers
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -247,26 +43,26 @@ func request_ApplicationPackageRegistry_List_0(ctx context.Context, marshaler ru
 		_   = err
 	)
 
-	val, ok = pathParams["ids.application_ids.application_id"]
+	val, ok = pathParams["application_ids.application_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "ids.application_ids.application_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "application_ids.application_id")
 	}
 
-	err = runtime.PopulateFieldFromPath(&protoReq, "ids.application_ids.application_id", val)
+	err = runtime.PopulateFieldFromPath(&protoReq, "application_ids.application_id", val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "ids.application_ids.application_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "application_ids.application_id", err)
 	}
 
-	val, ok = pathParams["ids.device_id"]
+	val, ok = pathParams["device_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "ids.device_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "device_id")
 	}
 
-	err = runtime.PopulateFieldFromPath(&protoReq, "ids.device_id", val)
+	protoReq.DeviceID, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "ids.device_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "device_id", err)
 	}
 
 	if err := req.ParseForm(); err != nil {
@@ -282,6 +78,165 @@ func request_ApplicationPackageRegistry_List_0(ctx context.Context, marshaler ru
 }
 
 func local_request_ApplicationPackageRegistry_List_0(ctx context.Context, marshaler runtime.Marshaler, server ApplicationPackageRegistryServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq EndDeviceIdentifiers
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["application_ids.application_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "application_ids.application_id")
+	}
+
+	err = runtime.PopulateFieldFromPath(&protoReq, "application_ids.application_id", val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "application_ids.application_id", err)
+	}
+
+	val, ok = pathParams["device_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "device_id")
+	}
+
+	protoReq.DeviceID, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "device_id", err)
+	}
+
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_ApplicationPackageRegistry_List_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := server.List(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+var (
+	filter_ApplicationPackageRegistry_GetAssociation_0 = &utilities.DoubleArray{Encoding: map[string]int{"ids": 0, "end_device_ids": 1, "application_ids": 2, "application_id": 3, "device_id": 4, "f_port": 5}, Base: []int{1, 4, 1, 1, 1, 2, 2, 0, 0, 4, 0}, Check: []int{0, 1, 2, 3, 4, 2, 6, 5, 7, 2, 10}}
+)
+
+func request_ApplicationPackageRegistry_GetAssociation_0(ctx context.Context, marshaler runtime.Marshaler, client ApplicationPackageRegistryClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetApplicationPackageAssociationRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["ids.end_device_ids.application_ids.application_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "ids.end_device_ids.application_ids.application_id")
+	}
+
+	err = runtime.PopulateFieldFromPath(&protoReq, "ids.end_device_ids.application_ids.application_id", val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "ids.end_device_ids.application_ids.application_id", err)
+	}
+
+	val, ok = pathParams["ids.end_device_ids.device_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "ids.end_device_ids.device_id")
+	}
+
+	err = runtime.PopulateFieldFromPath(&protoReq, "ids.end_device_ids.device_id", val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "ids.end_device_ids.device_id", err)
+	}
+
+	val, ok = pathParams["ids.f_port"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "ids.f_port")
+	}
+
+	err = runtime.PopulateFieldFromPath(&protoReq, "ids.f_port", val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "ids.f_port", err)
+	}
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ApplicationPackageRegistry_GetAssociation_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := client.GetAssociation(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_ApplicationPackageRegistry_GetAssociation_0(ctx context.Context, marshaler runtime.Marshaler, server ApplicationPackageRegistryServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetApplicationPackageAssociationRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["ids.end_device_ids.application_ids.application_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "ids.end_device_ids.application_ids.application_id")
+	}
+
+	err = runtime.PopulateFieldFromPath(&protoReq, "ids.end_device_ids.application_ids.application_id", val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "ids.end_device_ids.application_ids.application_id", err)
+	}
+
+	val, ok = pathParams["ids.end_device_ids.device_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "ids.end_device_ids.device_id")
+	}
+
+	err = runtime.PopulateFieldFromPath(&protoReq, "ids.end_device_ids.device_id", val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "ids.end_device_ids.device_id", err)
+	}
+
+	val, ok = pathParams["ids.f_port"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "ids.f_port")
+	}
+
+	err = runtime.PopulateFieldFromPath(&protoReq, "ids.f_port", val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "ids.f_port", err)
+	}
+
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_ApplicationPackageRegistry_GetAssociation_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := server.GetAssociation(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+var (
+	filter_ApplicationPackageRegistry_ListAssociations_0 = &utilities.DoubleArray{Encoding: map[string]int{"ids": 0, "application_ids": 1, "application_id": 2, "device_id": 3}, Base: []int{1, 1, 1, 1, 2, 0, 0}, Check: []int{0, 1, 2, 3, 2, 4, 5}}
+)
+
+func request_ApplicationPackageRegistry_ListAssociations_0(ctx context.Context, marshaler runtime.Marshaler, client ApplicationPackageRegistryClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ListApplicationPackageAssociationRequest
 	var metadata runtime.ServerMetadata
 
@@ -314,16 +269,61 @@ func local_request_ApplicationPackageRegistry_List_0(ctx context.Context, marsha
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "ids.device_id", err)
 	}
 
-	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_ApplicationPackageRegistry_List_0); err != nil {
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ApplicationPackageRegistry_ListAssociations_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.List(ctx, &protoReq)
+	msg, err := client.ListAssociations(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func request_ApplicationPackageRegistry_Set_0(ctx context.Context, marshaler runtime.Marshaler, client ApplicationPackageRegistryClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_ApplicationPackageRegistry_ListAssociations_0(ctx context.Context, marshaler runtime.Marshaler, server ApplicationPackageRegistryServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ListApplicationPackageAssociationRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["ids.application_ids.application_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "ids.application_ids.application_id")
+	}
+
+	err = runtime.PopulateFieldFromPath(&protoReq, "ids.application_ids.application_id", val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "ids.application_ids.application_id", err)
+	}
+
+	val, ok = pathParams["ids.device_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "ids.device_id")
+	}
+
+	err = runtime.PopulateFieldFromPath(&protoReq, "ids.device_id", val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "ids.device_id", err)
+	}
+
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_ApplicationPackageRegistry_ListAssociations_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := server.ListAssociations(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+func request_ApplicationPackageRegistry_SetAssociation_0(ctx context.Context, marshaler runtime.Marshaler, client ApplicationPackageRegistryClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq SetApplicationPackageAssociationRequest
 	var metadata runtime.ServerMetadata
 
@@ -375,12 +375,12 @@ func request_ApplicationPackageRegistry_Set_0(ctx context.Context, marshaler run
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "association.ids.f_port", err)
 	}
 
-	msg, err := client.Set(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.SetAssociation(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_ApplicationPackageRegistry_Set_0(ctx context.Context, marshaler runtime.Marshaler, server ApplicationPackageRegistryServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_ApplicationPackageRegistry_SetAssociation_0(ctx context.Context, marshaler runtime.Marshaler, server ApplicationPackageRegistryServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq SetApplicationPackageAssociationRequest
 	var metadata runtime.ServerMetadata
 
@@ -432,16 +432,16 @@ func local_request_ApplicationPackageRegistry_Set_0(ctx context.Context, marshal
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "association.ids.f_port", err)
 	}
 
-	msg, err := server.Set(ctx, &protoReq)
+	msg, err := server.SetAssociation(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
 var (
-	filter_ApplicationPackageRegistry_Delete_0 = &utilities.DoubleArray{Encoding: map[string]int{"end_device_ids": 0, "application_ids": 1, "application_id": 2, "device_id": 3, "f_port": 4}, Base: []int{1, 1, 1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 2, 3, 2, 1, 4, 5, 6}}
+	filter_ApplicationPackageRegistry_DeleteAssociation_0 = &utilities.DoubleArray{Encoding: map[string]int{"end_device_ids": 0, "application_ids": 1, "application_id": 2, "device_id": 3, "f_port": 4}, Base: []int{1, 1, 1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 2, 3, 2, 1, 4, 5, 6}}
 )
 
-func request_ApplicationPackageRegistry_Delete_0(ctx context.Context, marshaler runtime.Marshaler, client ApplicationPackageRegistryClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_ApplicationPackageRegistry_DeleteAssociation_0(ctx context.Context, marshaler runtime.Marshaler, client ApplicationPackageRegistryClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ApplicationPackageAssociationIdentifiers
 	var metadata runtime.ServerMetadata
 
@@ -488,16 +488,16 @@ func request_ApplicationPackageRegistry_Delete_0(ctx context.Context, marshaler 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ApplicationPackageRegistry_Delete_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ApplicationPackageRegistry_DeleteAssociation_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.Delete(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.DeleteAssociation(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_ApplicationPackageRegistry_Delete_0(ctx context.Context, marshaler runtime.Marshaler, server ApplicationPackageRegistryServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_ApplicationPackageRegistry_DeleteAssociation_0(ctx context.Context, marshaler runtime.Marshaler, server ApplicationPackageRegistryServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ApplicationPackageAssociationIdentifiers
 	var metadata runtime.ServerMetadata
 
@@ -541,11 +541,11 @@ func local_request_ApplicationPackageRegistry_Delete_0(ctx context.Context, mars
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "f_port", err)
 	}
 
-	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_ApplicationPackageRegistry_Delete_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_ApplicationPackageRegistry_DeleteAssociation_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.Delete(ctx, &protoReq)
+	msg, err := server.DeleteAssociation(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -554,46 +554,6 @@ func local_request_ApplicationPackageRegistry_Delete_0(ctx context.Context, mars
 // UnaryRPC     :call ApplicationPackageRegistryServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
 func RegisterApplicationPackageRegistryHandlerServer(ctx context.Context, mux *runtime.ServeMux, server ApplicationPackageRegistryServer) error {
-
-	mux.Handle("GET", pattern_ApplicationPackageRegistry_GetPackages_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := local_request_ApplicationPackageRegistry_GetPackages_0(rctx, inboundMarshaler, server, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_ApplicationPackageRegistry_GetPackages_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
-	mux.Handle("GET", pattern_ApplicationPackageRegistry_Get_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := local_request_ApplicationPackageRegistry_Get_0(rctx, inboundMarshaler, server, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_ApplicationPackageRegistry_Get_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
 
 	mux.Handle("GET", pattern_ApplicationPackageRegistry_List_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
@@ -615,7 +575,7 @@ func RegisterApplicationPackageRegistryHandlerServer(ctx context.Context, mux *r
 
 	})
 
-	mux.Handle("PUT", pattern_ApplicationPackageRegistry_Set_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ApplicationPackageRegistry_GetAssociation_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -624,18 +584,18 @@ func RegisterApplicationPackageRegistryHandlerServer(ctx context.Context, mux *r
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_ApplicationPackageRegistry_Set_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ApplicationPackageRegistry_GetAssociation_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ApplicationPackageRegistry_Set_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ApplicationPackageRegistry_GetAssociation_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("DELETE", pattern_ApplicationPackageRegistry_Delete_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ApplicationPackageRegistry_ListAssociations_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -644,14 +604,54 @@ func RegisterApplicationPackageRegistryHandlerServer(ctx context.Context, mux *r
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_ApplicationPackageRegistry_Delete_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ApplicationPackageRegistry_ListAssociations_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ApplicationPackageRegistry_Delete_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ApplicationPackageRegistry_ListAssociations_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("PUT", pattern_ApplicationPackageRegistry_SetAssociation_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_ApplicationPackageRegistry_SetAssociation_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ApplicationPackageRegistry_SetAssociation_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("DELETE", pattern_ApplicationPackageRegistry_DeleteAssociation_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_ApplicationPackageRegistry_DeleteAssociation_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ApplicationPackageRegistry_DeleteAssociation_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -696,46 +696,6 @@ func RegisterApplicationPackageRegistryHandler(ctx context.Context, mux *runtime
 // "ApplicationPackageRegistryClient" to call the correct interceptors.
 func RegisterApplicationPackageRegistryHandlerClient(ctx context.Context, mux *runtime.ServeMux, client ApplicationPackageRegistryClient) error {
 
-	mux.Handle("GET", pattern_ApplicationPackageRegistry_GetPackages_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := request_ApplicationPackageRegistry_GetPackages_0(rctx, inboundMarshaler, client, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_ApplicationPackageRegistry_GetPackages_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
-	mux.Handle("GET", pattern_ApplicationPackageRegistry_Get_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := request_ApplicationPackageRegistry_Get_0(rctx, inboundMarshaler, client, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_ApplicationPackageRegistry_Get_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
 	mux.Handle("GET", pattern_ApplicationPackageRegistry_List_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
@@ -756,7 +716,7 @@ func RegisterApplicationPackageRegistryHandlerClient(ctx context.Context, mux *r
 
 	})
 
-	mux.Handle("PUT", pattern_ApplicationPackageRegistry_Set_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ApplicationPackageRegistry_GetAssociation_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -765,18 +725,18 @@ func RegisterApplicationPackageRegistryHandlerClient(ctx context.Context, mux *r
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_ApplicationPackageRegistry_Set_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ApplicationPackageRegistry_GetAssociation_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ApplicationPackageRegistry_Set_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ApplicationPackageRegistry_GetAssociation_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("DELETE", pattern_ApplicationPackageRegistry_Delete_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ApplicationPackageRegistry_ListAssociations_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -785,14 +745,54 @@ func RegisterApplicationPackageRegistryHandlerClient(ctx context.Context, mux *r
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_ApplicationPackageRegistry_Delete_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ApplicationPackageRegistry_ListAssociations_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ApplicationPackageRegistry_Delete_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ApplicationPackageRegistry_ListAssociations_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("PUT", pattern_ApplicationPackageRegistry_SetAssociation_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_ApplicationPackageRegistry_SetAssociation_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ApplicationPackageRegistry_SetAssociation_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("DELETE", pattern_ApplicationPackageRegistry_DeleteAssociation_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_ApplicationPackageRegistry_DeleteAssociation_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ApplicationPackageRegistry_DeleteAssociation_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -800,25 +800,25 @@ func RegisterApplicationPackageRegistryHandlerClient(ctx context.Context, mux *r
 }
 
 var (
-	pattern_ApplicationPackageRegistry_GetPackages_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"as", "applications", "application_ids.application_id", "devices", "device_id", "packages"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ApplicationPackageRegistry_List_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"as", "applications", "application_ids.application_id", "devices", "device_id", "packages"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ApplicationPackageRegistry_Get_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"as", "applications", "ids.end_device_ids.application_ids.application_id", "devices", "ids.end_device_ids.device_id", "associations", "ids.f_port"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ApplicationPackageRegistry_GetAssociation_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 2, 6, 1, 0, 4, 1, 5, 7}, []string{"as", "applications", "ids.end_device_ids.application_ids.application_id", "devices", "ids.end_device_ids.device_id", "packages", "associations", "ids.f_port"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ApplicationPackageRegistry_List_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"as", "applications", "ids.application_ids.application_id", "devices", "ids.device_id", "associations"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ApplicationPackageRegistry_ListAssociations_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 2, 6}, []string{"as", "applications", "ids.application_ids.application_id", "devices", "ids.device_id", "packages", "associations"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ApplicationPackageRegistry_Set_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"as", "applications", "association.ids.end_device_ids.application_ids.application_id", "devices", "association.ids.end_device_ids.device_id", "associations", "association.ids.f_port"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ApplicationPackageRegistry_SetAssociation_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 2, 6, 1, 0, 4, 1, 5, 7}, []string{"as", "applications", "association.ids.end_device_ids.application_ids.application_id", "devices", "association.ids.end_device_ids.device_id", "packages", "associations", "association.ids.f_port"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ApplicationPackageRegistry_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"as", "applications", "end_device_ids.application_ids.application_id", "devices", "end_device_ids.device_id", "associations", "f_port"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ApplicationPackageRegistry_DeleteAssociation_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 2, 6, 1, 0, 4, 1, 5, 7}, []string{"as", "applications", "end_device_ids.application_ids.application_id", "devices", "end_device_ids.device_id", "packages", "associations", "f_port"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
-	forward_ApplicationPackageRegistry_GetPackages_0 = runtime.ForwardResponseMessage
-
-	forward_ApplicationPackageRegistry_Get_0 = runtime.ForwardResponseMessage
-
 	forward_ApplicationPackageRegistry_List_0 = runtime.ForwardResponseMessage
 
-	forward_ApplicationPackageRegistry_Set_0 = runtime.ForwardResponseMessage
+	forward_ApplicationPackageRegistry_GetAssociation_0 = runtime.ForwardResponseMessage
 
-	forward_ApplicationPackageRegistry_Delete_0 = runtime.ForwardResponseMessage
+	forward_ApplicationPackageRegistry_ListAssociations_0 = runtime.ForwardResponseMessage
+
+	forward_ApplicationPackageRegistry_SetAssociation_0 = runtime.ForwardResponseMessage
+
+	forward_ApplicationPackageRegistry_DeleteAssociation_0 = runtime.ForwardResponseMessage
 )

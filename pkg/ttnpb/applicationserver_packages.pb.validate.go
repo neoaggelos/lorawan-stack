@@ -724,6 +724,17 @@ func (m *ListApplicationPackageAssociationRequest) ValidateFields(paths ...strin
 				}
 			}
 
+		case "limit":
+
+			if m.GetLimit() > 10 {
+				return ListApplicationPackageAssociationRequestValidationError{
+					field:  "limit",
+					reason: "value must be less than or equal to 10",
+				}
+			}
+
+		case "page":
+			// no validation rules for Page
 		case "field_mask":
 
 			if v, ok := interface{}(&m.FieldMask).(interface{ ValidateFields(...string) error }); ok {

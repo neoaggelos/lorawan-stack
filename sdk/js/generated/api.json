@@ -1932,6 +1932,34 @@
               }
             },
             {
+              "name": "limit",
+              "description": "Limit the number of results per page.\nEach page is ordered by the FPort.",
+              "label": "",
+              "type": "uint32",
+              "longType": "uint32",
+              "fullType": "uint32",
+              "ismap": false,
+              "defaultValue": "",
+              "options": {
+                "validate.rules": [
+                  {
+                    "name": "uint32.lte",
+                    "value": 10
+                  }
+                ]
+              }
+            },
+            {
+              "name": "page",
+              "description": "Page number for pagination. 0 is interpreted as 1.",
+              "label": "",
+              "type": "uint32",
+              "longType": "uint32",
+              "fullType": "uint32",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
               "name": "field_mask",
               "description": "",
               "label": "",
@@ -1991,8 +2019,8 @@
           "description": "",
           "methods": [
             {
-              "name": "GetPackages",
-              "description": "GetPackages returns the available packages for the end device.",
+              "name": "List",
+              "description": "List returns the available packages for the end device.",
               "requestType": "EndDeviceIdentifiers",
               "requestLongType": "EndDeviceIdentifiers",
               "requestFullType": "ttn.lorawan.v3.EndDeviceIdentifiers",
@@ -2013,7 +2041,7 @@
               }
             },
             {
-              "name": "Get",
+              "name": "GetAssociation",
               "description": "Get returns the application package association registered on the FPort of the end device.",
               "requestType": "GetApplicationPackageAssociationRequest",
               "requestLongType": "GetApplicationPackageAssociationRequest",
@@ -2028,15 +2056,15 @@
                   "rules": [
                     {
                       "method": "GET",
-                      "pattern": "/as/applications/{ids.end_device_ids.application_ids.application_id}/devices/{ids.end_device_ids.device_id}/associations/{ids.f_port}"
+                      "pattern": "/as/applications/{ids.end_device_ids.application_ids.application_id}/devices/{ids.end_device_ids.device_id}/packages/associations/{ids.f_port}"
                     }
                   ]
                 }
               }
             },
             {
-              "name": "List",
-              "description": "List returns all of the application package associations of the end device.",
+              "name": "ListAssociations",
+              "description": "ListAssociations returns all of the application package associations of the end device.",
               "requestType": "ListApplicationPackageAssociationRequest",
               "requestLongType": "ListApplicationPackageAssociationRequest",
               "requestFullType": "ttn.lorawan.v3.ListApplicationPackageAssociationRequest",
@@ -2050,15 +2078,15 @@
                   "rules": [
                     {
                       "method": "GET",
-                      "pattern": "/as/applications/{ids.application_ids.application_id}/devices/{ids.device_id}/associations"
+                      "pattern": "/as/applications/{ids.application_ids.application_id}/devices/{ids.device_id}/packages/associations"
                     }
                   ]
                 }
               }
             },
             {
-              "name": "Set",
-              "description": "Set updates or creates the application package association on the FPort of the end device.",
+              "name": "SetAssociation",
+              "description": "SetAssociation updates or creates the application package association on the FPort of the end device.",
               "requestType": "SetApplicationPackageAssociationRequest",
               "requestLongType": "SetApplicationPackageAssociationRequest",
               "requestFullType": "ttn.lorawan.v3.SetApplicationPackageAssociationRequest",
@@ -2072,7 +2100,7 @@
                   "rules": [
                     {
                       "method": "PUT",
-                      "pattern": "/as/applications/{association.ids.end_device_ids.application_ids.application_id}/devices/{association.ids.end_device_ids.device_id}/associations/{association.ids.f_port}",
+                      "pattern": "/as/applications/{association.ids.end_device_ids.application_ids.application_id}/devices/{association.ids.end_device_ids.device_id}/packages/associations/{association.ids.f_port}",
                       "body": "*"
                     }
                   ]
@@ -2080,8 +2108,8 @@
               }
             },
             {
-              "name": "Delete",
-              "description": "Delete removes the application package association on the FPort of the end device.",
+              "name": "DeleteAssociation",
+              "description": "DeleteAssociation removes the application package association on the FPort of the end device.",
               "requestType": "ApplicationPackageAssociationIdentifiers",
               "requestLongType": "ApplicationPackageAssociationIdentifiers",
               "requestFullType": "ttn.lorawan.v3.ApplicationPackageAssociationIdentifiers",
@@ -2095,7 +2123,7 @@
                   "rules": [
                     {
                       "method": "DELETE",
-                      "pattern": "/as/applications/{end_device_ids.application_ids.application_id}/devices/{end_device_ids.device_id}/associations/{f_port}"
+                      "pattern": "/as/applications/{end_device_ids.application_ids.application_id}/devices/{end_device_ids.device_id}/packages/associations/{f_port}"
                     }
                   ]
                 }

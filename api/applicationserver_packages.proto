@@ -60,7 +60,12 @@ message GetApplicationPackageAssociationRequest {
 
 message ListApplicationPackageAssociationRequest {
   EndDeviceIdentifiers ids = 1 [(gogoproto.nullable) = false, (gogoproto.embed) = true, (validate.rules).message.required = true];
-  google.protobuf.FieldMask field_mask = 2 [(gogoproto.nullable) = false];
+  // Limit the number of results per page.
+  // Each page is ordered by the FPort.
+  uint32 limit = 2 [(validate.rules).uint32.lte = 10];
+  // Page number for pagination. 0 is interpreted as 1.
+  uint32 page = 3;
+  google.protobuf.FieldMask field_mask = 4 [(gogoproto.nullable) = false];
 }
 
 message SetApplicationPackageAssociationRequest {
@@ -69,39 +74,39 @@ message SetApplicationPackageAssociationRequest {
 }
 
 service ApplicationPackageRegistry {
-  // GetPackages returns the available packages for the end device.
-  rpc GetPackages(EndDeviceIdentifiers) returns (ApplicationPackages) {
+  // List returns the available packages for the end device.
+  rpc List(EndDeviceIdentifiers) returns (ApplicationPackages) {
     option (google.api.http) = {
       get: "/as/applications/{application_ids.application_id}/devices/{device_id}/packages"
     };
   }
 
   // Get returns the application package association registered on the FPort of the end device.
-  rpc Get(GetApplicationPackageAssociationRequest) returns (ApplicationPackageAssociation) {
+  rpc GetAssociation(GetApplicationPackageAssociationRequest) returns (ApplicationPackageAssociation) {
     option (google.api.http) = {
-      get: "/as/applications/{ids.end_device_ids.application_ids.application_id}/devices/{ids.end_device_ids.device_id}/associations/{ids.f_port}"
+      get: "/as/applications/{ids.end_device_ids.application_ids.application_id}/devices/{ids.end_device_ids.device_id}/packages/associations/{ids.f_port}"
     };
   };
 
-  // List returns all of the application package associations of the end device.
-  rpc List(ListApplicationPackageAssociationRequest) returns (ApplicationPackageAssociations) {
+  // ListAssociations returns all of the application package associations of the end device.
+  rpc ListAssociations(ListApplicationPackageAssociationRequest) returns (ApplicationPackageAssociations) {
     option (google.api.http) = {
-      get: "/as/applications/{ids.application_ids.application_id}/devices/{ids.device_id}/associations"
+      get: "/as/applications/{ids.application_ids.application_id}/devices/{ids.device_id}/packages/associations"
     };
   }
 
-  // Set updates or creates the application package association on the FPort of the end device.
-  rpc Set(SetApplicationPackageAssociationRequest) returns (ApplicationPackageAssociation) {
+  // SetAssociation updates or creates the application package association on the FPort of the end device.
+  rpc SetAssociation(SetApplicationPackageAssociationRequest) returns (ApplicationPackageAssociation) {
     option (google.api.http) = {
-      put: "/as/applications/{association.ids.end_device_ids.application_ids.application_id}/devices/{association.ids.end_device_ids.device_id}/associations/{association.ids.f_port}"
+      put: "/as/applications/{association.ids.end_device_ids.application_ids.application_id}/devices/{association.ids.end_device_ids.device_id}/packages/associations/{association.ids.f_port}"
       body: "*"
     };
   }
 
-  // Delete removes the application package association on the FPort of the end device.
-  rpc Delete(ApplicationPackageAssociationIdentifiers) returns (google.protobuf.Empty) {
+  // DeleteAssociation removes the application package association on the FPort of the end device.
+  rpc DeleteAssociation(ApplicationPackageAssociationIdentifiers) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      delete: "/as/applications/{end_device_ids.application_ids.application_id}/devices/{end_device_ids.device_id}/associations/{f_port}"
+      delete: "/as/applications/{end_device_ids.application_ids.application_id}/devices/{end_device_ids.device_id}/packages/associations/{f_port}"
     };
   }
 }
