@@ -27,9 +27,9 @@ import (
 	pbtypes "github.com/gogo/protobuf/types"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"go.thethings.network/lorawan-stack/pkg/applicationserver/io"
-	"go.thethings.network/lorawan-stack/pkg/applicationserver/io/packages"
 	iogrpc "go.thethings.network/lorawan-stack/pkg/applicationserver/io/grpc"
 	"go.thethings.network/lorawan-stack/pkg/applicationserver/io/mqtt"
+	"go.thethings.network/lorawan-stack/pkg/applicationserver/io/packages"
 	"go.thethings.network/lorawan-stack/pkg/applicationserver/io/pubsub"
 	_ "go.thethings.network/lorawan-stack/pkg/applicationserver/io/pubsub/provider/mqtt" // The MQTT integration provider
 	_ "go.thethings.network/lorawan-stack/pkg/applicationserver/io/pubsub/provider/nats" // The NATS integration provider

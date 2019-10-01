@@ -50,6 +50,7 @@ func (s *server) GetAssociation(ctx context.Context, req *ttnpb.GetApplicationPa
 }
 
 // ListAssociations implements tnpb.ApplicationPackageRegistryServer.
+// TODO: Support pagination.
 func (s *server) ListAssociations(ctx context.Context, req *ttnpb.ListApplicationPackageAssociationRequest) (*ttnpb.ApplicationPackageAssociations, error) {
 	if err := rights.RequireApplication(ctx, req.ApplicationIdentifiers, ttnpb.RIGHT_APPLICATION_TRAFFIC_READ); err != nil {
 		return nil, err
