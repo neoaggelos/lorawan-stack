@@ -25,6 +25,7 @@ import (
 	"go.thethings.network/lorawan-stack/cmd/ttn-lw-cli/internal/api"
 	"go.thethings.network/lorawan-stack/cmd/ttn-lw-cli/internal/io"
 	"go.thethings.network/lorawan-stack/cmd/ttn-lw-cli/internal/util"
+	"go.thethings.network/lorawan-stack/pkg/errors"
 	"go.thethings.network/lorawan-stack/pkg/ttnpb"
 )
 
@@ -37,14 +38,16 @@ func applicationPackageAssociationIDFlags() *pflag.FlagSet {
 	flagSet := &pflag.FlagSet{}
 	flagSet.String("application-id", "", "")
 	flagSet.String("device-id", "", "")
-	flagSet.String("f-port", "", "")
+	flagSet.Uint8("f-port", 1, "")
 	return flagSet
 }
+
+var errNoFPort = errors.DefineInvalidArgument("no_f_port", "no FPort set")
 
 func getApplicationPackageAssociationID(flagSet *pflag.FlagSet, args []string) (*ttnpb.ApplicationPackageAssociationIdentifiers, error) {
 	applicationID, _ := flagSet.GetString("application-id")
 	deviceID, _ := flagSet.GetString("device-id")
-	fport, _ := flagSet.GetUint32("f-port")
+	fport, _ := flagSet.GetUint8("f-port")
 	switch len(args) {
 	case 0:
 	case 1:
@@ -53,14 +56,20 @@ func getApplicationPackageAssociationID(flagSet *pflag.FlagSet, args []string) (
 	case 3:
 		applicationID = args[0]
 		deviceID = args[1]
-		fport64, _ := strconv.ParseUint(args[2], 10, 32)
-		fport = uint32(fport64)
+		fport64, err := strconv.ParseUint(args[2], 10, 8)
+		if err != nil {
+			return nil, err
+		}
+		fport = uint8(fport64)
 	default:
 		logger.Warn("multiple IDs found in arguments, considering the first")
 		applicationID = args[0]
 		deviceID = args[1]
-		fport64, _ := strconv.ParseUint(args[2], 10, 32)
-		fport = uint32(fport64)
+		fport64, err := strconv.ParseUint(args[2], 10, 8)
+		if err != nil {
+			return nil, err
+		}
+		fport = uint8(fport64)
 	}
 	if applicationID == "" {
 		return nil, errNoApplicationID
@@ -68,12 +77,15 @@ func getApplicationPackageAssociationID(flagSet *pflag.FlagSet, args []string) (
 	if deviceID == "" {
 		return nil, errNoEndDeviceID
 	}
+	if fport == 0 {
+		return nil, errNoFPort
+	}
 	return &ttnpb.ApplicationPackageAssociationIdentifiers{
 		EndDeviceIdentifiers: ttnpb.EndDeviceIdentifiers{
 			ApplicationIdentifiers: ttnpb.ApplicationIdentifiers{ApplicationID: applicationID},
 			DeviceID:               deviceID,
 		},
-		FPort: fport,
+		FPort: uint32(fport),
 	}, nil
 }
 
@@ -83,10 +95,10 @@ var (
 		Aliases: []string{"package"},
 		Short:   "Application packages commands",
 	}
-	applicationsPackagesGetAvailableCommand = &cobra.Command{
-		Use:     "get-available-packages",
-		Aliases: []string{"available-packages"},
-		Short:   "Get the available packages for the device",
+	applicationsPackagesListCommand = &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls"},
+		Short:   "List the available packages for the device",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			devID, err := getEndDeviceID(cmd.Flags(), args, true)
 			if err != nil {
@@ -96,7 +108,7 @@ var (
 			if err != nil {
 				return err
 			}
-			res, err := ttnpb.NewApplicationPackageRegistryClient(as).GetPackages(ctx, devID)
+			res, err := ttnpb.NewApplicationPackageRegistryClient(as).List(ctx, devID)
 			if err != nil {
 				return err
 			}
@@ -104,9 +116,9 @@ var (
 			return io.Write(os.Stdout, config.OutputFormat, res)
 		},
 	}
-	applicationsPackagesGetCommand = &cobra.Command{
-		Use:     "get [application-id] [device-id] [f-port]",
-		Aliases: []string{"info"},
+	applicationsPackageAssociationGetCommand = &cobra.Command{
+		Use:     "get-association [application-id] [device-id] [f-port]",
+		Aliases: []string{"info-association"},
 		Short:   "Get the properties of an application package association",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			assocID, err := getApplicationPackageAssociationID(cmd.Flags(), args)
@@ -125,7 +137,7 @@ var (
 			if err != nil {
 				return err
 			}
-			res, err := ttnpb.NewApplicationPackageRegistryClient(as).Get(ctx, &ttnpb.GetApplicationPackageAssociationRequest{
+			res, err := ttnpb.NewApplicationPackageRegistryClient(as).GetAssociation(ctx, &ttnpb.GetApplicationPackageAssociationRequest{
 				ApplicationPackageAssociationIdentifiers: *assocID,
 				FieldMask:                                types.FieldMask{Paths: paths},
 			})
@@ -136,9 +148,9 @@ var (
 			return io.Write(os.Stdout, config.OutputFormat, res)
 		},
 	}
-	applicationsPackagesListCommand = &cobra.Command{
-		Use:     "list [application-id] [device-id]",
-		Aliases: []string{"ls"},
+	applicationsPackageAssociationsListCommand = &cobra.Command{
+		Use:     "list-associations [application-id] [device-id]",
+		Aliases: []string{"ls-associations"},
 		Short:   "List application package associations",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			devID, err := getEndDeviceID(cmd.Flags(), args, true)
@@ -157,7 +169,7 @@ var (
 			if err != nil {
 				return err
 			}
-			res, err := ttnpb.NewApplicationPackageRegistryClient(as).List(ctx, &ttnpb.ListApplicationPackageAssociationRequest{
+			res, err := ttnpb.NewApplicationPackageRegistryClient(as).ListAssociations(ctx, &ttnpb.ListApplicationPackageAssociationRequest{
 				EndDeviceIdentifiers: *devID,
 				FieldMask:            types.FieldMask{Paths: paths},
 			})
@@ -168,9 +180,9 @@ var (
 			return io.Write(os.Stdout, config.OutputFormat, res)
 		},
 	}
-	applicationsPackagesSetCommand = &cobra.Command{
-		Use:     "set [application-id] [device-id] [f-port]",
-		Aliases: []string{"update"},
+	applicationsPackageAssociationSetCommand = &cobra.Command{
+		Use:     "set-association [application-id] [device-id] [f-port]",
+		Aliases: []string{"update-association"},
 		Short:   "Set the properties of an application package association",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			assocID, err := getApplicationPackageAssociationID(cmd.Flags(), args)
@@ -189,7 +201,7 @@ var (
 			if err != nil {
 				return err
 			}
-			res, err := ttnpb.NewApplicationPackageRegistryClient(as).Set(ctx, &ttnpb.SetApplicationPackageAssociationRequest{
+			res, err := ttnpb.NewApplicationPackageRegistryClient(as).SetAssociation(ctx, &ttnpb.SetApplicationPackageAssociationRequest{
 				ApplicationPackageAssociation: association,
 				FieldMask:                     types.FieldMask{Paths: paths},
 			})
@@ -200,8 +212,8 @@ var (
 			return io.Write(os.Stdout, config.OutputFormat, res)
 		},
 	}
-	applicationsPackagesDeleteCommand = &cobra.Command{
-		Use:   "delete [application-id] [device-id] [f-port]",
+	applicationsPackageAssociationDeleteCommand = &cobra.Command{
+		Use:   "delete-association [application-id] [device-id] [f-port]",
 		Short: "Delete an application package association",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			assocID, err := getApplicationPackageAssociationID(cmd.Flags(), args)
@@ -213,7 +225,7 @@ var (
 			if err != nil {
 				return err
 			}
-			_, err = ttnpb.NewApplicationPackageRegistryClient(as).Delete(ctx, assocID)
+			_, err = ttnpb.NewApplicationPackageRegistryClient(as).DeleteAssociation(ctx, assocID)
 			if err != nil {
 				return err
 			}
@@ -224,17 +236,17 @@ var (
 )
 
 func init() {
-	applicationsPackagesCommand.AddCommand(applicationsPackagesGetAvailableCommand)
-	applicationsPackagesGetCommand.Flags().AddFlagSet(applicationPackageAssociationIDFlags())
-	applicationsPackagesGetCommand.Flags().AddFlagSet(selectApplicationPackageAssociationsFlags)
-	applicationsPackagesCommand.AddCommand(applicationsPackagesGetCommand)
-	applicationsPackagesListCommand.Flags().AddFlagSet(endDeviceIDFlags())
-	applicationsPackagesListCommand.Flags().AddFlagSet(selectApplicationPackageAssociationsFlags)
 	applicationsPackagesCommand.AddCommand(applicationsPackagesListCommand)
-	applicationsPackagesSetCommand.Flags().AddFlagSet(applicationPackageAssociationIDFlags())
-	applicationsPackagesSetCommand.Flags().AddFlagSet(setApplicationPackageAssociationsFlags)
-	applicationsPackagesCommand.AddCommand(applicationsPackagesSetCommand)
-	applicationsPackagesDeleteCommand.Flags().AddFlagSet(applicationPackageAssociationIDFlags())
-	applicationsPackagesCommand.AddCommand(applicationsPackagesDeleteCommand)
+	applicationsPackageAssociationGetCommand.Flags().AddFlagSet(applicationPackageAssociationIDFlags())
+	applicationsPackageAssociationGetCommand.Flags().AddFlagSet(selectApplicationPackageAssociationsFlags)
+	applicationsPackagesCommand.AddCommand(applicationsPackageAssociationGetCommand)
+	applicationsPackageAssociationsListCommand.Flags().AddFlagSet(endDeviceIDFlags())
+	applicationsPackageAssociationsListCommand.Flags().AddFlagSet(selectApplicationPackageAssociationsFlags)
+	applicationsPackagesCommand.AddCommand(applicationsPackageAssociationsListCommand)
+	applicationsPackageAssociationSetCommand.Flags().AddFlagSet(applicationPackageAssociationIDFlags())
+	applicationsPackageAssociationSetCommand.Flags().AddFlagSet(setApplicationPackageAssociationsFlags)
+	applicationsPackagesCommand.AddCommand(applicationsPackageAssociationSetCommand)
+	applicationsPackageAssociationDeleteCommand.Flags().AddFlagSet(applicationPackageAssociationIDFlags())
+	applicationsPackagesCommand.AddCommand(applicationsPackageAssociationDeleteCommand)
 	applicationsCommand.AddCommand(applicationsPackagesCommand)
 }
