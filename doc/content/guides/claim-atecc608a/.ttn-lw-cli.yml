@@ -1,0 +1,10 @@
+oauth-server-address: https://eu1.cloud.thethings.industries/oauth
+identity-server-grpc-address: eu1.cloud.thethings.industries:8884
+
+join-server-grpc-address: join.thethings.industries:8884
+device-template-converter-grpc-address: join.thethings.industries:8884
+device-claiming-server-grpc-address: join.thethings.industries:8884
+
+gateway-server-enabled: false
+network-server-enabled: false
+application-server-enabled: false
