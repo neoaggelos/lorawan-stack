@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package applicationpackages_test
+package packages_test
 
 import (
 	"context"
@@ -23,8 +23,8 @@ import (
 	"github.com/gogo/protobuf/types"
 	"github.com/smartystreets/assertions"
 	"go.thethings.network/lorawan-stack/pkg/applicationserver/io"
-	"go.thethings.network/lorawan-stack/pkg/applicationserver/io/applicationpackages"
-	"go.thethings.network/lorawan-stack/pkg/applicationserver/io/applicationpackages/redis"
+	"go.thethings.network/lorawan-stack/pkg/applicationserver/io/packages"
+	"go.thethings.network/lorawan-stack/pkg/applicationserver/io/packages/redis"
 	"go.thethings.network/lorawan-stack/pkg/applicationserver/io/mock"
 	"go.thethings.network/lorawan-stack/pkg/component"
 	componenttest "go.thethings.network/lorawan-stack/pkg/component/test"
