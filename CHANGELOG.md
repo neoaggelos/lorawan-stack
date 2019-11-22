@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added support for JSON formatted logs (see `--logs.json.enable`, `--logs.json.fallback-on-error` options).
+
 ### Changed
 
 ### Deprecated

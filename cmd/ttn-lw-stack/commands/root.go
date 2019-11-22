@@ -60,7 +60,7 @@ var (
 			// create logger
 			logger, err = log.NewLogger(
 				log.WithLevel(config.Base.Log.Level),
-				log.WithHandler(log.NewCLI(os.Stdout)),
+				log.WithHandler(log.NewCLI(os.Stdout, log.JSON(config.Base.Log.JSON))),
 			)
 
 			ctx = log.NewContext(ctx, logger)

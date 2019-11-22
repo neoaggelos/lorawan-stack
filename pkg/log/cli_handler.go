@@ -15,6 +15,7 @@
 package log
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"os"
@@ -24,6 +25,12 @@ import (
 
 	isatty "github.com/mattn/go-isatty"
 )
+
+// JSONOptions represents configuration for the logger JSON format output
+type JSONOptions struct {
+	Enable          bool `name:"enable" description:"Output logs in JSON format"`
+	FallbackOnError bool `name:"fallback-on-error" description:"Fallback to default log format if JSON formatting fails"`
+}
 
 const (
 	red    = 31
@@ -46,6 +53,7 @@ type CLIHandler struct {
 	mu       sync.Mutex
 	Writer   io.Writer
 	UseColor bool
+	JSON     JSONOptions
 }
 
 // CLIHandlerOption is the type of options for the CLIHandler.
@@ -55,6 +63,13 @@ type CLIHandlerOption func(*CLIHandler)
 func UseColor(arg bool) CLIHandlerOption {
 	return func(handler *CLIHandler) {
 		handler.UseColor = arg
+	}
+}
+
+// JSON is a functional option to set log output format to JSON.
+func JSON(arg JSONOptions) CLIHandlerOption {
+	return func(handler *CLIHandler) {
+		handler.JSON = arg
 	}
 }
 
@@ -110,10 +125,24 @@ func NewCLI(w io.Writer, opts ...CLIHandlerOption) *CLIHandler {
 	return handler
 }
 
-// HandleLog implements Handler.
-func (h *CLIHandler) HandleLog(e Entry) error {
-	h.mu.Lock()
-	defer h.mu.Unlock()
+// LogJSON prints a log message in JSON format
+func (h *CLIHandler) LogJSON(e Entry) {
+	m := make(map[string]interface{})
+	m["data"] = e.Fields().Fields()
+	m["level"] = strings.ToUpper(e.Level().String())
+	m["message"] = e.Message()
+	jsonData, err := json.Marshal(m)
+
+	/* Do not drop messages where JSON encoding may fail */
+	if err != nil && h.JSON.FallbackOnError {
+		h.LogTTN(e)
+	}
+
+	fmt.Fprintf(h.Writer, "%s\n", jsonData)
+}
+
+// LogTTN prints a log message using the TheThingsStack log format
+func (h *CLIHandler) LogTTN(e Entry) {
 
 	color := Colors[e.Level()]
 	level := strings.ToUpper(e.Level().String())
@@ -149,6 +178,18 @@ func (h *CLIHandler) HandleLog(e Entry) error {
 	}
 
 	fmt.Fprintln(h.Writer)
+}
+
+// HandleLog implements Handler.
+func (h *CLIHandler) HandleLog(e Entry) error {
+	h.mu.Lock()
+	defer h.mu.Unlock()
+
+	if h.JSON.Enable {
+		h.LogJSON(e)
+	} else {
+		h.LogTTN(e)
+	}
 
 	return nil
 }

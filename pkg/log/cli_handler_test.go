@@ -97,3 +97,28 @@ func TestHandlerHandleLog(t *testing.T) {
 	a.So(err, assertions.ShouldBeNil)
 	a.So(b.String(), assertions.ShouldEqual, str)
 }
+
+func TestHandlerHandleJSONLog(t *testing.T) {
+	a := assertions.New(t)
+
+	var b bytes.Buffer
+	w := bufio.NewWriter(&b)
+
+	handler := NewCLI(w, UseColor(false), JSON(JSONOptions{
+		Enable: true,
+	}))
+
+	err := handler.HandleLog(&entry{
+		message: "Foo",
+		level:   DebugLevel,
+		time:    time.Now(),
+		fields:  Fields("a", 10, "b", "bar", "c", false, "d", 33.4),
+	})
+	a.So(err, assertions.ShouldBeNil)
+
+	str := `{"data":{"a":10,"b":"bar","c":false,"d":33.4},"level":"DEBUG","message":"Foo"}` + "\n"
+
+	err = w.Flush()
+	a.So(err, assertions.ShouldBeNil)
+	a.So(b.String(), assertions.ShouldEqual, str)
+}

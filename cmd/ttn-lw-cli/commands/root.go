@@ -100,7 +100,7 @@ func preRun(tasks ...func() error) func(cmd *cobra.Command, args []string) error
 		// create logger
 		logger, err = log.NewLogger(
 			log.WithLevel(config.Log.Level),
-			log.WithHandler(log.NewCLI(os.Stderr)),
+			log.WithHandler(log.NewCLI(os.Stderr, log.JSON(config.Log.JSON))),
 		)
 		if err != nil {
 			return err
