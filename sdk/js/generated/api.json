@@ -6983,6 +6983,680 @@
       ]
     },
     {
+      "name": "lorawan-stack/api/devicerepository.proto",
+      "description": "",
+      "package": "ttn.lorawan.v3",
+      "hasEnums": false,
+      "hasExtensions": false,
+      "hasMessages": true,
+      "hasServices": true,
+      "enums": [],
+      "extensions": [],
+      "messages": [
+        {
+          "name": "EndDeviceBrand",
+          "longName": "EndDeviceBrand",
+          "fullName": "ttn.lorawan.v3.EndDeviceBrand",
+          "description": "",
+          "hasExtensions": false,
+          "hasFields": true,
+          "extensions": [],
+          "fields": [
+            {
+              "name": "brand_id",
+              "description": "",
+              "label": "",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": "",
+              "options": {
+                "validate.rules": [
+                  {
+                    "name": "string.max_len",
+                    "value": 36
+                  },
+                  {
+                    "name": "string.pattern",
+                    "value": "^[a-z0-9](?:[-]?[a-z0-9]){2,}$"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "brand_name",
+              "description": "",
+              "label": "",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "end_devices",
+              "description": "",
+              "label": "repeated",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            }
+          ]
+        },
+        {
+          "name": "EndDeviceDefinition",
+          "longName": "EndDeviceDefinition",
+          "fullName": "ttn.lorawan.v3.EndDeviceDefinition",
+          "description": "",
+          "hasExtensions": false,
+          "hasFields": true,
+          "extensions": [],
+          "fields": [
+            {
+              "name": "definition_id",
+              "description": "",
+              "label": "",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "name",
+              "description": "",
+              "label": "",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "description",
+              "description": "",
+              "label": "",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "hardware_versions",
+              "description": "",
+              "label": "repeated",
+              "type": "Version",
+              "longType": "EndDeviceDefinition.Version",
+              "fullType": "ttn.lorawan.v3.EndDeviceDefinition.Version",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "firmware_versions",
+              "description": "",
+              "label": "repeated",
+              "type": "FirmwareVersion",
+              "longType": "EndDeviceDefinition.FirmwareVersion",
+              "fullType": "ttn.lorawan.v3.EndDeviceDefinition.FirmwareVersion",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "sensors",
+              "description": "TODO: enum?",
+              "label": "repeated",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "key_provisioning",
+              "description": "TODO: enum?",
+              "label": "repeated",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "key_security",
+              "description": "TODO: enum?",
+              "label": "",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "photos",
+              "description": "",
+              "label": "",
+              "type": "Photos",
+              "longType": "EndDeviceDefinition.Photos",
+              "fullType": "ttn.lorawan.v3.EndDeviceDefinition.Photos",
+              "ismap": false,
+              "defaultValue": ""
+            }
+          ]
+        },
+        {
+          "name": "FirmwareVersion",
+          "longName": "EndDeviceDefinition.FirmwareVersion",
+          "fullName": "ttn.lorawan.v3.EndDeviceDefinition.FirmwareVersion",
+          "description": "",
+          "hasExtensions": false,
+          "hasFields": true,
+          "extensions": [],
+          "fields": [
+            {
+              "name": "version",
+              "description": "",
+              "label": "",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "hardware_versions",
+              "description": "",
+              "label": "repeated",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "profiles",
+              "description": "",
+              "label": "repeated",
+              "type": "ProfilesEntry",
+              "longType": "EndDeviceDefinition.FirmwareVersion.ProfilesEntry",
+              "fullType": "ttn.lorawan.v3.EndDeviceDefinition.FirmwareVersion.ProfilesEntry",
+              "ismap": true,
+              "defaultValue": ""
+            }
+          ]
+        },
+        {
+          "name": "Profile",
+          "longName": "EndDeviceDefinition.FirmwareVersion.Profile",
+          "fullName": "ttn.lorawan.v3.EndDeviceDefinition.FirmwareVersion.Profile",
+          "description": "",
+          "hasExtensions": false,
+          "hasFields": true,
+          "extensions": [],
+          "fields": [
+            {
+              "name": "profile_id",
+              "description": "",
+              "label": "",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "lorawan_certified",
+              "description": "",
+              "label": "",
+              "type": "bool",
+              "longType": "bool",
+              "fullType": "bool",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "codec_id",
+              "description": "",
+              "label": "",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            }
+          ]
+        },
+        {
+          "name": "ProfilesEntry",
+          "longName": "EndDeviceDefinition.FirmwareVersion.ProfilesEntry",
+          "fullName": "ttn.lorawan.v3.EndDeviceDefinition.FirmwareVersion.ProfilesEntry",
+          "description": "",
+          "hasExtensions": false,
+          "hasFields": true,
+          "extensions": [],
+          "fields": [
+            {
+              "name": "key",
+              "description": "",
+              "label": "",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "value",
+              "description": "",
+              "label": "",
+              "type": "Profile",
+              "longType": "EndDeviceDefinition.FirmwareVersion.Profile",
+              "fullType": "ttn.lorawan.v3.EndDeviceDefinition.FirmwareVersion.Profile",
+              "ismap": false,
+              "defaultValue": ""
+            }
+          ]
+        },
+        {
+          "name": "Photos",
+          "longName": "EndDeviceDefinition.Photos",
+          "fullName": "ttn.lorawan.v3.EndDeviceDefinition.Photos",
+          "description": "",
+          "hasExtensions": false,
+          "hasFields": true,
+          "extensions": [],
+          "fields": [
+            {
+              "name": "main",
+              "description": "TODO: this should be prefixed with assets root URL, or path to image.",
+              "label": "",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "other",
+              "description": "TODO: this should be prefixed with assets root URL, or path to image.",
+              "label": "repeated",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            }
+          ]
+        },
+        {
+          "name": "Version",
+          "longName": "EndDeviceDefinition.Version",
+          "fullName": "ttn.lorawan.v3.EndDeviceDefinition.Version",
+          "description": "",
+          "hasExtensions": false,
+          "hasFields": true,
+          "extensions": [],
+          "fields": [
+            {
+              "name": "version",
+              "description": "",
+              "label": "",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            }
+          ]
+        },
+        {
+          "name": "ListEndDeviceBrandsRequest",
+          "longName": "ListEndDeviceBrandsRequest",
+          "fullName": "ttn.lorawan.v3.ListEndDeviceBrandsRequest",
+          "description": "",
+          "hasExtensions": false,
+          "hasFields": true,
+          "extensions": [],
+          "fields": [
+            {
+              "name": "brand_id",
+              "description": "Optionally limit to a specific brand ID",
+              "label": "",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": "",
+              "options": {
+                "validate.rules": [
+                  {
+                    "name": "string.max_len",
+                    "value": 36
+                  },
+                  {
+                    "name": "string.pattern",
+                    "value": "^[a-z0-9](?:[-]?[a-z0-9]){2,}$"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "limit",
+              "description": "Limit (for pagination)",
+              "label": "",
+              "type": "UInt32Value",
+              "longType": "google.protobuf.UInt32Value",
+              "fullType": "google.protobuf.UInt32Value",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "offset",
+              "description": "Offset (for pagination)",
+              "label": "",
+              "type": "UInt32Value",
+              "longType": "google.protobuf.UInt32Value",
+              "fullType": "google.protobuf.UInt32Value",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "order_by",
+              "description": "Order (for pagination)",
+              "label": "",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": "",
+              "options": {
+                "validate.rules": [
+                  {
+                    "name": "string.in",
+                    "value": [
+                      "",
+                      "brand_id",
+                      "-brand_id"
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "ListEndDeviceBrandsResponse",
+          "longName": "ListEndDeviceBrandsResponse",
+          "fullName": "ttn.lorawan.v3.ListEndDeviceBrandsResponse",
+          "description": "",
+          "hasExtensions": false,
+          "hasFields": true,
+          "extensions": [],
+          "fields": [
+            {
+              "name": "brands",
+              "description": "",
+              "label": "repeated",
+              "type": "EndDeviceBrand",
+              "longType": "EndDeviceBrand",
+              "fullType": "ttn.lorawan.v3.EndDeviceBrand",
+              "ismap": false,
+              "defaultValue": ""
+            }
+          ]
+        },
+        {
+          "name": "ListEndDeviceDefinitionsRequest",
+          "longName": "ListEndDeviceDefinitionsRequest",
+          "fullName": "ttn.lorawan.v3.ListEndDeviceDefinitionsRequest",
+          "description": "",
+          "hasExtensions": false,
+          "hasFields": true,
+          "extensions": [],
+          "fields": [
+            {
+              "name": "brand_id",
+              "description": "Query end devices from a specific brand",
+              "label": "",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": "",
+              "options": {
+                "validate.rules": [
+                  {
+                    "name": "string.max_len",
+                    "value": 36
+                  },
+                  {
+                    "name": "string.pattern",
+                    "value": "^[a-z0-9](?:[-]?[a-z0-9]){2,}$"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "model_id",
+              "description": "Query end devices matching a specific model",
+              "label": "",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": "",
+              "options": {
+                "validate.rules": [
+                  {
+                    "name": "string.max_len",
+                    "value": 36
+                  },
+                  {
+                    "name": "string.pattern",
+                    "value": "^[a-z0-9](?:[-]?[a-z0-9]){2,}$"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "search",
+              "description": "Query end devices matching a search string",
+              "label": "",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "order_by",
+              "description": "Order end devices",
+              "label": "",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": "",
+              "options": {
+                "validate.rules": [
+                  {
+                    "name": "string.in",
+                    "value": [
+                      "",
+                      "brand_id",
+                      "-brand_id",
+                      "model_id",
+                      "-model_id"
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "name": "limit",
+              "description": "Limit number of results.",
+              "label": "",
+              "type": "UInt32Value",
+              "longType": "google.protobuf.UInt32Value",
+              "fullType": "google.protobuf.UInt32Value",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "offset",
+              "description": "Start returning devices at offset.",
+              "label": "",
+              "type": "UInt32Value",
+              "longType": "google.protobuf.UInt32Value",
+              "fullType": "google.protobuf.UInt32Value",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "field_mask",
+              "description": "Field mask paths.",
+              "label": "",
+              "type": "FieldMask",
+              "longType": "google.protobuf.FieldMask",
+              "fullType": "google.protobuf.FieldMask",
+              "ismap": false,
+              "defaultValue": ""
+            }
+          ]
+        },
+        {
+          "name": "ListEndDeviceDefinitionsResponse",
+          "longName": "ListEndDeviceDefinitionsResponse",
+          "fullName": "ttn.lorawan.v3.ListEndDeviceDefinitionsResponse",
+          "description": "",
+          "hasExtensions": false,
+          "hasFields": true,
+          "extensions": [],
+          "fields": [
+            {
+              "name": "definitions",
+              "description": "",
+              "label": "repeated",
+              "type": "EndDeviceDefinition",
+              "longType": "EndDeviceDefinition",
+              "fullType": "ttn.lorawan.v3.EndDeviceDefinition",
+              "ismap": false,
+              "defaultValue": ""
+            }
+          ]
+        }
+      ],
+      "services": [
+        {
+          "name": "DeviceRepository",
+          "longName": "DeviceRepository",
+          "fullName": "ttn.lorawan.v3.DeviceRepository",
+          "description": "",
+          "methods": [
+            {
+              "name": "ListBrands",
+              "description": "",
+              "requestType": "ListEndDeviceBrandsRequest",
+              "requestLongType": "ListEndDeviceBrandsRequest",
+              "requestFullType": "ttn.lorawan.v3.ListEndDeviceBrandsRequest",
+              "requestStreaming": false,
+              "responseType": "ListEndDeviceBrandsResponse",
+              "responseLongType": "ListEndDeviceBrandsResponse",
+              "responseFullType": "ttn.lorawan.v3.ListEndDeviceBrandsResponse",
+              "responseStreaming": false,
+              "options": {
+                "google.api.http": {
+                  "rules": [
+                    {
+                      "method": "GET",
+                      "pattern": "/dr/brands"
+                    },
+                    {
+                      "method": "GET",
+                      "pattern": "/dr/brands/{brand_id}"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "ListDefinitions",
+              "description": "",
+              "requestType": "ListEndDeviceDefinitionsRequest",
+              "requestLongType": "ListEndDeviceDefinitionsRequest",
+              "requestFullType": "ttn.lorawan.v3.ListEndDeviceDefinitionsRequest",
+              "requestStreaming": false,
+              "responseType": "ListEndDeviceDefinitionsResponse",
+              "responseLongType": "ListEndDeviceDefinitionsResponse",
+              "responseFullType": "ttn.lorawan.v3.ListEndDeviceDefinitionsResponse",
+              "responseStreaming": false,
+              "options": {
+                "google.api.http": {
+                  "rules": [
+                    {
+                      "method": "GET",
+                      "pattern": "/dr/brands/{brand_id}/definitions"
+                    },
+                    {
+                      "method": "GET",
+                      "pattern": "/dr/brands/{brand_id}/models/{model_id}/definitions"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "GetTemplate",
+              "description": "",
+              "requestType": "EndDeviceVersionIdentifiers",
+              "requestLongType": "EndDeviceVersionIdentifiers",
+              "requestFullType": "ttn.lorawan.v3.EndDeviceVersionIdentifiers",
+              "requestStreaming": false,
+              "responseType": "EndDeviceTemplate",
+              "responseLongType": "EndDeviceTemplate",
+              "responseFullType": "ttn.lorawan.v3.EndDeviceTemplate",
+              "responseStreaming": false,
+              "options": {
+                "google.api.http": {
+                  "rules": [
+                    {
+                      "method": "GET",
+                      "pattern": "/dr/brands/{brand_id}/models/{model_id}/{firmware_version}/{band_id}/template"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "GetMessagePayloadFormatters",
+              "description": "",
+              "requestType": "EndDeviceVersionIdentifiers",
+              "requestLongType": "EndDeviceVersionIdentifiers",
+              "requestFullType": "ttn.lorawan.v3.EndDeviceVersionIdentifiers",
+              "requestStreaming": false,
+              "responseType": "MessagePayloadFormatters",
+              "responseLongType": "MessagePayloadFormatters",
+              "responseFullType": "ttn.lorawan.v3.MessagePayloadFormatters",
+              "responseStreaming": false,
+              "options": {
+                "google.api.http": {
+                  "rules": [
+                    {
+                      "method": "GET",
+                      "pattern": "/dr/brands/{brand_id}/models/{model_id}/{firmware_version}/{band_id}/formatters"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "lorawan-stack/api/end_device.proto",
       "description": "",
       "package": "ttn.lorawan.v3",
@@ -7892,122 +8566,6 @@
           ]
         },
         {
-          "name": "EndDeviceBrand",
-          "longName": "EndDeviceBrand",
-          "fullName": "ttn.lorawan.v3.EndDeviceBrand",
-          "description": "",
-          "hasExtensions": false,
-          "hasFields": true,
-          "extensions": [],
-          "fields": [
-            {
-              "name": "id",
-              "description": "",
-              "label": "",
-              "type": "string",
-              "longType": "string",
-              "fullType": "string",
-              "ismap": false,
-              "defaultValue": ""
-            },
-            {
-              "name": "name",
-              "description": "",
-              "label": "",
-              "type": "string",
-              "longType": "string",
-              "fullType": "string",
-              "ismap": false,
-              "defaultValue": ""
-            },
-            {
-              "name": "url",
-              "description": "",
-              "label": "",
-              "type": "string",
-              "longType": "string",
-              "fullType": "string",
-              "ismap": false,
-              "defaultValue": ""
-            },
-            {
-              "name": "logos",
-              "description": "Logos contains file names of brand logos.",
-              "label": "repeated",
-              "type": "string",
-              "longType": "string",
-              "fullType": "string",
-              "ismap": false,
-              "defaultValue": ""
-            }
-          ]
-        },
-        {
-          "name": "EndDeviceModel",
-          "longName": "EndDeviceModel",
-          "fullName": "ttn.lorawan.v3.EndDeviceModel",
-          "description": "",
-          "hasExtensions": false,
-          "hasFields": true,
-          "extensions": [],
-          "fields": [
-            {
-              "name": "brand_id",
-              "description": "",
-              "label": "",
-              "type": "string",
-              "longType": "string",
-              "fullType": "string",
-              "ismap": false,
-              "defaultValue": "",
-              "options": {
-                "validate.rules": [
-                  {
-                    "name": "string.max_len",
-                    "value": 36
-                  },
-                  {
-                    "name": "string.pattern",
-                    "value": "^[a-z0-9](?:[-]?[a-z0-9]){2,}$"
-                  }
-                ]
-              }
-            },
-            {
-              "name": "id",
-              "description": "",
-              "label": "",
-              "type": "string",
-              "longType": "string",
-              "fullType": "string",
-              "ismap": false,
-              "defaultValue": "",
-              "options": {
-                "validate.rules": [
-                  {
-                    "name": "string.max_len",
-                    "value": 36
-                  },
-                  {
-                    "name": "string.pattern",
-                    "value": "^[a-z0-9](?:[-]?[a-z0-9]){2,}$"
-                  }
-                ]
-              }
-            },
-            {
-              "name": "name",
-              "description": "",
-              "label": "",
-              "type": "string",
-              "longType": "string",
-              "fullType": "string",
-              "ismap": false,
-              "defaultValue": ""
-            }
-          ]
-        },
-        {
           "name": "EndDeviceTemplate",
           "longName": "EndDeviceTemplate",
           "fullName": "ttn.lorawan.v3.EndDeviceTemplate",
@@ -8202,187 +8760,6 @@
           ]
         },
         {
-          "name": "EndDeviceVersion",
-          "longName": "EndDeviceVersion",
-          "fullName": "ttn.lorawan.v3.EndDeviceVersion",
-          "description": "Template for creating end devices.",
-          "hasExtensions": false,
-          "hasFields": true,
-          "extensions": [],
-          "fields": [
-            {
-              "name": "ids",
-              "description": "Version identifiers.",
-              "label": "",
-              "type": "EndDeviceVersionIdentifiers",
-              "longType": "EndDeviceVersionIdentifiers",
-              "fullType": "ttn.lorawan.v3.EndDeviceVersionIdentifiers",
-              "ismap": false,
-              "defaultValue": "",
-              "options": {
-                "validate.rules": [
-                  {
-                    "name": "message.required",
-                    "value": true
-                  }
-                ]
-              }
-            },
-            {
-              "name": "lorawan_version",
-              "description": "LoRaWAN MAC version.",
-              "label": "",
-              "type": "MACVersion",
-              "longType": "MACVersion",
-              "fullType": "ttn.lorawan.v3.MACVersion",
-              "ismap": false,
-              "defaultValue": "",
-              "options": {
-                "validate.rules": [
-                  {
-                    "name": "enum.defined_only",
-                    "value": true
-                  }
-                ]
-              }
-            },
-            {
-              "name": "lorawan_phy_version",
-              "description": "LoRaWAN PHY version.",
-              "label": "",
-              "type": "PHYVersion",
-              "longType": "PHYVersion",
-              "fullType": "ttn.lorawan.v3.PHYVersion",
-              "ismap": false,
-              "defaultValue": "",
-              "options": {
-                "validate.rules": [
-                  {
-                    "name": "enum.defined_only",
-                    "value": true
-                  }
-                ]
-              }
-            },
-            {
-              "name": "frequency_plan_id",
-              "description": "ID of the frequency plan used by this device.",
-              "label": "",
-              "type": "string",
-              "longType": "string",
-              "fullType": "string",
-              "ismap": false,
-              "defaultValue": "",
-              "options": {
-                "validate.rules": [
-                  {
-                    "name": "string.max_len",
-                    "value": 64
-                  }
-                ]
-              }
-            },
-            {
-              "name": "photos",
-              "description": "Photos contains file names of device photos.",
-              "label": "repeated",
-              "type": "string",
-              "longType": "string",
-              "fullType": "string",
-              "ismap": false,
-              "defaultValue": ""
-            },
-            {
-              "name": "supports_class_b",
-              "description": "Whether the device supports class B.",
-              "label": "",
-              "type": "bool",
-              "longType": "bool",
-              "fullType": "bool",
-              "ismap": false,
-              "defaultValue": ""
-            },
-            {
-              "name": "supports_class_c",
-              "description": "Whether the device supports class C.",
-              "label": "",
-              "type": "bool",
-              "longType": "bool",
-              "fullType": "bool",
-              "ismap": false,
-              "defaultValue": ""
-            },
-            {
-              "name": "default_mac_settings",
-              "description": "Default MAC layer settings of the device.",
-              "label": "",
-              "type": "MACSettings",
-              "longType": "MACSettings",
-              "fullType": "ttn.lorawan.v3.MACSettings",
-              "ismap": false,
-              "defaultValue": ""
-            },
-            {
-              "name": "min_frequency",
-              "description": "Minimum frequency the device is capable of using (Hz).",
-              "label": "",
-              "type": "uint64",
-              "longType": "uint64",
-              "fullType": "uint64",
-              "ismap": false,
-              "defaultValue": ""
-            },
-            {
-              "name": "max_frequency",
-              "description": "Maximum frequency the device is capable of using (Hz).",
-              "label": "",
-              "type": "uint64",
-              "longType": "uint64",
-              "fullType": "uint64",
-              "ismap": false,
-              "defaultValue": ""
-            },
-            {
-              "name": "supports_join",
-              "description": "The device supports join (it's OTAA).",
-              "label": "",
-              "type": "bool",
-              "longType": "bool",
-              "fullType": "bool",
-              "ismap": false,
-              "defaultValue": ""
-            },
-            {
-              "name": "resets_join_nonces",
-              "description": "Whether the device resets the join and dev nonces (not LoRaWAN compliant).",
-              "label": "",
-              "type": "bool",
-              "longType": "bool",
-              "fullType": "bool",
-              "ismap": false,
-              "defaultValue": ""
-            },
-            {
-              "name": "default_formatters",
-              "description": "Default formatters defining the payload formats for this end device.",
-              "label": "",
-              "type": "MessagePayloadFormatters",
-              "longType": "MessagePayloadFormatters",
-              "fullType": "ttn.lorawan.v3.MessagePayloadFormatters",
-              "ismap": false,
-              "defaultValue": "",
-              "options": {
-                "validate.rules": [
-                  {
-                    "name": "message.required",
-                    "value": true
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        {
           "name": "EndDeviceVersionIdentifiers",
           "longName": "EndDeviceVersionIdentifiers",
           "fullName": "ttn.lorawan.v3.EndDeviceVersionIdentifiers",
@@ -8447,6 +8824,16 @@
             },
             {
               "name": "firmware_version",
+              "description": "",
+              "label": "",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "band_id",
               "description": "",
               "label": "",
               "type": "string",
@@ -10375,6 +10762,11 @@
             {
               "name": "PACKET_BROKER_AGENT",
               "number": "12",
+              "description": ""
+            },
+            {
+              "name": "DEVICE_REPOSITORY",
+              "number": "13",
               "description": ""
             }
           ]
