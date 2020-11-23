@@ -66,5 +66,5 @@ func (dr *DeviceRepository) GetTemplate(ctx context.Context, ids *ttnpb.EndDevic
 
 // GetMessagePayloadFormatters implements the ttnpb.DeviceRepositoryServer interface.
 func (dr *DeviceRepository) GetMessagePayloadFormatters(ctx context.Context, ids *ttnpb.EndDeviceVersionIdentifiers) (*ttnpb.MessagePayloadFormatters, error) {
-	return nil, errNotImplemented.New()
+	return dr.store.GetFormatters(ids)
 }

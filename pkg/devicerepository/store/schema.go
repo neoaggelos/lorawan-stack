@@ -381,3 +381,13 @@ func (p EndDeviceProfile) ToTemplatePB(ids *ttnpb.EndDeviceVersionIdentifiers, i
 		},
 	}, nil
 }
+
+// EndDeviceCodec is the format of the `vendor/<vendor>/<codec-id>.js` files.
+type EndDeviceCodec struct {
+	UplinkDecoder struct {
+		FileName string `yaml:"fileName"`
+	} `yaml:"uplinkDecoder"`
+	DownlinkEncoder struct {
+		FileName string `yaml:"fileName"`
+	} `yaml:"downlinkEncoder"`
+}

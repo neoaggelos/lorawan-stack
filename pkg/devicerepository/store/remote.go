@@ -163,7 +163,71 @@ func (s *remoteStore) GetTemplate(ids *ttnpb.EndDeviceVersionIdentifiers) (*ttnp
 	return nil, errNoModel.WithAttributes("brand_id", ids.BrandID, "model_id", ids.ModelID)
 }
 
+var (
+	errNoCodec = errors.DefineNotFound("no_codec", "no codec defined for firmware version `{firmware_version}` and band `{band_id}`")
+)
+
 // GetFormatters retrieves the message payload formatters for an end device template
-func (s *remoteStore) GetFormatters(*ttnpb.EndDeviceVersionIdentifiers) (*ttnpb.MessagePayloadFormatters, error) {
-	return nil, nil
+func (s *remoteStore) GetFormatters(ids *ttnpb.EndDeviceVersionIdentifiers) (*ttnpb.MessagePayloadFormatters, error) {
+	defs, err := s.ListDefinitions(ListDefinitionsRequest{
+		BrandID: ids.BrandID,
+		ModelID: ids.ModelID,
+		Paths: []string{
+			"firmware_versions",
+		},
+	})
+	if err != nil {
+		return nil, err
+	}
+	for _, def := range defs {
+		for _, ver := range def.FirmwareVersions {
+			if ver.Version != ids.FirmwareVersion {
+				continue
+			}
+
+			if _, ok := BandIDToRegion[ids.BandID]; !ok {
+				return nil, errUnknownBand.WithAttributes("unknown_band", ids.BandID)
+			}
+			profileInfo, ok := ver.Profiles[ids.BandID]
+			if !ok {
+				return nil, errNoProfile.WithAttributes(
+					"band_id", ids.BandID,
+				)
+			}
+
+			if profileInfo.CodecID == "" {
+				return nil, errNoCodec.WithAttributes("firmware_version", ids.FirmwareVersion, "band_id", ids.BandID)
+			}
+
+			codec := EndDeviceCodec{}
+			formatters := &ttnpb.MessagePayloadFormatters{}
+			b, err := s.fetcher.File("vendor", ids.BrandID, profileInfo.CodecID+".yaml")
+			if err != nil {
+				return nil, err
+			}
+			if err := yaml.Unmarshal(b, &codec); err != nil {
+				return nil, err
+			}
+			if file := codec.DownlinkEncoder.FileName; file != "" {
+				b, err := s.fetcher.File("vendor", ids.BrandID, file)
+				if err != nil {
+					return nil, err
+				}
+				formatters.DownFormatter = ttnpb.PayloadFormatter_FORMATTER_JAVASCRIPT
+				formatters.DownFormatterParameter = string(b)
+			}
+			if file := codec.UplinkDecoder.FileName; file != "" {
+				b, err := s.fetcher.File("vendor", ids.BrandID, file)
+				if err != nil {
+					return nil, err
+				}
+				formatters.UpFormatter = ttnpb.PayloadFormatter_FORMATTER_JAVASCRIPT
+				formatters.UpFormatterParameter = string(b)
+			}
+
+			return formatters, nil
+		}
+	}
+
+	return nil, errNoModel.WithAttributes("brand_id", ids.BrandID, "model_id", ids.ModelID)
 }
