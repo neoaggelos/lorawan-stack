@@ -16,6 +16,7 @@ package devicerepository
 
 import (
 	"go.thethings.network/lorawan-stack/v3/pkg/devicerepository/store"
+	"go.thethings.network/lorawan-stack/v3/pkg/fetch"
 )
 
 // Config represents the DeviceRepository configuration.
@@ -30,5 +31,21 @@ type Config struct {
 
 // NewStore creates a new Store for end devices.
 func (c Config) NewStore() (store.Store, error) {
-	return &store.NoopStore{}, nil
+	var fetcher fetch.Interface
+	switch {
+	case c.Static != nil:
+		fetcher = fetch.NewMemFetcher(c.Static)
+	case c.Directory != "":
+		fetcher = fetch.FromFilesystem(c.Directory)
+	case c.URL != "":
+		var err error
+		fetcher, err = fetch.FromHTTP(c.URL, true)
+		if err != nil {
+			return nil, err
+		}
+	default:
+		return &store.NoopStore{}, nil
+	}
+
+	return store.NewRemoteStore(fetcher)
 }

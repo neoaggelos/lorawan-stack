@@ -7107,7 +7107,7 @@
             },
             {
               "name": "sensors",
-              "description": "TODO: enum?",
+              "description": "",
               "label": "repeated",
               "type": "string",
               "longType": "string",
@@ -7116,8 +7116,58 @@
               "defaultValue": ""
             },
             {
+              "name": "dimensions",
+              "description": "",
+              "label": "",
+              "type": "Dimensions",
+              "longType": "EndDeviceDefinition.Dimensions",
+              "fullType": "ttn.lorawan.v3.EndDeviceDefinition.Dimensions",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "weight",
+              "description": "",
+              "label": "",
+              "type": "float",
+              "longType": "float",
+              "fullType": "float",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "battery",
+              "description": "",
+              "label": "",
+              "type": "Battery",
+              "longType": "EndDeviceDefinition.Battery",
+              "fullType": "ttn.lorawan.v3.EndDeviceDefinition.Battery",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "operating_conditions",
+              "description": "",
+              "label": "",
+              "type": "OperatingConditions",
+              "longType": "EndDeviceDefinition.OperatingConditions",
+              "fullType": "ttn.lorawan.v3.EndDeviceDefinition.OperatingConditions",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "ip_code",
+              "description": "",
+              "label": "",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
               "name": "key_provisioning",
-              "description": "TODO: enum?",
+              "description": "",
               "label": "repeated",
               "type": "string",
               "longType": "string",
@@ -7127,7 +7177,7 @@
             },
             {
               "name": "key_security",
-              "description": "TODO: enum?",
+              "description": "",
               "label": "",
               "type": "string",
               "longType": "string",
@@ -7142,6 +7192,210 @@
               "type": "Photos",
               "longType": "EndDeviceDefinition.Photos",
               "fullType": "ttn.lorawan.v3.EndDeviceDefinition.Photos",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "product_url",
+              "description": "",
+              "label": "",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "datasheet_url",
+              "description": "",
+              "label": "",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "compliances",
+              "description": "",
+              "label": "",
+              "type": "Compliances",
+              "longType": "EndDeviceDefinition.Compliances",
+              "fullType": "ttn.lorawan.v3.EndDeviceDefinition.Compliances",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "additional_radios",
+              "description": "",
+              "label": "repeated",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            }
+          ]
+        },
+        {
+          "name": "Battery",
+          "longName": "EndDeviceDefinition.Battery",
+          "fullName": "ttn.lorawan.v3.EndDeviceDefinition.Battery",
+          "description": "",
+          "hasExtensions": false,
+          "hasFields": true,
+          "extensions": [],
+          "fields": [
+            {
+              "name": "replaceable",
+              "description": "",
+              "label": "",
+              "type": "BoolValue",
+              "longType": "google.protobuf.BoolValue",
+              "fullType": "google.protobuf.BoolValue",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "type",
+              "description": "",
+              "label": "",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            }
+          ]
+        },
+        {
+          "name": "Compliances",
+          "longName": "EndDeviceDefinition.Compliances",
+          "fullName": "ttn.lorawan.v3.EndDeviceDefinition.Compliances",
+          "description": "",
+          "hasExtensions": false,
+          "hasFields": true,
+          "extensions": [],
+          "fields": [
+            {
+              "name": "safety",
+              "description": "",
+              "label": "repeated",
+              "type": "Compliance",
+              "longType": "EndDeviceDefinition.Compliances.Compliance",
+              "fullType": "ttn.lorawan.v3.EndDeviceDefinition.Compliances.Compliance",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "radio_equipment",
+              "description": "",
+              "label": "repeated",
+              "type": "Compliance",
+              "longType": "EndDeviceDefinition.Compliances.Compliance",
+              "fullType": "ttn.lorawan.v3.EndDeviceDefinition.Compliances.Compliance",
+              "ismap": false,
+              "defaultValue": ""
+            }
+          ]
+        },
+        {
+          "name": "Compliance",
+          "longName": "EndDeviceDefinition.Compliances.Compliance",
+          "fullName": "ttn.lorawan.v3.EndDeviceDefinition.Compliances.Compliance",
+          "description": "",
+          "hasExtensions": false,
+          "hasFields": true,
+          "extensions": [],
+          "fields": [
+            {
+              "name": "body",
+              "description": "",
+              "label": "",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "norm",
+              "description": "",
+              "label": "",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "standard",
+              "description": "",
+              "label": "",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "version",
+              "description": "",
+              "label": "",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            }
+          ]
+        },
+        {
+          "name": "Dimensions",
+          "longName": "EndDeviceDefinition.Dimensions",
+          "fullName": "ttn.lorawan.v3.EndDeviceDefinition.Dimensions",
+          "description": "",
+          "hasExtensions": false,
+          "hasFields": true,
+          "extensions": [],
+          "fields": [
+            {
+              "name": "width",
+              "description": "",
+              "label": "",
+              "type": "float",
+              "longType": "float",
+              "fullType": "float",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "height",
+              "description": "",
+              "label": "",
+              "type": "float",
+              "longType": "float",
+              "fullType": "float",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "diameter",
+              "description": "",
+              "label": "",
+              "type": "float",
+              "longType": "float",
+              "fullType": "float",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "length",
+              "description": "",
+              "label": "",
+              "type": "float",
+              "longType": "float",
+              "fullType": "float",
               "ismap": false,
               "defaultValue": ""
             }
@@ -7163,6 +7417,16 @@
               "type": "string",
               "longType": "string",
               "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "numeric",
+              "description": "",
+              "label": "",
+              "type": "uint32",
+              "longType": "uint32",
+              "fullType": "uint32",
               "ismap": false,
               "defaultValue": ""
             },
@@ -7261,6 +7525,68 @@
           ]
         },
         {
+          "name": "OperatingConditions",
+          "longName": "EndDeviceDefinition.OperatingConditions",
+          "fullName": "ttn.lorawan.v3.EndDeviceDefinition.OperatingConditions",
+          "description": "",
+          "hasExtensions": false,
+          "hasFields": true,
+          "extensions": [],
+          "fields": [
+            {
+              "name": "temperature",
+              "description": "",
+              "label": "",
+              "type": "Limits",
+              "longType": "EndDeviceDefinition.OperatingConditions.Limits",
+              "fullType": "ttn.lorawan.v3.EndDeviceDefinition.OperatingConditions.Limits",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "relative_humidity",
+              "description": "",
+              "label": "",
+              "type": "Limits",
+              "longType": "EndDeviceDefinition.OperatingConditions.Limits",
+              "fullType": "ttn.lorawan.v3.EndDeviceDefinition.OperatingConditions.Limits",
+              "ismap": false,
+              "defaultValue": ""
+            }
+          ]
+        },
+        {
+          "name": "Limits",
+          "longName": "EndDeviceDefinition.OperatingConditions.Limits",
+          "fullName": "ttn.lorawan.v3.EndDeviceDefinition.OperatingConditions.Limits",
+          "description": "",
+          "hasExtensions": false,
+          "hasFields": true,
+          "extensions": [],
+          "fields": [
+            {
+              "name": "min",
+              "description": "",
+              "label": "",
+              "type": "FloatValue",
+              "longType": "google.protobuf.FloatValue",
+              "fullType": "google.protobuf.FloatValue",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "max",
+              "description": "",
+              "label": "",
+              "type": "FloatValue",
+              "longType": "google.protobuf.FloatValue",
+              "fullType": "google.protobuf.FloatValue",
+              "ismap": false,
+              "defaultValue": ""
+            }
+          ]
+        },
+        {
           "name": "Photos",
           "longName": "EndDeviceDefinition.Photos",
           "fullName": "ttn.lorawan.v3.EndDeviceDefinition.Photos",
@@ -7271,7 +7597,7 @@
           "fields": [
             {
               "name": "main",
-              "description": "TODO: this should be prefixed with assets root URL, or path to image.",
+              "description": "",
               "label": "",
               "type": "string",
               "longType": "string",
@@ -7281,7 +7607,7 @@
             },
             {
               "name": "other",
-              "description": "TODO: this should be prefixed with assets root URL, or path to image.",
+              "description": "",
               "label": "repeated",
               "type": "string",
               "longType": "string",
@@ -7307,6 +7633,16 @@
               "type": "string",
               "longType": "string",
               "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "numeric",
+              "description": "",
+              "label": "",
+              "type": "uint32",
+              "longType": "uint32",
+              "fullType": "uint32",
               "ismap": false,
               "defaultValue": ""
             }
@@ -7425,19 +7761,7 @@
               "longType": "string",
               "fullType": "string",
               "ismap": false,
-              "defaultValue": "",
-              "options": {
-                "validate.rules": [
-                  {
-                    "name": "string.max_len",
-                    "value": 36
-                  },
-                  {
-                    "name": "string.pattern",
-                    "value": "^[a-z0-9](?:[-]?[a-z0-9]){2,}$"
-                  }
-                ]
-              }
+              "defaultValue": ""
             },
             {
               "name": "model_id",
@@ -7447,19 +7771,7 @@
               "longType": "string",
               "fullType": "string",
               "ismap": false,
-              "defaultValue": "",
-              "options": {
-                "validate.rules": [
-                  {
-                    "name": "string.max_len",
-                    "value": 36
-                  },
-                  {
-                    "name": "string.pattern",
-                    "value": "^[a-z0-9](?:[-]?[a-z0-9]){2,}$"
-                  }
-                ]
-              }
+              "defaultValue": ""
             },
             {
               "name": "search",

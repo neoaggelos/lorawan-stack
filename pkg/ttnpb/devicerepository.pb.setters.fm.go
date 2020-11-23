@@ -52,10 +52,10 @@ func (dst *EndDeviceDefinition) SetFields(src *EndDeviceDefinition, paths ...str
 				return fmt.Errorf("'definition_id' has no subfields, but %s were specified", subs)
 			}
 			if src != nil {
-				dst.DefinitionId = src.DefinitionId
+				dst.DefinitionID = src.DefinitionID
 			} else {
 				var zero string
-				dst.DefinitionId = zero
+				dst.DefinitionID = zero
 			}
 		case "name":
 			if len(subs) > 0 {
@@ -104,6 +104,101 @@ func (dst *EndDeviceDefinition) SetFields(src *EndDeviceDefinition, paths ...str
 			} else {
 				dst.Sensors = nil
 			}
+		case "dimensions":
+			if len(subs) > 0 {
+				var newDst, newSrc *EndDeviceDefinition_Dimensions
+				if (src == nil || src.Dimensions == nil) && dst.Dimensions == nil {
+					continue
+				}
+				if src != nil {
+					newSrc = src.Dimensions
+				}
+				if dst.Dimensions != nil {
+					newDst = dst.Dimensions
+				} else {
+					newDst = &EndDeviceDefinition_Dimensions{}
+					dst.Dimensions = newDst
+				}
+				if err := newDst.SetFields(newSrc, subs...); err != nil {
+					return err
+				}
+			} else {
+				if src != nil {
+					dst.Dimensions = src.Dimensions
+				} else {
+					dst.Dimensions = nil
+				}
+			}
+		case "weight":
+			if len(subs) > 0 {
+				return fmt.Errorf("'weight' has no subfields, but %s were specified", subs)
+			}
+			if src != nil {
+				dst.Weight = src.Weight
+			} else {
+				var zero float32
+				dst.Weight = zero
+			}
+		case "battery":
+			if len(subs) > 0 {
+				var newDst, newSrc *EndDeviceDefinition_Battery
+				if (src == nil || src.Battery == nil) && dst.Battery == nil {
+					continue
+				}
+				if src != nil {
+					newSrc = src.Battery
+				}
+				if dst.Battery != nil {
+					newDst = dst.Battery
+				} else {
+					newDst = &EndDeviceDefinition_Battery{}
+					dst.Battery = newDst
+				}
+				if err := newDst.SetFields(newSrc, subs...); err != nil {
+					return err
+				}
+			} else {
+				if src != nil {
+					dst.Battery = src.Battery
+				} else {
+					dst.Battery = nil
+				}
+			}
+		case "operating_conditions":
+			if len(subs) > 0 {
+				var newDst, newSrc *EndDeviceDefinition_OperatingConditions
+				if (src == nil || src.OperatingConditions == nil) && dst.OperatingConditions == nil {
+					continue
+				}
+				if src != nil {
+					newSrc = src.OperatingConditions
+				}
+				if dst.OperatingConditions != nil {
+					newDst = dst.OperatingConditions
+				} else {
+					newDst = &EndDeviceDefinition_OperatingConditions{}
+					dst.OperatingConditions = newDst
+				}
+				if err := newDst.SetFields(newSrc, subs...); err != nil {
+					return err
+				}
+			} else {
+				if src != nil {
+					dst.OperatingConditions = src.OperatingConditions
+				} else {
+					dst.OperatingConditions = nil
+				}
+			}
+		case "ip_code":
+			if len(subs) > 0 {
+				return fmt.Errorf("'ip_code' has no subfields, but %s were specified", subs)
+			}
+			if src != nil {
+				dst.IPCode = src.IPCode
+			} else {
+				var zero string
+				dst.IPCode = zero
+			}
 		case "key_provisioning":
 			if len(subs) > 0 {
 				return fmt.Errorf("'key_provisioning' has no subfields, but %s were specified", subs)
@@ -147,6 +242,60 @@ func (dst *EndDeviceDefinition) SetFields(src *EndDeviceDefinition, paths ...str
 				} else {
 					dst.Photos = nil
 				}
+			}
+		case "product_url":
+			if len(subs) > 0 {
+				return fmt.Errorf("'product_url' has no subfields, but %s were specified", subs)
+			}
+			if src != nil {
+				dst.ProductURL = src.ProductURL
+			} else {
+				var zero string
+				dst.ProductURL = zero
+			}
+		case "datasheet_url":
+			if len(subs) > 0 {
+				return fmt.Errorf("'datasheet_url' has no subfields, but %s were specified", subs)
+			}
+			if src != nil {
+				dst.DatasheetURL = src.DatasheetURL
+			} else {
+				var zero string
+				dst.DatasheetURL = zero
+			}
+		case "compliances":
+			if len(subs) > 0 {
+				var newDst, newSrc *EndDeviceDefinition_Compliances
+				if (src == nil || src.Compliances == nil) && dst.Compliances == nil {
+					continue
+				}
+				if src != nil {
+					newSrc = src.Compliances
+				}
+				if dst.Compliances != nil {
+					newDst = dst.Compliances
+				} else {
+					newDst = &EndDeviceDefinition_Compliances{}
+					dst.Compliances = newDst
+				}
+				if err := newDst.SetFields(newSrc, subs...); err != nil {
+					return err
+				}
+			} else {
+				if src != nil {
+					dst.Compliances = src.Compliances
+				} else {
+					dst.Compliances = nil
+				}
+			}
+		case "additional_radios":
+			if len(subs) > 0 {
+				return fmt.Errorf("'additional_radios' has no subfields, but %s were specified", subs)
+			}
+			if src != nil {
+				dst.AdditionalRadios = src.AdditionalRadios
+			} else {
+				dst.AdditionalRadios = nil
 			}
 
 		default:
@@ -336,6 +485,16 @@ func (dst *EndDeviceDefinition_Version) SetFields(src *EndDeviceDefinition_Versi
 				var zero string
 				dst.Version = zero
 			}
+		case "numeric":
+			if len(subs) > 0 {
+				return fmt.Errorf("'numeric' has no subfields, but %s were specified", subs)
+			}
+			if src != nil {
+				dst.Numeric = src.Numeric
+			} else {
+				var zero uint32
+				dst.Numeric = zero
+			}
 
 		default:
 			return fmt.Errorf("invalid field: '%s'", name)
@@ -357,6 +516,16 @@ func (dst *EndDeviceDefinition_FirmwareVersion) SetFields(src *EndDeviceDefiniti
 				var zero string
 				dst.Version = zero
 			}
+		case "numeric":
+			if len(subs) > 0 {
+				return fmt.Errorf("'numeric' has no subfields, but %s were specified", subs)
+			}
+			if src != nil {
+				dst.Numeric = src.Numeric
+			} else {
+				var zero uint32
+				dst.Numeric = zero
+			}
 		case "hardware_versions":
 			if len(subs) > 0 {
 				return fmt.Errorf("'hardware_versions' has no subfields, but %s were specified", subs)
@@ -374,6 +543,148 @@ func (dst *EndDeviceDefinition_FirmwareVersion) SetFields(src *EndDeviceDefiniti
 				dst.Profiles = src.Profiles
 			} else {
 				dst.Profiles = nil
+			}
+
+		default:
+			return fmt.Errorf("invalid field: '%s'", name)
+		}
+	}
+	return nil
+}
+
+func (dst *EndDeviceDefinition_Dimensions) SetFields(src *EndDeviceDefinition_Dimensions, paths ...string) error {
+	for name, subs := range _processPaths(paths) {
+		switch name {
+		case "width":
+			if len(subs) > 0 {
+				return fmt.Errorf("'width' has no subfields, but %s were specified", subs)
+			}
+			if src != nil {
+				dst.Width = src.Width
+			} else {
+				var zero float32
+				dst.Width = zero
+			}
+		case "height":
+			if len(subs) > 0 {
+				return fmt.Errorf("'height' has no subfields, but %s were specified", subs)
+			}
+			if src != nil {
+				dst.Height = src.Height
+			} else {
+				var zero float32
+				dst.Height = zero
+			}
+		case "diameter":
+			if len(subs) > 0 {
+				return fmt.Errorf("'diameter' has no subfields, but %s were specified", subs)
+			}
+			if src != nil {
+				dst.Diameter = src.Diameter
+			} else {
+				var zero float32
+				dst.Diameter = zero
+			}
+		case "length":
+			if len(subs) > 0 {
+				return fmt.Errorf("'length' has no subfields, but %s were specified", subs)
+			}
+			if src != nil {
+				dst.Length = src.Length
+			} else {
+				var zero float32
+				dst.Length = zero
+			}
+
+		default:
+			return fmt.Errorf("invalid field: '%s'", name)
+		}
+	}
+	return nil
+}
+
+func (dst *EndDeviceDefinition_Battery) SetFields(src *EndDeviceDefinition_Battery, paths ...string) error {
+	for name, subs := range _processPaths(paths) {
+		switch name {
+		case "replaceable":
+			if len(subs) > 0 {
+				return fmt.Errorf("'replaceable' has no subfields, but %s were specified", subs)
+			}
+			if src != nil {
+				dst.Replaceable = src.Replaceable
+			} else {
+				dst.Replaceable = nil
+			}
+		case "type":
+			if len(subs) > 0 {
+				return fmt.Errorf("'type' has no subfields, but %s were specified", subs)
+			}
+			if src != nil {
+				dst.Type = src.Type
+			} else {
+				var zero string
+				dst.Type = zero
+			}
+
+		default:
+			return fmt.Errorf("invalid field: '%s'", name)
+		}
+	}
+	return nil
+}
+
+func (dst *EndDeviceDefinition_OperatingConditions) SetFields(src *EndDeviceDefinition_OperatingConditions, paths ...string) error {
+	for name, subs := range _processPaths(paths) {
+		switch name {
+		case "temperature":
+			if len(subs) > 0 {
+				var newDst, newSrc *EndDeviceDefinition_OperatingConditions_Limits
+				if (src == nil || src.Temperature == nil) && dst.Temperature == nil {
+					continue
+				}
+				if src != nil {
+					newSrc = src.Temperature
+				}
+				if dst.Temperature != nil {
+					newDst = dst.Temperature
+				} else {
+					newDst = &EndDeviceDefinition_OperatingConditions_Limits{}
+					dst.Temperature = newDst
+				}
+				if err := newDst.SetFields(newSrc, subs...); err != nil {
+					return err
+				}
+			} else {
+				if src != nil {
+					dst.Temperature = src.Temperature
+				} else {
+					dst.Temperature = nil
+				}
+			}
+		case "relative_humidity":
+			if len(subs) > 0 {
+				var newDst, newSrc *EndDeviceDefinition_OperatingConditions_Limits
+				if (src == nil || src.RelativeHumidity == nil) && dst.RelativeHumidity == nil {
+					continue
+				}
+				if src != nil {
+					newSrc = src.RelativeHumidity
+				}
+				if dst.RelativeHumidity != nil {
+					newDst = dst.RelativeHumidity
+				} else {
+					newDst = &EndDeviceDefinition_OperatingConditions_Limits{}
+					dst.RelativeHumidity = newDst
+				}
+				if err := newDst.SetFields(newSrc, subs...); err != nil {
+					return err
+				}
+			} else {
+				if src != nil {
+					dst.RelativeHumidity = src.RelativeHumidity
+				} else {
+					dst.RelativeHumidity = nil
+				}
 			}
 
 		default:
@@ -413,6 +724,35 @@ func (dst *EndDeviceDefinition_Photos) SetFields(src *EndDeviceDefinition_Photos
 	return nil
 }
 
+func (dst *EndDeviceDefinition_Compliances) SetFields(src *EndDeviceDefinition_Compliances, paths ...string) error {
+	for name, subs := range _processPaths(paths) {
+		switch name {
+		case "safety":
+			if len(subs) > 0 {
+				return fmt.Errorf("'safety' has no subfields, but %s were specified", subs)
+			}
+			if src != nil {
+				dst.Safety = src.Safety
+			} else {
+				dst.Safety = nil
+			}
+		case "radio_equipment":
+			if len(subs) > 0 {
+				return fmt.Errorf("'radio_equipment' has no subfields, but %s were specified", subs)
+			}
+			if src != nil {
+				dst.RadioEquipment = src.RadioEquipment
+			} else {
+				dst.RadioEquipment = nil
+			}
+
+		default:
+			return fmt.Errorf("invalid field: '%s'", name)
+		}
+	}
+	return nil
+}
+
 func (dst *EndDeviceDefinition_FirmwareVersion_Profile) SetFields(src *EndDeviceDefinition_FirmwareVersion_Profile, paths ...string) error {
 	for name, subs := range _processPaths(paths) {
 		switch name {
@@ -421,30 +761,110 @@ func (dst *EndDeviceDefinition_FirmwareVersion_Profile) SetFields(src *EndDevice
 				return fmt.Errorf("'profile_id' has no subfields, but %s were specified", subs)
 			}
 			if src != nil {
-				dst.ProfileId = src.ProfileId
+				dst.ProfileID = src.ProfileID
 			} else {
 				var zero string
-				dst.ProfileId = zero
+				dst.ProfileID = zero
 			}
 		case "lorawan_certified":
 			if len(subs) > 0 {
 				return fmt.Errorf("'lorawan_certified' has no subfields, but %s were specified", subs)
 			}
 			if src != nil {
-				dst.LorawanCertified = src.LorawanCertified
+				dst.LoRaWANCertified = src.LoRaWANCertified
 			} else {
 				var zero bool
-				dst.LorawanCertified = zero
+				dst.LoRaWANCertified = zero
 			}
 		case "codec_id":
 			if len(subs) > 0 {
 				return fmt.Errorf("'codec_id' has no subfields, but %s were specified", subs)
 			}
 			if src != nil {
-				dst.CodecId = src.CodecId
+				dst.CodecID = src.CodecID
 			} else {
 				var zero string
-				dst.CodecId = zero
+				dst.CodecID = zero
+			}
+
+		default:
+			return fmt.Errorf("invalid field: '%s'", name)
+		}
+	}
+	return nil
+}
+
+func (dst *EndDeviceDefinition_OperatingConditions_Limits) SetFields(src *EndDeviceDefinition_OperatingConditions_Limits, paths ...string) error {
+	for name, subs := range _processPaths(paths) {
+		switch name {
+		case "min":
+			if len(subs) > 0 {
+				return fmt.Errorf("'min' has no subfields, but %s were specified", subs)
+			}
+			if src != nil {
+				dst.Min = src.Min
+			} else {
+				dst.Min = nil
+			}
+		case "max":
+			if len(subs) > 0 {
+				return fmt.Errorf("'max' has no subfields, but %s were specified", subs)
+			}
+			if src != nil {
+				dst.Max = src.Max
+			} else {
+				dst.Max = nil
+			}
+
+		default:
+			return fmt.Errorf("invalid field: '%s'", name)
+		}
+	}
+	return nil
+}
+
+func (dst *EndDeviceDefinition_Compliances_Compliance) SetFields(src *EndDeviceDefinition_Compliances_Compliance, paths ...string) error {
+	for name, subs := range _processPaths(paths) {
+		switch name {
+		case "body":
+			if len(subs) > 0 {
+				return fmt.Errorf("'body' has no subfields, but %s were specified", subs)
+			}
+			if src != nil {
+				dst.Body = src.Body
+			} else {
+				var zero string
+				dst.Body = zero
+			}
+		case "norm":
+			if len(subs) > 0 {
+				return fmt.Errorf("'norm' has no subfields, but %s were specified", subs)
+			}
+			if src != nil {
+				dst.Norm = src.Norm
+			} else {
+				var zero string
+				dst.Norm = zero
+			}
+		case "standard":
+			if len(subs) > 0 {
+				return fmt.Errorf("'standard' has no subfields, but %s were specified", subs)
+			}
+			if src != nil {
+				dst.Standard = src.Standard
+			} else {
+				var zero string
+				dst.Standard = zero
+			}
+		case "version":
+			if len(subs) > 0 {
+				return fmt.Errorf("'version' has no subfields, but %s were specified", subs)
+			}
+			if src != nil {
+				dst.Version = src.Version
+			} else {
+				var zero string
+				dst.Version = zero
 			}
 
 		default:

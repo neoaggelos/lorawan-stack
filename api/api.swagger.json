@@ -8325,6 +8325,23 @@
         }
       }
     },
+    "CompliancesCompliance": {
+      "type": "object",
+      "properties": {
+        "body": {
+          "type": "string"
+        },
+        "norm": {
+          "type": "string"
+        },
+        "standard": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
     "ConcentratorConfigFSKChannel": {
       "type": "object",
       "properties": {
@@ -8380,11 +8397,64 @@
         }
       }
     },
+    "EndDeviceDefinitionBattery": {
+      "type": "object",
+      "properties": {
+        "replaceable": {
+          "type": "boolean"
+        },
+        "type": {
+          "type": "string"
+        }
+      }
+    },
+    "EndDeviceDefinitionCompliances": {
+      "type": "object",
+      "properties": {
+        "safety": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CompliancesCompliance"
+          }
+        },
+        "radio_equipment": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CompliancesCompliance"
+          }
+        }
+      }
+    },
+    "EndDeviceDefinitionDimensions": {
+      "type": "object",
+      "properties": {
+        "width": {
+          "type": "number",
+          "format": "float"
+        },
+        "height": {
+          "type": "number",
+          "format": "float"
+        },
+        "diameter": {
+          "type": "number",
+          "format": "float"
+        },
+        "length": {
+          "type": "number",
+          "format": "float"
+        }
+      }
+    },
     "EndDeviceDefinitionFirmwareVersion": {
       "type": "object",
       "properties": {
         "version": {
           "type": "string"
+        },
+        "numeric": {
+          "type": "integer",
+          "format": "int64"
         },
         "hardware_versions": {
           "type": "array",
@@ -8400,19 +8470,28 @@
         }
       }
     },
+    "EndDeviceDefinitionOperatingConditions": {
+      "type": "object",
+      "properties": {
+        "temperature": {
+          "$ref": "#/definitions/OperatingConditionsLimits"
+        },
+        "relative_humidity": {
+          "$ref": "#/definitions/OperatingConditionsLimits"
+        }
+      }
+    },
     "EndDeviceDefinitionPhotos": {
       "type": "object",
       "properties": {
         "main": {
-          "type": "string",
-          "description": "TODO: this should be prefixed with assets root URL, or path to image."
+          "type": "string"
         },
         "other": {
           "type": "array",
           "items": {
             "type": "string"
-          },
-          "description": "TODO: this should be prefixed with assets root URL, or path to image."
+          }
         }
       }
     },
@@ -8421,6 +8500,10 @@
       "properties": {
         "version": {
           "type": "string"
+        },
+        "numeric": {
+          "type": "integer",
+          "format": "int64"
         }
       }
     },
@@ -9001,6 +9084,19 @@
         "EXACTLY_ONCE"
       ],
       "default": "AT_MOST_ONCE"
+    },
+    "OperatingConditionsLimits": {
+      "type": "object",
+      "properties": {
+        "min": {
+          "type": "number",
+          "format": "float"
+        },
+        "max": {
+          "type": "number",
+          "format": "float"
+        }
+      }
     },
     "PictureEmbedded": {
       "type": "object",
@@ -11294,22 +11390,50 @@
           "type": "array",
           "items": {
             "type": "string"
-          },
-          "title": "TODO: enum?"
+          }
+        },
+        "dimensions": {
+          "$ref": "#/definitions/EndDeviceDefinitionDimensions"
+        },
+        "weight": {
+          "type": "number",
+          "format": "float"
+        },
+        "battery": {
+          "$ref": "#/definitions/EndDeviceDefinitionBattery"
+        },
+        "operating_conditions": {
+          "$ref": "#/definitions/EndDeviceDefinitionOperatingConditions"
+        },
+        "ip_code": {
+          "type": "string"
         },
         "key_provisioning": {
           "type": "array",
           "items": {
             "type": "string"
-          },
-          "title": "TODO: enum?"
+          }
         },
         "key_security": {
-          "type": "string",
-          "title": "TODO: enum?"
+          "type": "string"
         },
         "photos": {
           "$ref": "#/definitions/EndDeviceDefinitionPhotos"
+        },
+        "product_url": {
+          "type": "string"
+        },
+        "datasheet_url": {
+          "type": "string"
+        },
+        "compliances": {
+          "$ref": "#/definitions/EndDeviceDefinitionCompliances"
+        },
+        "additional_radios": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },

@@ -127,9 +127,15 @@
 - [File `lorawan-stack/api/devicerepository.proto`](#lorawan-stack/api/devicerepository.proto)
   - [Message `EndDeviceBrand`](#ttn.lorawan.v3.EndDeviceBrand)
   - [Message `EndDeviceDefinition`](#ttn.lorawan.v3.EndDeviceDefinition)
+  - [Message `EndDeviceDefinition.Battery`](#ttn.lorawan.v3.EndDeviceDefinition.Battery)
+  - [Message `EndDeviceDefinition.Compliances`](#ttn.lorawan.v3.EndDeviceDefinition.Compliances)
+  - [Message `EndDeviceDefinition.Compliances.Compliance`](#ttn.lorawan.v3.EndDeviceDefinition.Compliances.Compliance)
+  - [Message `EndDeviceDefinition.Dimensions`](#ttn.lorawan.v3.EndDeviceDefinition.Dimensions)
   - [Message `EndDeviceDefinition.FirmwareVersion`](#ttn.lorawan.v3.EndDeviceDefinition.FirmwareVersion)
   - [Message `EndDeviceDefinition.FirmwareVersion.Profile`](#ttn.lorawan.v3.EndDeviceDefinition.FirmwareVersion.Profile)
   - [Message `EndDeviceDefinition.FirmwareVersion.ProfilesEntry`](#ttn.lorawan.v3.EndDeviceDefinition.FirmwareVersion.ProfilesEntry)
+  - [Message `EndDeviceDefinition.OperatingConditions`](#ttn.lorawan.v3.EndDeviceDefinition.OperatingConditions)
+  - [Message `EndDeviceDefinition.OperatingConditions.Limits`](#ttn.lorawan.v3.EndDeviceDefinition.OperatingConditions.Limits)
   - [Message `EndDeviceDefinition.Photos`](#ttn.lorawan.v3.EndDeviceDefinition.Photos)
   - [Message `EndDeviceDefinition.Version`](#ttn.lorawan.v3.EndDeviceDefinition.Version)
   - [Message `ListEndDeviceBrandsRequest`](#ttn.lorawan.v3.ListEndDeviceBrandsRequest)
@@ -2052,16 +2058,58 @@ PeerInfo
 | `description` | [`string`](#string) |  |  |
 | `hardware_versions` | [`EndDeviceDefinition.Version`](#ttn.lorawan.v3.EndDeviceDefinition.Version) | repeated |  |
 | `firmware_versions` | [`EndDeviceDefinition.FirmwareVersion`](#ttn.lorawan.v3.EndDeviceDefinition.FirmwareVersion) | repeated |  |
-| `sensors` | [`string`](#string) | repeated | TODO: enum? |
-| `key_provisioning` | [`string`](#string) | repeated | TODO: enum? |
-| `key_security` | [`string`](#string) |  | TODO: enum? |
+| `sensors` | [`string`](#string) | repeated |  |
+| `dimensions` | [`EndDeviceDefinition.Dimensions`](#ttn.lorawan.v3.EndDeviceDefinition.Dimensions) |  |  |
+| `weight` | [`float`](#float) |  |  |
+| `battery` | [`EndDeviceDefinition.Battery`](#ttn.lorawan.v3.EndDeviceDefinition.Battery) |  |  |
+| `operating_conditions` | [`EndDeviceDefinition.OperatingConditions`](#ttn.lorawan.v3.EndDeviceDefinition.OperatingConditions) |  |  |
+| `ip_code` | [`string`](#string) |  |  |
+| `key_provisioning` | [`string`](#string) | repeated |  |
+| `key_security` | [`string`](#string) |  |  |
 | `photos` | [`EndDeviceDefinition.Photos`](#ttn.lorawan.v3.EndDeviceDefinition.Photos) |  |  |
+| `product_url` | [`string`](#string) |  |  |
+| `datasheet_url` | [`string`](#string) |  |  |
+| `compliances` | [`EndDeviceDefinition.Compliances`](#ttn.lorawan.v3.EndDeviceDefinition.Compliances) |  |  |
+| `additional_radios` | [`string`](#string) | repeated |  |
+
+### <a name="ttn.lorawan.v3.EndDeviceDefinition.Battery">Message `EndDeviceDefinition.Battery`</a>
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| `replaceable` | [`google.protobuf.BoolValue`](#google.protobuf.BoolValue) |  |  |
+| `type` | [`string`](#string) |  |  |
+
+### <a name="ttn.lorawan.v3.EndDeviceDefinition.Compliances">Message `EndDeviceDefinition.Compliances`</a>
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| `safety` | [`EndDeviceDefinition.Compliances.Compliance`](#ttn.lorawan.v3.EndDeviceDefinition.Compliances.Compliance) | repeated |  |
+| `radio_equipment` | [`EndDeviceDefinition.Compliances.Compliance`](#ttn.lorawan.v3.EndDeviceDefinition.Compliances.Compliance) | repeated |  |
+
+### <a name="ttn.lorawan.v3.EndDeviceDefinition.Compliances.Compliance">Message `EndDeviceDefinition.Compliances.Compliance`</a>
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| `body` | [`string`](#string) |  |  |
+| `norm` | [`string`](#string) |  |  |
+| `standard` | [`string`](#string) |  |  |
+| `version` | [`string`](#string) |  |  |
+
+### <a name="ttn.lorawan.v3.EndDeviceDefinition.Dimensions">Message `EndDeviceDefinition.Dimensions`</a>
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| `width` | [`float`](#float) |  |  |
+| `height` | [`float`](#float) |  |  |
+| `diameter` | [`float`](#float) |  |  |
+| `length` | [`float`](#float) |  |  |
 
 ### <a name="ttn.lorawan.v3.EndDeviceDefinition.FirmwareVersion">Message `EndDeviceDefinition.FirmwareVersion`</a>
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | `version` | [`string`](#string) |  |  |
+| `numeric` | [`uint32`](#uint32) |  |  |
 | `hardware_versions` | [`string`](#string) | repeated |  |
 | `profiles` | [`EndDeviceDefinition.FirmwareVersion.ProfilesEntry`](#ttn.lorawan.v3.EndDeviceDefinition.FirmwareVersion.ProfilesEntry) | repeated |  |
 
@@ -2080,18 +2128,33 @@ PeerInfo
 | `key` | [`string`](#string) |  |  |
 | `value` | [`EndDeviceDefinition.FirmwareVersion.Profile`](#ttn.lorawan.v3.EndDeviceDefinition.FirmwareVersion.Profile) |  |  |
 
+### <a name="ttn.lorawan.v3.EndDeviceDefinition.OperatingConditions">Message `EndDeviceDefinition.OperatingConditions`</a>
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| `temperature` | [`EndDeviceDefinition.OperatingConditions.Limits`](#ttn.lorawan.v3.EndDeviceDefinition.OperatingConditions.Limits) |  |  |
+| `relative_humidity` | [`EndDeviceDefinition.OperatingConditions.Limits`](#ttn.lorawan.v3.EndDeviceDefinition.OperatingConditions.Limits) |  |  |
+
+### <a name="ttn.lorawan.v3.EndDeviceDefinition.OperatingConditions.Limits">Message `EndDeviceDefinition.OperatingConditions.Limits`</a>
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| `min` | [`google.protobuf.FloatValue`](#google.protobuf.FloatValue) |  |  |
+| `max` | [`google.protobuf.FloatValue`](#google.protobuf.FloatValue) |  |  |
+
 ### <a name="ttn.lorawan.v3.EndDeviceDefinition.Photos">Message `EndDeviceDefinition.Photos`</a>
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| `main` | [`string`](#string) |  | TODO: this should be prefixed with assets root URL, or path to image. |
-| `other` | [`string`](#string) | repeated | TODO: this should be prefixed with assets root URL, or path to image. |
+| `main` | [`string`](#string) |  |  |
+| `other` | [`string`](#string) | repeated |  |
 
 ### <a name="ttn.lorawan.v3.EndDeviceDefinition.Version">Message `EndDeviceDefinition.Version`</a>
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | `version` | [`string`](#string) |  |  |
+| `numeric` | [`uint32`](#uint32) |  |  |
 
 ### <a name="ttn.lorawan.v3.ListEndDeviceBrandsRequest">Message `ListEndDeviceBrandsRequest`</a>
 
@@ -2131,8 +2194,6 @@ PeerInfo
 
 | Field | Validations |
 | ----- | ----------- |
-| `brand_id` | <p>`string.max_len`: `36`</p><p>`string.pattern`: `^[a-z0-9](?:[-]?[a-z0-9]){2,}$`</p> |
-| `model_id` | <p>`string.max_len`: `36`</p><p>`string.pattern`: `^[a-z0-9](?:[-]?[a-z0-9]){2,}$`</p> |
 | `order_by` | <p>`string.in`: `[ brand_id -brand_id model_id -model_id]`</p> |
 
 ### <a name="ttn.lorawan.v3.ListEndDeviceDefinitionsResponse">Message `ListEndDeviceDefinitionsResponse`</a>

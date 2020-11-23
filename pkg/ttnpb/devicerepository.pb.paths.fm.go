@@ -14,29 +14,61 @@ var EndDeviceBrandFieldPathsTopLevel = []string{
 	"end_devices",
 }
 var EndDeviceDefinitionFieldPathsNested = []string{
+	"additional_radios",
+	"battery",
+	"battery.replaceable",
+	"battery.type",
+	"compliances",
+	"compliances.radio_equipment",
+	"compliances.safety",
+	"datasheet_url",
 	"definition_id",
 	"description",
+	"dimensions",
+	"dimensions.diameter",
+	"dimensions.height",
+	"dimensions.length",
+	"dimensions.width",
 	"firmware_versions",
 	"hardware_versions",
+	"ip_code",
 	"key_provisioning",
 	"key_security",
 	"name",
+	"operating_conditions",
+	"operating_conditions.relative_humidity",
+	"operating_conditions.relative_humidity.max",
+	"operating_conditions.relative_humidity.min",
+	"operating_conditions.temperature",
+	"operating_conditions.temperature.max",
+	"operating_conditions.temperature.min",
 	"photos",
 	"photos.main",
 	"photos.other",
+	"product_url",
 	"sensors",
+	"weight",
 }
 
 var EndDeviceDefinitionFieldPathsTopLevel = []string{
+	"additional_radios",
+	"battery",
+	"compliances",
+	"datasheet_url",
 	"definition_id",
 	"description",
+	"dimensions",
 	"firmware_versions",
 	"hardware_versions",
+	"ip_code",
 	"key_provisioning",
 	"key_security",
 	"name",
+	"operating_conditions",
 	"photos",
+	"product_url",
 	"sensors",
+	"weight",
 }
 var ListEndDeviceBrandsRequestFieldPathsNested = []string{
 	"brand_id",
@@ -85,22 +117,61 @@ var ListEndDeviceDefinitionsResponseFieldPathsTopLevel = []string{
 	"definitions",
 }
 var EndDeviceDefinition_VersionFieldPathsNested = []string{
+	"numeric",
 	"version",
 }
 
 var EndDeviceDefinition_VersionFieldPathsTopLevel = []string{
+	"numeric",
 	"version",
 }
 var EndDeviceDefinition_FirmwareVersionFieldPathsNested = []string{
 	"hardware_versions",
+	"numeric",
 	"profiles",
 	"version",
 }
 
 var EndDeviceDefinition_FirmwareVersionFieldPathsTopLevel = []string{
 	"hardware_versions",
+	"numeric",
 	"profiles",
 	"version",
+}
+var EndDeviceDefinition_DimensionsFieldPathsNested = []string{
+	"diameter",
+	"height",
+	"length",
+	"width",
+}
+
+var EndDeviceDefinition_DimensionsFieldPathsTopLevel = []string{
+	"diameter",
+	"height",
+	"length",
+	"width",
+}
+var EndDeviceDefinition_BatteryFieldPathsNested = []string{
+	"replaceable",
+	"type",
+}
+
+var EndDeviceDefinition_BatteryFieldPathsTopLevel = []string{
+	"replaceable",
+	"type",
+}
+var EndDeviceDefinition_OperatingConditionsFieldPathsNested = []string{
+	"relative_humidity",
+	"relative_humidity.max",
+	"relative_humidity.min",
+	"temperature",
+	"temperature.max",
+	"temperature.min",
+}
+
+var EndDeviceDefinition_OperatingConditionsFieldPathsTopLevel = []string{
+	"relative_humidity",
+	"temperature",
 }
 var EndDeviceDefinition_PhotosFieldPathsNested = []string{
 	"main",
@@ -110,6 +181,15 @@ var EndDeviceDefinition_PhotosFieldPathsNested = []string{
 var EndDeviceDefinition_PhotosFieldPathsTopLevel = []string{
 	"main",
 	"other",
+}
+var EndDeviceDefinition_CompliancesFieldPathsNested = []string{
+	"radio_equipment",
+	"safety",
+}
+
+var EndDeviceDefinition_CompliancesFieldPathsTopLevel = []string{
+	"radio_equipment",
+	"safety",
 }
 var EndDeviceDefinition_FirmwareVersion_ProfileFieldPathsNested = []string{
 	"codec_id",
@@ -121,4 +201,26 @@ var EndDeviceDefinition_FirmwareVersion_ProfileFieldPathsTopLevel = []string{
 	"codec_id",
 	"lorawan_certified",
 	"profile_id",
+}
+var EndDeviceDefinition_OperatingConditions_LimitsFieldPathsNested = []string{
+	"max",
+	"min",
+}
+
+var EndDeviceDefinition_OperatingConditions_LimitsFieldPathsTopLevel = []string{
+	"max",
+	"min",
+}
+var EndDeviceDefinition_Compliances_ComplianceFieldPathsNested = []string{
+	"body",
+	"norm",
+	"standard",
+	"version",
+}
+
+var EndDeviceDefinition_Compliances_ComplianceFieldPathsTopLevel = []string{
+	"body",
+	"norm",
+	"standard",
+	"version",
 }

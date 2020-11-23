@@ -30,6 +30,9 @@ type ListBrandsRequest struct {
 type ListDefinitionsRequest struct {
 	BrandID,
 	ModelID string
+	Limit,
+	Offset *pbtypes.UInt32Value
+	Paths []string
 }
 
 // DefinitionIdentifiers is a request to retrieve an end device template for an end device definition.

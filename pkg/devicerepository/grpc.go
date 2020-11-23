@@ -17,6 +17,7 @@ package devicerepository
 import (
 	"context"
 
+	"go.thethings.network/lorawan-stack/v3/pkg/devicerepository/store"
 	"go.thethings.network/lorawan-stack/v3/pkg/errors"
 	"go.thethings.network/lorawan-stack/v3/pkg/ttnpb"
 )
@@ -27,12 +28,35 @@ var (
 
 // ListBrands implements the ttnpb.DeviceRepositoryServer interface.
 func (dr *DeviceRepository) ListBrands(ctx context.Context, request *ttnpb.ListEndDeviceBrandsRequest) (*ttnpb.ListEndDeviceBrandsResponse, error) {
-	return nil, errNotImplemented.New()
+	brands, err := dr.store.ListBrands(store.ListBrandsRequest{
+		Limit:   request.Limit,
+		Offset:  request.Offset,
+		OrderBy: request.OrderBy,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &ttnpb.ListEndDeviceBrandsResponse{Brands: brands}, nil
 }
 
 // ListDefinitions implements the ttnpb.DeviceRepositoryServer interface.
 func (dr *DeviceRepository) ListDefinitions(ctx context.Context, request *ttnpb.ListEndDeviceDefinitionsRequest) (*ttnpb.ListEndDeviceDefinitionsResponse, error) {
-	return nil, errNotImplemented.New()
+	paths := []string{}
+	if request.FieldMask != nil {
+		paths = request.FieldMask.Paths
+	}
+
+	defs, err := dr.store.ListDefinitions(store.ListDefinitionsRequest{
+		BrandID: request.BrandID,
+		ModelID: request.ModelID,
+		Limit:   request.Limit,
+		Offset:  request.Offset,
+		Paths:   paths,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &ttnpb.ListEndDeviceDefinitionsResponse{Definitions: defs}, nil
 }
 
 // GetTemplate implements the ttnpb.DeviceRepositoryServer interface.
