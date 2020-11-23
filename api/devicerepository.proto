@@ -35,15 +35,15 @@ message EndDeviceBrand {
   // TODO: add all fields from device repo
 }
 
-
 message EndDeviceDefinition {
-  string definition_id = 1 [(gogoproto.customname) = "DefinitionID"];
+  string model_id = 1 [(gogoproto.customname) = "ModelID"];
   string name = 2;
   string description = 3;
 
   message Version {
     string version = 1;
     uint32 numeric = 2;
+    string part_number = 3;
   }
   repeated Version hardware_versions = 4;
 
@@ -92,9 +92,14 @@ message EndDeviceDefinition {
     repeated string other = 2;
   }
   Photos photos = 14;
+  message Videos {
+    string main = 1;
+    repeated string other = 2;
+  }
+  Videos videos = 15;
 
-  string product_url = 15 [(gogoproto.customname) = "ProductURL"];
-  string datasheet_url = 16 [(gogoproto.customname) = "DatasheetURL"];
+  string product_url = 16 [(gogoproto.customname) = "ProductURL"];
+  string datasheet_url = 17 [(gogoproto.customname) = "DatasheetURL"];
 
   message Compliances {
     message Compliance {
@@ -106,9 +111,9 @@ message EndDeviceDefinition {
     repeated Compliance safety = 1;
     repeated Compliance radio_equipment = 2;
   }
-  Compliances compliances = 17;
+  Compliances compliances = 18;
 
-  repeated string additional_radios = 18;
+  repeated string additional_radios = 19;
 }
 
 message ListEndDeviceBrandsRequest {

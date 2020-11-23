@@ -68,8 +68,18 @@ func (m *EndDeviceBrand) ValidateFields(paths ...string) error {
 
 		case "brand_name":
 			// no validation rules for BrandName
-		case "end_devices":
+		case "private_enterprise_number":
+			// no validation rules for PrivateEnterpriseNumber
+		case "organization_unique_identifiers":
 
+		case "vendor_id":
+			// no validation rules for VendorId
+		case "website":
+			// no validation rules for Website
+		case "email":
+			// no validation rules for Email
+		case "logo":
+			// no validation rules for Logo
 		default:
 			return EndDeviceBrandValidationError{
 				field:  name,
@@ -151,8 +161,8 @@ func (m *EndDeviceDefinition) ValidateFields(paths ...string) error {
 	for name, subs := range _processPaths(append(paths[:0:0], paths...)) {
 		_ = subs
 		switch name {
-		case "definition_id":
-			// no validation rules for DefinitionID
+		case "model_id":
+			// no validation rules for ModelID
 		case "name":
 			// no validation rules for Name
 		case "description":
@@ -243,6 +253,18 @@ func (m *EndDeviceDefinition) ValidateFields(paths ...string) error {
 				if err := v.ValidateFields(subs...); err != nil {
 					return EndDeviceDefinitionValidationError{
 						field:  "photos",
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+
+		case "videos":
+
+			if v, ok := interface{}(m.GetVideos()).(interface{ ValidateFields(...string) error }); ok {
+				if err := v.ValidateFields(subs...); err != nil {
+					return EndDeviceDefinitionValidationError{
+						field:  "videos",
 						reason: "embedded message failed validation",
 						cause:  err,
 					}
@@ -830,6 +852,8 @@ func (m *EndDeviceDefinition_Version) ValidateFields(paths ...string) error {
 			// no validation rules for Version
 		case "numeric":
 			// no validation rules for Numeric
+		case "part_number":
+			// no validation rules for PartNumber
 		default:
 			return EndDeviceDefinition_VersionValidationError{
 				field:  name,
@@ -1381,6 +1405,92 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = EndDeviceDefinition_PhotosValidationError{}
+
+// ValidateFields checks the field values on EndDeviceDefinition_Videos with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, an error is returned.
+func (m *EndDeviceDefinition_Videos) ValidateFields(paths ...string) error {
+	if m == nil {
+		return nil
+	}
+
+	if len(paths) == 0 {
+		paths = EndDeviceDefinition_VideosFieldPathsNested
+	}
+
+	for name, subs := range _processPaths(append(paths[:0:0], paths...)) {
+		_ = subs
+		switch name {
+		case "main":
+			// no validation rules for Main
+		case "other":
+
+		default:
+			return EndDeviceDefinition_VideosValidationError{
+				field:  name,
+				reason: "invalid field path",
+			}
+		}
+	}
+	return nil
+}
+
+// EndDeviceDefinition_VideosValidationError is the validation error returned
+// by EndDeviceDefinition_Videos.ValidateFields if the designated constraints
+// aren't met.
+type EndDeviceDefinition_VideosValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e EndDeviceDefinition_VideosValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e EndDeviceDefinition_VideosValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e EndDeviceDefinition_VideosValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e EndDeviceDefinition_VideosValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e EndDeviceDefinition_VideosValidationError) ErrorName() string {
+	return "EndDeviceDefinition_VideosValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e EndDeviceDefinition_VideosValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sEndDeviceDefinition_Videos.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = EndDeviceDefinition_VideosValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = EndDeviceDefinition_VideosValidationError{}
 
 // ValidateFields checks the field values on EndDeviceDefinition_Compliances
 // with the rules defined in the proto definition for this message. If any

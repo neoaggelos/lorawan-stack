@@ -27,14 +27,64 @@ func (dst *EndDeviceBrand) SetFields(src *EndDeviceBrand, paths ...string) error
 				var zero string
 				dst.BrandName = zero
 			}
-		case "end_devices":
+		case "private_enterprise_number":
 			if len(subs) > 0 {
-				return fmt.Errorf("'end_devices' has no subfields, but %s were specified", subs)
+				return fmt.Errorf("'private_enterprise_number' has no subfields, but %s were specified", subs)
 			}
 			if src != nil {
-				dst.EndDevices = src.EndDevices
+				dst.PrivateEnterpriseNumber = src.PrivateEnterpriseNumber
 			} else {
-				dst.EndDevices = nil
+				var zero uint32
+				dst.PrivateEnterpriseNumber = zero
+			}
+		case "organization_unique_identifiers":
+			if len(subs) > 0 {
+				return fmt.Errorf("'organization_unique_identifiers' has no subfields, but %s were specified", subs)
+			}
+			if src != nil {
+				dst.OrganizationUniqueIdentifiers = src.OrganizationUniqueIdentifiers
+			} else {
+				dst.OrganizationUniqueIdentifiers = nil
+			}
+		case "vendor_id":
+			if len(subs) > 0 {
+				return fmt.Errorf("'vendor_id' has no subfields, but %s were specified", subs)
+			}
+			if src != nil {
+				dst.VendorId = src.VendorId
+			} else {
+				var zero uint32
+				dst.VendorId = zero
+			}
+		case "website":
+			if len(subs) > 0 {
+				return fmt.Errorf("'website' has no subfields, but %s were specified", subs)
+			}
+			if src != nil {
+				dst.Website = src.Website
+			} else {
+				var zero string
+				dst.Website = zero
+			}
+		case "email":
+			if len(subs) > 0 {
+				return fmt.Errorf("'email' has no subfields, but %s were specified", subs)
+			}
+			if src != nil {
+				dst.Email = src.Email
+			} else {
+				var zero string
+				dst.Email = zero
+			}
+		case "logo":
+			if len(subs) > 0 {
+				return fmt.Errorf("'logo' has no subfields, but %s were specified", subs)
+			}
+			if src != nil {
+				dst.Logo = src.Logo
+			} else {
+				var zero string
+				dst.Logo = zero
 			}
 
 		default:
@@ -47,15 +97,15 @@ func (dst *EndDeviceBrand) SetFields(src *EndDeviceBrand, paths ...string) error
 func (dst *EndDeviceDefinition) SetFields(src *EndDeviceDefinition, paths ...string) error {
 	for name, subs := range _processPaths(paths) {
 		switch name {
-		case "definition_id":
+		case "model_id":
 			if len(subs) > 0 {
-				return fmt.Errorf("'definition_id' has no subfields, but %s were specified", subs)
+				return fmt.Errorf("'model_id' has no subfields, but %s were specified", subs)
 			}
 			if src != nil {
-				dst.DefinitionID = src.DefinitionID
+				dst.ModelID = src.ModelID
 			} else {
 				var zero string
-				dst.DefinitionID = zero
+				dst.ModelID = zero
 			}
 		case "name":
 			if len(subs) > 0 {
@@ -241,6 +291,31 @@ func (dst *EndDeviceDefinition) SetFields(src *EndDeviceDefinition, paths ...str
 					dst.Photos = src.Photos
 				} else {
 					dst.Photos = nil
+				}
+			}
+		case "videos":
+			if len(subs) > 0 {
+				var newDst, newSrc *EndDeviceDefinition_Videos
+				if (src == nil || src.Videos == nil) && dst.Videos == nil {
+					continue
+				}
+				if src != nil {
+					newSrc = src.Videos
+				}
+				if dst.Videos != nil {
+					newDst = dst.Videos
+				} else {
+					newDst = &EndDeviceDefinition_Videos{}
+					dst.Videos = newDst
+				}
+				if err := newDst.SetFields(newSrc, subs...); err != nil {
+					return err
+				}
+			} else {
+				if src != nil {
+					dst.Videos = src.Videos
+				} else {
+					dst.Videos = nil
 				}
 			}
 		case "product_url":
@@ -495,6 +570,16 @@ func (dst *EndDeviceDefinition_Version) SetFields(src *EndDeviceDefinition_Versi
 				var zero uint32
 				dst.Numeric = zero
 			}
+		case "part_number":
+			if len(subs) > 0 {
+				return fmt.Errorf("'part_number' has no subfields, but %s were specified", subs)
+			}
+			if src != nil {
+				dst.PartNumber = src.PartNumber
+			} else {
+				var zero string
+				dst.PartNumber = zero
+			}
 
 		default:
 			return fmt.Errorf("invalid field: '%s'", name)
@@ -695,6 +780,36 @@ func (dst *EndDeviceDefinition_OperatingConditions) SetFields(src *EndDeviceDefi
 }
 
 func (dst *EndDeviceDefinition_Photos) SetFields(src *EndDeviceDefinition_Photos, paths ...string) error {
+	for name, subs := range _processPaths(paths) {
+		switch name {
+		case "main":
+			if len(subs) > 0 {
+				return fmt.Errorf("'main' has no subfields, but %s were specified", subs)
+			}
+			if src != nil {
+				dst.Main = src.Main
+			} else {
+				var zero string
+				dst.Main = zero
+			}
+		case "other":
+			if len(subs) > 0 {
+				return fmt.Errorf("'other' has no subfields, but %s were specified", subs)
+			}
+			if src != nil {
+				dst.Other = src.Other
+			} else {
+				dst.Other = nil
+			}
+
+		default:
+			return fmt.Errorf("invalid field: '%s'", name)
+		}
+	}
+	return nil
+}
+
+func (dst *EndDeviceDefinition_Videos) SetFields(src *EndDeviceDefinition_Videos, paths ...string) error {
 	for name, subs := range _processPaths(paths) {
 		switch name {
 		case "main":

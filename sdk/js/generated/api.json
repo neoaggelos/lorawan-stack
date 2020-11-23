@@ -7035,9 +7035,59 @@
               "defaultValue": ""
             },
             {
-              "name": "end_devices",
+              "name": "private_enterprise_number",
+              "description": "",
+              "label": "",
+              "type": "uint32",
+              "longType": "uint32",
+              "fullType": "uint32",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "organization_unique_identifiers",
               "description": "",
               "label": "repeated",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "vendor_id",
+              "description": "",
+              "label": "",
+              "type": "uint32",
+              "longType": "uint32",
+              "fullType": "uint32",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "website",
+              "description": "",
+              "label": "",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "email",
+              "description": "",
+              "label": "",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "logo",
+              "description": "",
+              "label": "",
               "type": "string",
               "longType": "string",
               "fullType": "string",
@@ -7056,7 +7106,7 @@
           "extensions": [],
           "fields": [
             {
-              "name": "definition_id",
+              "name": "model_id",
               "description": "",
               "label": "",
               "type": "string",
@@ -7192,6 +7242,16 @@
               "type": "Photos",
               "longType": "EndDeviceDefinition.Photos",
               "fullType": "ttn.lorawan.v3.EndDeviceDefinition.Photos",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "videos",
+              "description": "",
+              "label": "",
+              "type": "Videos",
+              "longType": "EndDeviceDefinition.Videos",
+              "fullType": "ttn.lorawan.v3.EndDeviceDefinition.Videos",
               "ismap": false,
               "defaultValue": ""
             },
@@ -7643,6 +7703,47 @@
               "type": "uint32",
               "longType": "uint32",
               "fullType": "uint32",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "part_number",
+              "description": "",
+              "label": "",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            }
+          ]
+        },
+        {
+          "name": "Videos",
+          "longName": "EndDeviceDefinition.Videos",
+          "fullName": "ttn.lorawan.v3.EndDeviceDefinition.Videos",
+          "description": "",
+          "hasExtensions": false,
+          "hasFields": true,
+          "extensions": [],
+          "fields": [
+            {
+              "name": "main",
+              "description": "",
+              "label": "",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "other",
+              "description": "",
+              "label": "repeated",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
               "ismap": false,
               "defaultValue": ""
             }

@@ -138,6 +138,7 @@
   - [Message `EndDeviceDefinition.OperatingConditions.Limits`](#ttn.lorawan.v3.EndDeviceDefinition.OperatingConditions.Limits)
   - [Message `EndDeviceDefinition.Photos`](#ttn.lorawan.v3.EndDeviceDefinition.Photos)
   - [Message `EndDeviceDefinition.Version`](#ttn.lorawan.v3.EndDeviceDefinition.Version)
+  - [Message `EndDeviceDefinition.Videos`](#ttn.lorawan.v3.EndDeviceDefinition.Videos)
   - [Message `ListEndDeviceBrandsRequest`](#ttn.lorawan.v3.ListEndDeviceBrandsRequest)
   - [Message `ListEndDeviceBrandsResponse`](#ttn.lorawan.v3.ListEndDeviceBrandsResponse)
   - [Message `ListEndDeviceDefinitionsRequest`](#ttn.lorawan.v3.ListEndDeviceDefinitionsRequest)
@@ -2041,7 +2042,12 @@ PeerInfo
 | ----- | ---- | ----- | ----------- |
 | `brand_id` | [`string`](#string) |  |  |
 | `brand_name` | [`string`](#string) |  |  |
-| `end_devices` | [`string`](#string) | repeated |  |
+| `private_enterprise_number` | [`uint32`](#uint32) |  |  |
+| `organization_unique_identifiers` | [`string`](#string) | repeated |  |
+| `vendor_id` | [`uint32`](#uint32) |  |  |
+| `website` | [`string`](#string) |  |  |
+| `email` | [`string`](#string) |  |  |
+| `logo` | [`string`](#string) |  |  |
 
 #### Field Rules
 
@@ -2053,7 +2059,7 @@ PeerInfo
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| `definition_id` | [`string`](#string) |  |  |
+| `model_id` | [`string`](#string) |  |  |
 | `name` | [`string`](#string) |  |  |
 | `description` | [`string`](#string) |  |  |
 | `hardware_versions` | [`EndDeviceDefinition.Version`](#ttn.lorawan.v3.EndDeviceDefinition.Version) | repeated |  |
@@ -2067,6 +2073,7 @@ PeerInfo
 | `key_provisioning` | [`string`](#string) | repeated |  |
 | `key_security` | [`string`](#string) |  |  |
 | `photos` | [`EndDeviceDefinition.Photos`](#ttn.lorawan.v3.EndDeviceDefinition.Photos) |  |  |
+| `videos` | [`EndDeviceDefinition.Videos`](#ttn.lorawan.v3.EndDeviceDefinition.Videos) |  |  |
 | `product_url` | [`string`](#string) |  |  |
 | `datasheet_url` | [`string`](#string) |  |  |
 | `compliances` | [`EndDeviceDefinition.Compliances`](#ttn.lorawan.v3.EndDeviceDefinition.Compliances) |  |  |
@@ -2155,6 +2162,14 @@ PeerInfo
 | ----- | ---- | ----- | ----------- |
 | `version` | [`string`](#string) |  |  |
 | `numeric` | [`uint32`](#uint32) |  |  |
+| `part_number` | [`string`](#string) |  |  |
+
+### <a name="ttn.lorawan.v3.EndDeviceDefinition.Videos">Message `EndDeviceDefinition.Videos`</a>
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| `main` | [`string`](#string) |  |  |
+| `other` | [`string`](#string) | repeated |  |
 
 ### <a name="ttn.lorawan.v3.ListEndDeviceBrandsRequest">Message `ListEndDeviceBrandsRequest`</a>
 

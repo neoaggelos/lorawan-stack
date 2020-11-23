@@ -5,13 +5,23 @@ package ttnpb
 var EndDeviceBrandFieldPathsNested = []string{
 	"brand_id",
 	"brand_name",
-	"end_devices",
+	"email",
+	"logo",
+	"organization_unique_identifiers",
+	"private_enterprise_number",
+	"vendor_id",
+	"website",
 }
 
 var EndDeviceBrandFieldPathsTopLevel = []string{
 	"brand_id",
 	"brand_name",
-	"end_devices",
+	"email",
+	"logo",
+	"organization_unique_identifiers",
+	"private_enterprise_number",
+	"vendor_id",
+	"website",
 }
 var EndDeviceDefinitionFieldPathsNested = []string{
 	"additional_radios",
@@ -22,7 +32,6 @@ var EndDeviceDefinitionFieldPathsNested = []string{
 	"compliances.radio_equipment",
 	"compliances.safety",
 	"datasheet_url",
-	"definition_id",
 	"description",
 	"dimensions",
 	"dimensions.diameter",
@@ -34,6 +43,7 @@ var EndDeviceDefinitionFieldPathsNested = []string{
 	"ip_code",
 	"key_provisioning",
 	"key_security",
+	"model_id",
 	"name",
 	"operating_conditions",
 	"operating_conditions.relative_humidity",
@@ -47,6 +57,9 @@ var EndDeviceDefinitionFieldPathsNested = []string{
 	"photos.other",
 	"product_url",
 	"sensors",
+	"videos",
+	"videos.main",
+	"videos.other",
 	"weight",
 }
 
@@ -55,7 +68,6 @@ var EndDeviceDefinitionFieldPathsTopLevel = []string{
 	"battery",
 	"compliances",
 	"datasheet_url",
-	"definition_id",
 	"description",
 	"dimensions",
 	"firmware_versions",
@@ -63,11 +75,13 @@ var EndDeviceDefinitionFieldPathsTopLevel = []string{
 	"ip_code",
 	"key_provisioning",
 	"key_security",
+	"model_id",
 	"name",
 	"operating_conditions",
 	"photos",
 	"product_url",
 	"sensors",
+	"videos",
 	"weight",
 }
 var ListEndDeviceBrandsRequestFieldPathsNested = []string{
@@ -118,11 +132,13 @@ var ListEndDeviceDefinitionsResponseFieldPathsTopLevel = []string{
 }
 var EndDeviceDefinition_VersionFieldPathsNested = []string{
 	"numeric",
+	"part_number",
 	"version",
 }
 
 var EndDeviceDefinition_VersionFieldPathsTopLevel = []string{
 	"numeric",
+	"part_number",
 	"version",
 }
 var EndDeviceDefinition_FirmwareVersionFieldPathsNested = []string{
@@ -179,6 +195,15 @@ var EndDeviceDefinition_PhotosFieldPathsNested = []string{
 }
 
 var EndDeviceDefinition_PhotosFieldPathsTopLevel = []string{
+	"main",
+	"other",
+}
+var EndDeviceDefinition_VideosFieldPathsNested = []string{
+	"main",
+	"other",
+}
+
+var EndDeviceDefinition_VideosFieldPathsTopLevel = []string{
 	"main",
 	"other",
 }

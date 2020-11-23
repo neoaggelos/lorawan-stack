@@ -8504,6 +8504,23 @@
         "numeric": {
           "type": "integer",
           "format": "int64"
+        },
+        "part_number": {
+          "type": "string"
+        }
+      }
+    },
+    "EndDeviceDefinitionVideos": {
+      "type": "object",
+      "properties": {
+        "main": {
+          "type": "string"
+        },
+        "other": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },
@@ -11354,18 +11371,35 @@
         "brand_name": {
           "type": "string"
         },
-        "end_devices": {
+        "private_enterprise_number": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "organization_unique_identifiers": {
           "type": "array",
           "items": {
             "type": "string"
           }
+        },
+        "vendor_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "website": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "logo": {
+          "type": "string"
         }
       }
     },
     "v3EndDeviceDefinition": {
       "type": "object",
       "properties": {
-        "definition_id": {
+        "model_id": {
           "type": "string"
         },
         "name": {
@@ -11419,6 +11453,9 @@
         },
         "photos": {
           "$ref": "#/definitions/EndDeviceDefinitionPhotos"
+        },
+        "videos": {
+          "$ref": "#/definitions/EndDeviceDefinitionVideos"
         },
         "product_url": {
           "type": "string"

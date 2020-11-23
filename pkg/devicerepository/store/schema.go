@@ -43,8 +43,9 @@ type EndDeviceDefinition struct {
 	Name             string `yaml:"name"`
 	Description      string `yaml:"description"`
 	HardwareVersions []struct {
-		Version string `yaml:"version"`
-		Numeric uint32 `yaml:"numeric"`
+		Version    string `yaml:"version"`
+		Numeric    uint32 `yaml:"numeric"`
+		PartNumber string `yaml:"partNumber"`
 	} `yaml:"hardwareVersions"`
 	FirmwareVersions []struct {
 		Version          string   `yaml:"version"`
@@ -85,6 +86,10 @@ type EndDeviceDefinition struct {
 		Main  string   `yaml:"main"`
 		Other []string `yaml:"other"`
 	} `yaml:"photos"`
+	Videos *struct {
+		Main  string   `yaml:"main"`
+		Other []string `yaml:"other"`
+	} `yaml:"videos"`
 	ProductURL   string `yaml:"productURL"`
 	DatasheetURL string `yaml:"datasheetURL"`
 	Compliances  *struct {
@@ -107,7 +112,7 @@ type EndDeviceDefinition struct {
 // ToPB converts an EndDefinitionDefinition to a Protocol Buffer.
 func (d EndDeviceDefinition) ToPB(id string, paths ...string) (*ttnpb.EndDeviceDefinition, error) {
 	pb := &ttnpb.EndDeviceDefinition{
-		DefinitionID:     id,
+		ModelID:          id,
 		Name:             d.Name,
 		Description:      d.Description,
 		FirmwareVersions: make([]*ttnpb.EndDeviceDefinition_FirmwareVersion, 0, len(d.FirmwareVersions)),
@@ -121,12 +126,14 @@ func (d EndDeviceDefinition) ToPB(id string, paths ...string) (*ttnpb.EndDeviceD
 		AdditionalRadios: d.AdditionalRadios,
 	}
 
+	paths = withDefaultDefinitionFields(paths)
 	if hwVersions := d.HardwareVersions; hwVersions != nil {
 		pb.HardwareVersions = make([]*ttnpb.EndDeviceDefinition_Version, 0, len(hwVersions))
 		for _, ver := range hwVersions {
 			pb.HardwareVersions = append(pb.HardwareVersions, &ttnpb.EndDeviceDefinition_Version{
-				Version: ver.Version,
-				Numeric: ver.Numeric,
+				Version:    ver.Version,
+				Numeric:    ver.Numeric,
+				PartNumber: ver.PartNumber,
 			})
 		}
 	}
@@ -198,6 +205,13 @@ func (d EndDeviceDefinition) ToPB(id string, paths ...string) (*ttnpb.EndDeviceD
 		}
 	}
 
+	if v := d.Videos; v != nil {
+		pb.Videos = &ttnpb.EndDeviceDefinition_Videos{
+			Main:  v.Main,
+			Other: v.Other,
+		}
+	}
+
 	if cs := d.Compliances; cs != nil {
 		pb.Compliances = &ttnpb.EndDeviceDefinition_Compliances{
 			Safety:         make([]*ttnpb.EndDeviceDefinition_Compliances_Compliance, 0, len(cs.Safety)),
@@ -222,15 +236,11 @@ func (d EndDeviceDefinition) ToPB(id string, paths ...string) (*ttnpb.EndDeviceD
 		}
 	}
 
-	if len(paths) > 0 {
-		pb2 := &ttnpb.EndDeviceDefinition{}
-		if err := pb2.SetFields(pb, paths...); err != nil {
-			return nil, err
-		}
-		pb = pb2
+	res := &ttnpb.EndDeviceDefinition{}
+	if err := res.SetFields(pb, paths...); err != nil {
+		return nil, err
 	}
-
-	return pb, nil
+	return res, nil
 }
 
 // EndDeviceProfile is the format of the `vendor/<vendor-id>/<profile-id>.yaml` file.
