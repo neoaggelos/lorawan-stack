@@ -26,8 +26,8 @@ func (*NoopStore) ListBrands(ListBrandsRequest) ([]*ttnpb.EndDeviceBrand, error)
 	return nil, nil
 }
 
-// ListDefinitions lists available end device definitions.
-func (*NoopStore) ListDefinitions(ListDefinitionsRequest) ([]*ttnpb.EndDeviceDefinition, error) {
+// ListModels lists available end device definitions.
+func (*NoopStore) ListModels(ListModelsRequest) ([]*ttnpb.EndDeviceModel, error) {
 	return nil, nil
 }
 

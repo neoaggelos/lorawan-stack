@@ -51,29 +51,15 @@ func (m *EndDeviceBrand) ValidateFields(paths ...string) error {
 		_ = subs
 		switch name {
 		case "brand_id":
-
-			if utf8.RuneCountInString(m.GetBrandID()) > 36 {
-				return EndDeviceBrandValidationError{
-					field:  "brand_id",
-					reason: "value length must be at most 36 runes",
-				}
-			}
-
-			if !_EndDeviceBrand_BrandID_Pattern.MatchString(m.GetBrandID()) {
-				return EndDeviceBrandValidationError{
-					field:  "brand_id",
-					reason: "value does not match regex pattern \"^[a-z0-9](?:[-]?[a-z0-9]){2,}$\"",
-				}
-			}
-
-		case "brand_name":
-			// no validation rules for BrandName
+			// no validation rules for BrandID
+		case "name":
+			// no validation rules for Name
 		case "private_enterprise_number":
 			// no validation rules for PrivateEnterpriseNumber
 		case "organization_unique_identifiers":
 
 		case "vendor_id":
-			// no validation rules for VendorId
+			// no validation rules for VendorID
 		case "website":
 			// no validation rules for Website
 		case "email":
@@ -144,18 +130,16 @@ var _ interface {
 	ErrorName() string
 } = EndDeviceBrandValidationError{}
 
-var _EndDeviceBrand_BrandID_Pattern = regexp.MustCompile("^[a-z0-9](?:[-]?[a-z0-9]){2,}$")
-
-// ValidateFields checks the field values on EndDeviceDefinition with the rules
+// ValidateFields checks the field values on EndDeviceModel with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
-func (m *EndDeviceDefinition) ValidateFields(paths ...string) error {
+func (m *EndDeviceModel) ValidateFields(paths ...string) error {
 	if m == nil {
 		return nil
 	}
 
 	if len(paths) == 0 {
-		paths = EndDeviceDefinitionFieldPathsNested
+		paths = EndDeviceModelFieldPathsNested
 	}
 
 	for name, subs := range _processPaths(append(paths[:0:0], paths...)) {
@@ -174,7 +158,7 @@ func (m *EndDeviceDefinition) ValidateFields(paths ...string) error {
 
 				if v, ok := interface{}(item).(interface{ ValidateFields(...string) error }); ok {
 					if err := v.ValidateFields(subs...); err != nil {
-						return EndDeviceDefinitionValidationError{
+						return EndDeviceModelValidationError{
 							field:  fmt.Sprintf("hardware_versions[%v]", idx),
 							reason: "embedded message failed validation",
 							cause:  err,
@@ -191,7 +175,7 @@ func (m *EndDeviceDefinition) ValidateFields(paths ...string) error {
 
 				if v, ok := interface{}(item).(interface{ ValidateFields(...string) error }); ok {
 					if err := v.ValidateFields(subs...); err != nil {
-						return EndDeviceDefinitionValidationError{
+						return EndDeviceModelValidationError{
 							field:  fmt.Sprintf("firmware_versions[%v]", idx),
 							reason: "embedded message failed validation",
 							cause:  err,
@@ -207,7 +191,7 @@ func (m *EndDeviceDefinition) ValidateFields(paths ...string) error {
 
 			if v, ok := interface{}(m.GetDimensions()).(interface{ ValidateFields(...string) error }); ok {
 				if err := v.ValidateFields(subs...); err != nil {
-					return EndDeviceDefinitionValidationError{
+					return EndDeviceModelValidationError{
 						field:  "dimensions",
 						reason: "embedded message failed validation",
 						cause:  err,
@@ -221,7 +205,7 @@ func (m *EndDeviceDefinition) ValidateFields(paths ...string) error {
 
 			if v, ok := interface{}(m.GetBattery()).(interface{ ValidateFields(...string) error }); ok {
 				if err := v.ValidateFields(subs...); err != nil {
-					return EndDeviceDefinitionValidationError{
+					return EndDeviceModelValidationError{
 						field:  "battery",
 						reason: "embedded message failed validation",
 						cause:  err,
@@ -233,7 +217,7 @@ func (m *EndDeviceDefinition) ValidateFields(paths ...string) error {
 
 			if v, ok := interface{}(m.GetOperatingConditions()).(interface{ ValidateFields(...string) error }); ok {
 				if err := v.ValidateFields(subs...); err != nil {
-					return EndDeviceDefinitionValidationError{
+					return EndDeviceModelValidationError{
 						field:  "operating_conditions",
 						reason: "embedded message failed validation",
 						cause:  err,
@@ -251,7 +235,7 @@ func (m *EndDeviceDefinition) ValidateFields(paths ...string) error {
 
 			if v, ok := interface{}(m.GetPhotos()).(interface{ ValidateFields(...string) error }); ok {
 				if err := v.ValidateFields(subs...); err != nil {
-					return EndDeviceDefinitionValidationError{
+					return EndDeviceModelValidationError{
 						field:  "photos",
 						reason: "embedded message failed validation",
 						cause:  err,
@@ -263,7 +247,7 @@ func (m *EndDeviceDefinition) ValidateFields(paths ...string) error {
 
 			if v, ok := interface{}(m.GetVideos()).(interface{ ValidateFields(...string) error }); ok {
 				if err := v.ValidateFields(subs...); err != nil {
-					return EndDeviceDefinitionValidationError{
+					return EndDeviceModelValidationError{
 						field:  "videos",
 						reason: "embedded message failed validation",
 						cause:  err,
@@ -279,7 +263,7 @@ func (m *EndDeviceDefinition) ValidateFields(paths ...string) error {
 
 			if v, ok := interface{}(m.GetCompliances()).(interface{ ValidateFields(...string) error }); ok {
 				if err := v.ValidateFields(subs...); err != nil {
-					return EndDeviceDefinitionValidationError{
+					return EndDeviceModelValidationError{
 						field:  "compliances",
 						reason: "embedded message failed validation",
 						cause:  err,
@@ -290,7 +274,7 @@ func (m *EndDeviceDefinition) ValidateFields(paths ...string) error {
 		case "additional_radios":
 
 		default:
-			return EndDeviceDefinitionValidationError{
+			return EndDeviceModelValidationError{
 				field:  name,
 				reason: "invalid field path",
 			}
@@ -299,9 +283,9 @@ func (m *EndDeviceDefinition) ValidateFields(paths ...string) error {
 	return nil
 }
 
-// EndDeviceDefinitionValidationError is the validation error returned by
-// EndDeviceDefinition.ValidateFields if the designated constraints aren't met.
-type EndDeviceDefinitionValidationError struct {
+// EndDeviceModelValidationError is the validation error returned by
+// EndDeviceModel.ValidateFields if the designated constraints aren't met.
+type EndDeviceModelValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -309,24 +293,22 @@ type EndDeviceDefinitionValidationError struct {
 }
 
 // Field function returns field value.
-func (e EndDeviceDefinitionValidationError) Field() string { return e.field }
+func (e EndDeviceModelValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e EndDeviceDefinitionValidationError) Reason() string { return e.reason }
+func (e EndDeviceModelValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e EndDeviceDefinitionValidationError) Cause() error { return e.cause }
+func (e EndDeviceModelValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e EndDeviceDefinitionValidationError) Key() bool { return e.key }
+func (e EndDeviceModelValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e EndDeviceDefinitionValidationError) ErrorName() string {
-	return "EndDeviceDefinitionValidationError"
-}
+func (e EndDeviceModelValidationError) ErrorName() string { return "EndDeviceModelValidationError" }
 
 // Error satisfies the builtin error interface
-func (e EndDeviceDefinitionValidationError) Error() string {
+func (e EndDeviceModelValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -338,14 +320,14 @@ func (e EndDeviceDefinitionValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sEndDeviceDefinition.%s: %s%s",
+		"invalid %sEndDeviceModel.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = EndDeviceDefinitionValidationError{}
+var _ error = EndDeviceModelValidationError{}
 
 var _ interface {
 	Field() string
@@ -353,7 +335,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = EndDeviceDefinitionValidationError{}
+} = EndDeviceModelValidationError{}
 
 // ValidateFields checks the field values on ListEndDeviceBrandsRequest with
 // the rules defined in the proto definition for this message. If any rules
@@ -371,21 +353,7 @@ func (m *ListEndDeviceBrandsRequest) ValidateFields(paths ...string) error {
 		_ = subs
 		switch name {
 		case "brand_id":
-
-			if utf8.RuneCountInString(m.GetBrandID()) > 36 {
-				return ListEndDeviceBrandsRequestValidationError{
-					field:  "brand_id",
-					reason: "value length must be at most 36 runes",
-				}
-			}
-
-			if !_ListEndDeviceBrandsRequest_BrandID_Pattern.MatchString(m.GetBrandID()) {
-				return ListEndDeviceBrandsRequestValidationError{
-					field:  "brand_id",
-					reason: "value does not match regex pattern \"^[a-z0-9](?:[-]?[a-z0-9]){2,}$\"",
-				}
-			}
-
+			// no validation rules for BrandID
 		case "limit":
 
 			if v, ok := interface{}(m.GetLimit()).(interface{ ValidateFields(...string) error }); ok {
@@ -415,7 +383,21 @@ func (m *ListEndDeviceBrandsRequest) ValidateFields(paths ...string) error {
 			if _, ok := _ListEndDeviceBrandsRequest_OrderBy_InLookup[m.GetOrderBy()]; !ok {
 				return ListEndDeviceBrandsRequestValidationError{
 					field:  "order_by",
-					reason: "value must be in list [ brand_id -brand_id]",
+					reason: "value must be in list [ brand_id -brand_id name -name]",
+				}
+			}
+
+		case "search":
+			// no validation rules for Search
+		case "field_mask":
+
+			if v, ok := interface{}(&m.FieldMask).(interface{ ValidateFields(...string) error }); ok {
+				if err := v.ValidateFields(subs...); err != nil {
+					return ListEndDeviceBrandsRequestValidationError{
+						field:  "field_mask",
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 
@@ -486,24 +468,24 @@ var _ interface {
 	ErrorName() string
 } = ListEndDeviceBrandsRequestValidationError{}
 
-var _ListEndDeviceBrandsRequest_BrandID_Pattern = regexp.MustCompile("^[a-z0-9](?:[-]?[a-z0-9]){2,}$")
-
 var _ListEndDeviceBrandsRequest_OrderBy_InLookup = map[string]struct{}{
 	"":          {},
 	"brand_id":  {},
 	"-brand_id": {},
+	"name":      {},
+	"-name":     {},
 }
 
-// ValidateFields checks the field values on ListEndDeviceDefinitionsRequest
-// with the rules defined in the proto definition for this message. If any
-// rules are violated, an error is returned.
-func (m *ListEndDeviceDefinitionsRequest) ValidateFields(paths ...string) error {
+// ValidateFields checks the field values on ListEndDeviceModelsRequest with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, an error is returned.
+func (m *ListEndDeviceModelsRequest) ValidateFields(paths ...string) error {
 	if m == nil {
 		return nil
 	}
 
 	if len(paths) == 0 {
-		paths = ListEndDeviceDefinitionsRequestFieldPathsNested
+		paths = ListEndDeviceModelsRequestFieldPathsNested
 	}
 
 	for name, subs := range _processPaths(append(paths[:0:0], paths...)) {
@@ -517,8 +499,8 @@ func (m *ListEndDeviceDefinitionsRequest) ValidateFields(paths ...string) error 
 			// no validation rules for Search
 		case "order_by":
 
-			if _, ok := _ListEndDeviceDefinitionsRequest_OrderBy_InLookup[m.GetOrderBy()]; !ok {
-				return ListEndDeviceDefinitionsRequestValidationError{
+			if _, ok := _ListEndDeviceModelsRequest_OrderBy_InLookup[m.GetOrderBy()]; !ok {
+				return ListEndDeviceModelsRequestValidationError{
 					field:  "order_by",
 					reason: "value must be in list [ brand_id -brand_id model_id -model_id]",
 				}
@@ -528,7 +510,7 @@ func (m *ListEndDeviceDefinitionsRequest) ValidateFields(paths ...string) error 
 
 			if v, ok := interface{}(m.GetLimit()).(interface{ ValidateFields(...string) error }); ok {
 				if err := v.ValidateFields(subs...); err != nil {
-					return ListEndDeviceDefinitionsRequestValidationError{
+					return ListEndDeviceModelsRequestValidationError{
 						field:  "limit",
 						reason: "embedded message failed validation",
 						cause:  err,
@@ -540,7 +522,7 @@ func (m *ListEndDeviceDefinitionsRequest) ValidateFields(paths ...string) error 
 
 			if v, ok := interface{}(m.GetOffset()).(interface{ ValidateFields(...string) error }); ok {
 				if err := v.ValidateFields(subs...); err != nil {
-					return ListEndDeviceDefinitionsRequestValidationError{
+					return ListEndDeviceModelsRequestValidationError{
 						field:  "offset",
 						reason: "embedded message failed validation",
 						cause:  err,
@@ -550,9 +532,9 @@ func (m *ListEndDeviceDefinitionsRequest) ValidateFields(paths ...string) error 
 
 		case "field_mask":
 
-			if v, ok := interface{}(m.GetFieldMask()).(interface{ ValidateFields(...string) error }); ok {
+			if v, ok := interface{}(&m.FieldMask).(interface{ ValidateFields(...string) error }); ok {
 				if err := v.ValidateFields(subs...); err != nil {
-					return ListEndDeviceDefinitionsRequestValidationError{
+					return ListEndDeviceModelsRequestValidationError{
 						field:  "field_mask",
 						reason: "embedded message failed validation",
 						cause:  err,
@@ -561,7 +543,7 @@ func (m *ListEndDeviceDefinitionsRequest) ValidateFields(paths ...string) error 
 			}
 
 		default:
-			return ListEndDeviceDefinitionsRequestValidationError{
+			return ListEndDeviceModelsRequestValidationError{
 				field:  name,
 				reason: "invalid field path",
 			}
@@ -570,10 +552,10 @@ func (m *ListEndDeviceDefinitionsRequest) ValidateFields(paths ...string) error 
 	return nil
 }
 
-// ListEndDeviceDefinitionsRequestValidationError is the validation error
-// returned by ListEndDeviceDefinitionsRequest.ValidateFields if the
-// designated constraints aren't met.
-type ListEndDeviceDefinitionsRequestValidationError struct {
+// ListEndDeviceModelsRequestValidationError is the validation error returned
+// by ListEndDeviceModelsRequest.ValidateFields if the designated constraints
+// aren't met.
+type ListEndDeviceModelsRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -581,24 +563,24 @@ type ListEndDeviceDefinitionsRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e ListEndDeviceDefinitionsRequestValidationError) Field() string { return e.field }
+func (e ListEndDeviceModelsRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e ListEndDeviceDefinitionsRequestValidationError) Reason() string { return e.reason }
+func (e ListEndDeviceModelsRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e ListEndDeviceDefinitionsRequestValidationError) Cause() error { return e.cause }
+func (e ListEndDeviceModelsRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e ListEndDeviceDefinitionsRequestValidationError) Key() bool { return e.key }
+func (e ListEndDeviceModelsRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e ListEndDeviceDefinitionsRequestValidationError) ErrorName() string {
-	return "ListEndDeviceDefinitionsRequestValidationError"
+func (e ListEndDeviceModelsRequestValidationError) ErrorName() string {
+	return "ListEndDeviceModelsRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e ListEndDeviceDefinitionsRequestValidationError) Error() string {
+func (e ListEndDeviceModelsRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -610,14 +592,14 @@ func (e ListEndDeviceDefinitionsRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sListEndDeviceDefinitionsRequest.%s: %s%s",
+		"invalid %sListEndDeviceModelsRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = ListEndDeviceDefinitionsRequestValidationError{}
+var _ error = ListEndDeviceModelsRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -625,9 +607,9 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = ListEndDeviceDefinitionsRequestValidationError{}
+} = ListEndDeviceModelsRequestValidationError{}
 
-var _ListEndDeviceDefinitionsRequest_OrderBy_InLookup = map[string]struct{}{
+var _ListEndDeviceModelsRequest_OrderBy_InLookup = map[string]struct{}{
 	"":          {},
 	"brand_id":  {},
 	"-brand_id": {},
@@ -734,30 +716,30 @@ var _ interface {
 	ErrorName() string
 } = ListEndDeviceBrandsResponseValidationError{}
 
-// ValidateFields checks the field values on ListEndDeviceDefinitionsResponse
-// with the rules defined in the proto definition for this message. If any
-// rules are violated, an error is returned.
-func (m *ListEndDeviceDefinitionsResponse) ValidateFields(paths ...string) error {
+// ValidateFields checks the field values on ListEndDeviceModelsResponse with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, an error is returned.
+func (m *ListEndDeviceModelsResponse) ValidateFields(paths ...string) error {
 	if m == nil {
 		return nil
 	}
 
 	if len(paths) == 0 {
-		paths = ListEndDeviceDefinitionsResponseFieldPathsNested
+		paths = ListEndDeviceModelsResponseFieldPathsNested
 	}
 
 	for name, subs := range _processPaths(append(paths[:0:0], paths...)) {
 		_ = subs
 		switch name {
-		case "definitions":
+		case "models":
 
-			for idx, item := range m.GetDefinitions() {
+			for idx, item := range m.GetModels() {
 				_, _ = idx, item
 
 				if v, ok := interface{}(item).(interface{ ValidateFields(...string) error }); ok {
 					if err := v.ValidateFields(subs...); err != nil {
-						return ListEndDeviceDefinitionsResponseValidationError{
-							field:  fmt.Sprintf("definitions[%v]", idx),
+						return ListEndDeviceModelsResponseValidationError{
+							field:  fmt.Sprintf("models[%v]", idx),
 							reason: "embedded message failed validation",
 							cause:  err,
 						}
@@ -767,7 +749,7 @@ func (m *ListEndDeviceDefinitionsResponse) ValidateFields(paths ...string) error
 			}
 
 		default:
-			return ListEndDeviceDefinitionsResponseValidationError{
+			return ListEndDeviceModelsResponseValidationError{
 				field:  name,
 				reason: "invalid field path",
 			}
@@ -776,10 +758,10 @@ func (m *ListEndDeviceDefinitionsResponse) ValidateFields(paths ...string) error
 	return nil
 }
 
-// ListEndDeviceDefinitionsResponseValidationError is the validation error
-// returned by ListEndDeviceDefinitionsResponse.ValidateFields if the
-// designated constraints aren't met.
-type ListEndDeviceDefinitionsResponseValidationError struct {
+// ListEndDeviceModelsResponseValidationError is the validation error returned
+// by ListEndDeviceModelsResponse.ValidateFields if the designated constraints
+// aren't met.
+type ListEndDeviceModelsResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -787,24 +769,24 @@ type ListEndDeviceDefinitionsResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e ListEndDeviceDefinitionsResponseValidationError) Field() string { return e.field }
+func (e ListEndDeviceModelsResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e ListEndDeviceDefinitionsResponseValidationError) Reason() string { return e.reason }
+func (e ListEndDeviceModelsResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e ListEndDeviceDefinitionsResponseValidationError) Cause() error { return e.cause }
+func (e ListEndDeviceModelsResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e ListEndDeviceDefinitionsResponseValidationError) Key() bool { return e.key }
+func (e ListEndDeviceModelsResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e ListEndDeviceDefinitionsResponseValidationError) ErrorName() string {
-	return "ListEndDeviceDefinitionsResponseValidationError"
+func (e ListEndDeviceModelsResponseValidationError) ErrorName() string {
+	return "ListEndDeviceModelsResponseValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e ListEndDeviceDefinitionsResponseValidationError) Error() string {
+func (e ListEndDeviceModelsResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -816,14 +798,14 @@ func (e ListEndDeviceDefinitionsResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sListEndDeviceDefinitionsResponse.%s: %s%s",
+		"invalid %sListEndDeviceModelsResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = ListEndDeviceDefinitionsResponseValidationError{}
+var _ error = ListEndDeviceModelsResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -831,18 +813,18 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = ListEndDeviceDefinitionsResponseValidationError{}
+} = ListEndDeviceModelsResponseValidationError{}
 
-// ValidateFields checks the field values on EndDeviceDefinition_Version with
-// the rules defined in the proto definition for this message. If any rules
-// are violated, an error is returned.
-func (m *EndDeviceDefinition_Version) ValidateFields(paths ...string) error {
+// ValidateFields checks the field values on EndDeviceModel_Version with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *EndDeviceModel_Version) ValidateFields(paths ...string) error {
 	if m == nil {
 		return nil
 	}
 
 	if len(paths) == 0 {
-		paths = EndDeviceDefinition_VersionFieldPathsNested
+		paths = EndDeviceModel_VersionFieldPathsNested
 	}
 
 	for name, subs := range _processPaths(append(paths[:0:0], paths...)) {
@@ -855,7 +837,7 @@ func (m *EndDeviceDefinition_Version) ValidateFields(paths ...string) error {
 		case "part_number":
 			// no validation rules for PartNumber
 		default:
-			return EndDeviceDefinition_VersionValidationError{
+			return EndDeviceModel_VersionValidationError{
 				field:  name,
 				reason: "invalid field path",
 			}
@@ -864,10 +846,9 @@ func (m *EndDeviceDefinition_Version) ValidateFields(paths ...string) error {
 	return nil
 }
 
-// EndDeviceDefinition_VersionValidationError is the validation error returned
-// by EndDeviceDefinition_Version.ValidateFields if the designated constraints
-// aren't met.
-type EndDeviceDefinition_VersionValidationError struct {
+// EndDeviceModel_VersionValidationError is the validation error returned by
+// EndDeviceModel_Version.ValidateFields if the designated constraints aren't met.
+type EndDeviceModel_VersionValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -875,24 +856,24 @@ type EndDeviceDefinition_VersionValidationError struct {
 }
 
 // Field function returns field value.
-func (e EndDeviceDefinition_VersionValidationError) Field() string { return e.field }
+func (e EndDeviceModel_VersionValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e EndDeviceDefinition_VersionValidationError) Reason() string { return e.reason }
+func (e EndDeviceModel_VersionValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e EndDeviceDefinition_VersionValidationError) Cause() error { return e.cause }
+func (e EndDeviceModel_VersionValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e EndDeviceDefinition_VersionValidationError) Key() bool { return e.key }
+func (e EndDeviceModel_VersionValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e EndDeviceDefinition_VersionValidationError) ErrorName() string {
-	return "EndDeviceDefinition_VersionValidationError"
+func (e EndDeviceModel_VersionValidationError) ErrorName() string {
+	return "EndDeviceModel_VersionValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e EndDeviceDefinition_VersionValidationError) Error() string {
+func (e EndDeviceModel_VersionValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -904,14 +885,14 @@ func (e EndDeviceDefinition_VersionValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sEndDeviceDefinition_Version.%s: %s%s",
+		"invalid %sEndDeviceModel_Version.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = EndDeviceDefinition_VersionValidationError{}
+var _ error = EndDeviceModel_VersionValidationError{}
 
 var _ interface {
 	Field() string
@@ -919,18 +900,18 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = EndDeviceDefinition_VersionValidationError{}
+} = EndDeviceModel_VersionValidationError{}
 
-// ValidateFields checks the field values on
-// EndDeviceDefinition_FirmwareVersion with the rules defined in the proto
-// definition for this message. If any rules are violated, an error is returned.
-func (m *EndDeviceDefinition_FirmwareVersion) ValidateFields(paths ...string) error {
+// ValidateFields checks the field values on EndDeviceModel_FirmwareVersion
+// with the rules defined in the proto definition for this message. If any
+// rules are violated, an error is returned.
+func (m *EndDeviceModel_FirmwareVersion) ValidateFields(paths ...string) error {
 	if m == nil {
 		return nil
 	}
 
 	if len(paths) == 0 {
-		paths = EndDeviceDefinition_FirmwareVersionFieldPathsNested
+		paths = EndDeviceModel_FirmwareVersionFieldPathsNested
 	}
 
 	for name, subs := range _processPaths(append(paths[:0:0], paths...)) {
@@ -951,7 +932,7 @@ func (m *EndDeviceDefinition_FirmwareVersion) ValidateFields(paths ...string) er
 
 				if v, ok := interface{}(val).(interface{ ValidateFields(...string) error }); ok {
 					if err := v.ValidateFields(subs...); err != nil {
-						return EndDeviceDefinition_FirmwareVersionValidationError{
+						return EndDeviceModel_FirmwareVersionValidationError{
 							field:  fmt.Sprintf("profiles[%v]", key),
 							reason: "embedded message failed validation",
 							cause:  err,
@@ -962,7 +943,7 @@ func (m *EndDeviceDefinition_FirmwareVersion) ValidateFields(paths ...string) er
 			}
 
 		default:
-			return EndDeviceDefinition_FirmwareVersionValidationError{
+			return EndDeviceModel_FirmwareVersionValidationError{
 				field:  name,
 				reason: "invalid field path",
 			}
@@ -971,10 +952,10 @@ func (m *EndDeviceDefinition_FirmwareVersion) ValidateFields(paths ...string) er
 	return nil
 }
 
-// EndDeviceDefinition_FirmwareVersionValidationError is the validation error
-// returned by EndDeviceDefinition_FirmwareVersion.ValidateFields if the
-// designated constraints aren't met.
-type EndDeviceDefinition_FirmwareVersionValidationError struct {
+// EndDeviceModel_FirmwareVersionValidationError is the validation error
+// returned by EndDeviceModel_FirmwareVersion.ValidateFields if the designated
+// constraints aren't met.
+type EndDeviceModel_FirmwareVersionValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -982,24 +963,24 @@ type EndDeviceDefinition_FirmwareVersionValidationError struct {
 }
 
 // Field function returns field value.
-func (e EndDeviceDefinition_FirmwareVersionValidationError) Field() string { return e.field }
+func (e EndDeviceModel_FirmwareVersionValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e EndDeviceDefinition_FirmwareVersionValidationError) Reason() string { return e.reason }
+func (e EndDeviceModel_FirmwareVersionValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e EndDeviceDefinition_FirmwareVersionValidationError) Cause() error { return e.cause }
+func (e EndDeviceModel_FirmwareVersionValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e EndDeviceDefinition_FirmwareVersionValidationError) Key() bool { return e.key }
+func (e EndDeviceModel_FirmwareVersionValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e EndDeviceDefinition_FirmwareVersionValidationError) ErrorName() string {
-	return "EndDeviceDefinition_FirmwareVersionValidationError"
+func (e EndDeviceModel_FirmwareVersionValidationError) ErrorName() string {
+	return "EndDeviceModel_FirmwareVersionValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e EndDeviceDefinition_FirmwareVersionValidationError) Error() string {
+func (e EndDeviceModel_FirmwareVersionValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1011,14 +992,14 @@ func (e EndDeviceDefinition_FirmwareVersionValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sEndDeviceDefinition_FirmwareVersion.%s: %s%s",
+		"invalid %sEndDeviceModel_FirmwareVersion.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = EndDeviceDefinition_FirmwareVersionValidationError{}
+var _ error = EndDeviceModel_FirmwareVersionValidationError{}
 
 var _ interface {
 	Field() string
@@ -1026,18 +1007,18 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = EndDeviceDefinition_FirmwareVersionValidationError{}
+} = EndDeviceModel_FirmwareVersionValidationError{}
 
-// ValidateFields checks the field values on EndDeviceDefinition_Dimensions
-// with the rules defined in the proto definition for this message. If any
-// rules are violated, an error is returned.
-func (m *EndDeviceDefinition_Dimensions) ValidateFields(paths ...string) error {
+// ValidateFields checks the field values on EndDeviceModel_Dimensions with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *EndDeviceModel_Dimensions) ValidateFields(paths ...string) error {
 	if m == nil {
 		return nil
 	}
 
 	if len(paths) == 0 {
-		paths = EndDeviceDefinition_DimensionsFieldPathsNested
+		paths = EndDeviceModel_DimensionsFieldPathsNested
 	}
 
 	for name, subs := range _processPaths(append(paths[:0:0], paths...)) {
@@ -1052,7 +1033,7 @@ func (m *EndDeviceDefinition_Dimensions) ValidateFields(paths ...string) error {
 		case "length":
 			// no validation rules for Length
 		default:
-			return EndDeviceDefinition_DimensionsValidationError{
+			return EndDeviceModel_DimensionsValidationError{
 				field:  name,
 				reason: "invalid field path",
 			}
@@ -1061,10 +1042,10 @@ func (m *EndDeviceDefinition_Dimensions) ValidateFields(paths ...string) error {
 	return nil
 }
 
-// EndDeviceDefinition_DimensionsValidationError is the validation error
-// returned by EndDeviceDefinition_Dimensions.ValidateFields if the designated
-// constraints aren't met.
-type EndDeviceDefinition_DimensionsValidationError struct {
+// EndDeviceModel_DimensionsValidationError is the validation error returned by
+// EndDeviceModel_Dimensions.ValidateFields if the designated constraints
+// aren't met.
+type EndDeviceModel_DimensionsValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1072,24 +1053,24 @@ type EndDeviceDefinition_DimensionsValidationError struct {
 }
 
 // Field function returns field value.
-func (e EndDeviceDefinition_DimensionsValidationError) Field() string { return e.field }
+func (e EndDeviceModel_DimensionsValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e EndDeviceDefinition_DimensionsValidationError) Reason() string { return e.reason }
+func (e EndDeviceModel_DimensionsValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e EndDeviceDefinition_DimensionsValidationError) Cause() error { return e.cause }
+func (e EndDeviceModel_DimensionsValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e EndDeviceDefinition_DimensionsValidationError) Key() bool { return e.key }
+func (e EndDeviceModel_DimensionsValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e EndDeviceDefinition_DimensionsValidationError) ErrorName() string {
-	return "EndDeviceDefinition_DimensionsValidationError"
+func (e EndDeviceModel_DimensionsValidationError) ErrorName() string {
+	return "EndDeviceModel_DimensionsValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e EndDeviceDefinition_DimensionsValidationError) Error() string {
+func (e EndDeviceModel_DimensionsValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1101,14 +1082,14 @@ func (e EndDeviceDefinition_DimensionsValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sEndDeviceDefinition_Dimensions.%s: %s%s",
+		"invalid %sEndDeviceModel_Dimensions.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = EndDeviceDefinition_DimensionsValidationError{}
+var _ error = EndDeviceModel_DimensionsValidationError{}
 
 var _ interface {
 	Field() string
@@ -1116,18 +1097,18 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = EndDeviceDefinition_DimensionsValidationError{}
+} = EndDeviceModel_DimensionsValidationError{}
 
-// ValidateFields checks the field values on EndDeviceDefinition_Battery with
-// the rules defined in the proto definition for this message. If any rules
-// are violated, an error is returned.
-func (m *EndDeviceDefinition_Battery) ValidateFields(paths ...string) error {
+// ValidateFields checks the field values on EndDeviceModel_Battery with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *EndDeviceModel_Battery) ValidateFields(paths ...string) error {
 	if m == nil {
 		return nil
 	}
 
 	if len(paths) == 0 {
-		paths = EndDeviceDefinition_BatteryFieldPathsNested
+		paths = EndDeviceModel_BatteryFieldPathsNested
 	}
 
 	for name, subs := range _processPaths(append(paths[:0:0], paths...)) {
@@ -1137,7 +1118,7 @@ func (m *EndDeviceDefinition_Battery) ValidateFields(paths ...string) error {
 
 			if v, ok := interface{}(m.GetReplaceable()).(interface{ ValidateFields(...string) error }); ok {
 				if err := v.ValidateFields(subs...); err != nil {
-					return EndDeviceDefinition_BatteryValidationError{
+					return EndDeviceModel_BatteryValidationError{
 						field:  "replaceable",
 						reason: "embedded message failed validation",
 						cause:  err,
@@ -1148,7 +1129,7 @@ func (m *EndDeviceDefinition_Battery) ValidateFields(paths ...string) error {
 		case "type":
 			// no validation rules for Type
 		default:
-			return EndDeviceDefinition_BatteryValidationError{
+			return EndDeviceModel_BatteryValidationError{
 				field:  name,
 				reason: "invalid field path",
 			}
@@ -1157,10 +1138,9 @@ func (m *EndDeviceDefinition_Battery) ValidateFields(paths ...string) error {
 	return nil
 }
 
-// EndDeviceDefinition_BatteryValidationError is the validation error returned
-// by EndDeviceDefinition_Battery.ValidateFields if the designated constraints
-// aren't met.
-type EndDeviceDefinition_BatteryValidationError struct {
+// EndDeviceModel_BatteryValidationError is the validation error returned by
+// EndDeviceModel_Battery.ValidateFields if the designated constraints aren't met.
+type EndDeviceModel_BatteryValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1168,24 +1148,24 @@ type EndDeviceDefinition_BatteryValidationError struct {
 }
 
 // Field function returns field value.
-func (e EndDeviceDefinition_BatteryValidationError) Field() string { return e.field }
+func (e EndDeviceModel_BatteryValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e EndDeviceDefinition_BatteryValidationError) Reason() string { return e.reason }
+func (e EndDeviceModel_BatteryValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e EndDeviceDefinition_BatteryValidationError) Cause() error { return e.cause }
+func (e EndDeviceModel_BatteryValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e EndDeviceDefinition_BatteryValidationError) Key() bool { return e.key }
+func (e EndDeviceModel_BatteryValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e EndDeviceDefinition_BatteryValidationError) ErrorName() string {
-	return "EndDeviceDefinition_BatteryValidationError"
+func (e EndDeviceModel_BatteryValidationError) ErrorName() string {
+	return "EndDeviceModel_BatteryValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e EndDeviceDefinition_BatteryValidationError) Error() string {
+func (e EndDeviceModel_BatteryValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1197,14 +1177,14 @@ func (e EndDeviceDefinition_BatteryValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sEndDeviceDefinition_Battery.%s: %s%s",
+		"invalid %sEndDeviceModel_Battery.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = EndDeviceDefinition_BatteryValidationError{}
+var _ error = EndDeviceModel_BatteryValidationError{}
 
 var _ interface {
 	Field() string
@@ -1212,18 +1192,18 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = EndDeviceDefinition_BatteryValidationError{}
+} = EndDeviceModel_BatteryValidationError{}
 
-// ValidateFields checks the field values on
-// EndDeviceDefinition_OperatingConditions with the rules defined in the proto
-// definition for this message. If any rules are violated, an error is returned.
-func (m *EndDeviceDefinition_OperatingConditions) ValidateFields(paths ...string) error {
+// ValidateFields checks the field values on EndDeviceModel_OperatingConditions
+// with the rules defined in the proto definition for this message. If any
+// rules are violated, an error is returned.
+func (m *EndDeviceModel_OperatingConditions) ValidateFields(paths ...string) error {
 	if m == nil {
 		return nil
 	}
 
 	if len(paths) == 0 {
-		paths = EndDeviceDefinition_OperatingConditionsFieldPathsNested
+		paths = EndDeviceModel_OperatingConditionsFieldPathsNested
 	}
 
 	for name, subs := range _processPaths(append(paths[:0:0], paths...)) {
@@ -1233,7 +1213,7 @@ func (m *EndDeviceDefinition_OperatingConditions) ValidateFields(paths ...string
 
 			if v, ok := interface{}(m.GetTemperature()).(interface{ ValidateFields(...string) error }); ok {
 				if err := v.ValidateFields(subs...); err != nil {
-					return EndDeviceDefinition_OperatingConditionsValidationError{
+					return EndDeviceModel_OperatingConditionsValidationError{
 						field:  "temperature",
 						reason: "embedded message failed validation",
 						cause:  err,
@@ -1245,7 +1225,7 @@ func (m *EndDeviceDefinition_OperatingConditions) ValidateFields(paths ...string
 
 			if v, ok := interface{}(m.GetRelativeHumidity()).(interface{ ValidateFields(...string) error }); ok {
 				if err := v.ValidateFields(subs...); err != nil {
-					return EndDeviceDefinition_OperatingConditionsValidationError{
+					return EndDeviceModel_OperatingConditionsValidationError{
 						field:  "relative_humidity",
 						reason: "embedded message failed validation",
 						cause:  err,
@@ -1254,7 +1234,7 @@ func (m *EndDeviceDefinition_OperatingConditions) ValidateFields(paths ...string
 			}
 
 		default:
-			return EndDeviceDefinition_OperatingConditionsValidationError{
+			return EndDeviceModel_OperatingConditionsValidationError{
 				field:  name,
 				reason: "invalid field path",
 			}
@@ -1263,10 +1243,10 @@ func (m *EndDeviceDefinition_OperatingConditions) ValidateFields(paths ...string
 	return nil
 }
 
-// EndDeviceDefinition_OperatingConditionsValidationError is the validation
-// error returned by EndDeviceDefinition_OperatingConditions.ValidateFields if
-// the designated constraints aren't met.
-type EndDeviceDefinition_OperatingConditionsValidationError struct {
+// EndDeviceModel_OperatingConditionsValidationError is the validation error
+// returned by EndDeviceModel_OperatingConditions.ValidateFields if the
+// designated constraints aren't met.
+type EndDeviceModel_OperatingConditionsValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1274,24 +1254,24 @@ type EndDeviceDefinition_OperatingConditionsValidationError struct {
 }
 
 // Field function returns field value.
-func (e EndDeviceDefinition_OperatingConditionsValidationError) Field() string { return e.field }
+func (e EndDeviceModel_OperatingConditionsValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e EndDeviceDefinition_OperatingConditionsValidationError) Reason() string { return e.reason }
+func (e EndDeviceModel_OperatingConditionsValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e EndDeviceDefinition_OperatingConditionsValidationError) Cause() error { return e.cause }
+func (e EndDeviceModel_OperatingConditionsValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e EndDeviceDefinition_OperatingConditionsValidationError) Key() bool { return e.key }
+func (e EndDeviceModel_OperatingConditionsValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e EndDeviceDefinition_OperatingConditionsValidationError) ErrorName() string {
-	return "EndDeviceDefinition_OperatingConditionsValidationError"
+func (e EndDeviceModel_OperatingConditionsValidationError) ErrorName() string {
+	return "EndDeviceModel_OperatingConditionsValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e EndDeviceDefinition_OperatingConditionsValidationError) Error() string {
+func (e EndDeviceModel_OperatingConditionsValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1303,14 +1283,14 @@ func (e EndDeviceDefinition_OperatingConditionsValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sEndDeviceDefinition_OperatingConditions.%s: %s%s",
+		"invalid %sEndDeviceModel_OperatingConditions.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = EndDeviceDefinition_OperatingConditionsValidationError{}
+var _ error = EndDeviceModel_OperatingConditionsValidationError{}
 
 var _ interface {
 	Field() string
@@ -1318,18 +1298,18 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = EndDeviceDefinition_OperatingConditionsValidationError{}
+} = EndDeviceModel_OperatingConditionsValidationError{}
 
-// ValidateFields checks the field values on EndDeviceDefinition_Photos with
-// the rules defined in the proto definition for this message. If any rules
-// are violated, an error is returned.
-func (m *EndDeviceDefinition_Photos) ValidateFields(paths ...string) error {
+// ValidateFields checks the field values on EndDeviceModel_Photos with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *EndDeviceModel_Photos) ValidateFields(paths ...string) error {
 	if m == nil {
 		return nil
 	}
 
 	if len(paths) == 0 {
-		paths = EndDeviceDefinition_PhotosFieldPathsNested
+		paths = EndDeviceModel_PhotosFieldPathsNested
 	}
 
 	for name, subs := range _processPaths(append(paths[:0:0], paths...)) {
@@ -1340,7 +1320,7 @@ func (m *EndDeviceDefinition_Photos) ValidateFields(paths ...string) error {
 		case "other":
 
 		default:
-			return EndDeviceDefinition_PhotosValidationError{
+			return EndDeviceModel_PhotosValidationError{
 				field:  name,
 				reason: "invalid field path",
 			}
@@ -1349,10 +1329,9 @@ func (m *EndDeviceDefinition_Photos) ValidateFields(paths ...string) error {
 	return nil
 }
 
-// EndDeviceDefinition_PhotosValidationError is the validation error returned
-// by EndDeviceDefinition_Photos.ValidateFields if the designated constraints
-// aren't met.
-type EndDeviceDefinition_PhotosValidationError struct {
+// EndDeviceModel_PhotosValidationError is the validation error returned by
+// EndDeviceModel_Photos.ValidateFields if the designated constraints aren't met.
+type EndDeviceModel_PhotosValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1360,24 +1339,24 @@ type EndDeviceDefinition_PhotosValidationError struct {
 }
 
 // Field function returns field value.
-func (e EndDeviceDefinition_PhotosValidationError) Field() string { return e.field }
+func (e EndDeviceModel_PhotosValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e EndDeviceDefinition_PhotosValidationError) Reason() string { return e.reason }
+func (e EndDeviceModel_PhotosValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e EndDeviceDefinition_PhotosValidationError) Cause() error { return e.cause }
+func (e EndDeviceModel_PhotosValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e EndDeviceDefinition_PhotosValidationError) Key() bool { return e.key }
+func (e EndDeviceModel_PhotosValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e EndDeviceDefinition_PhotosValidationError) ErrorName() string {
-	return "EndDeviceDefinition_PhotosValidationError"
+func (e EndDeviceModel_PhotosValidationError) ErrorName() string {
+	return "EndDeviceModel_PhotosValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e EndDeviceDefinition_PhotosValidationError) Error() string {
+func (e EndDeviceModel_PhotosValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1389,14 +1368,14 @@ func (e EndDeviceDefinition_PhotosValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sEndDeviceDefinition_Photos.%s: %s%s",
+		"invalid %sEndDeviceModel_Photos.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = EndDeviceDefinition_PhotosValidationError{}
+var _ error = EndDeviceModel_PhotosValidationError{}
 
 var _ interface {
 	Field() string
@@ -1404,18 +1383,18 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = EndDeviceDefinition_PhotosValidationError{}
+} = EndDeviceModel_PhotosValidationError{}
 
-// ValidateFields checks the field values on EndDeviceDefinition_Videos with
-// the rules defined in the proto definition for this message. If any rules
-// are violated, an error is returned.
-func (m *EndDeviceDefinition_Videos) ValidateFields(paths ...string) error {
+// ValidateFields checks the field values on EndDeviceModel_Videos with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *EndDeviceModel_Videos) ValidateFields(paths ...string) error {
 	if m == nil {
 		return nil
 	}
 
 	if len(paths) == 0 {
-		paths = EndDeviceDefinition_VideosFieldPathsNested
+		paths = EndDeviceModel_VideosFieldPathsNested
 	}
 
 	for name, subs := range _processPaths(append(paths[:0:0], paths...)) {
@@ -1426,7 +1405,7 @@ func (m *EndDeviceDefinition_Videos) ValidateFields(paths ...string) error {
 		case "other":
 
 		default:
-			return EndDeviceDefinition_VideosValidationError{
+			return EndDeviceModel_VideosValidationError{
 				field:  name,
 				reason: "invalid field path",
 			}
@@ -1435,10 +1414,9 @@ func (m *EndDeviceDefinition_Videos) ValidateFields(paths ...string) error {
 	return nil
 }
 
-// EndDeviceDefinition_VideosValidationError is the validation error returned
-// by EndDeviceDefinition_Videos.ValidateFields if the designated constraints
-// aren't met.
-type EndDeviceDefinition_VideosValidationError struct {
+// EndDeviceModel_VideosValidationError is the validation error returned by
+// EndDeviceModel_Videos.ValidateFields if the designated constraints aren't met.
+type EndDeviceModel_VideosValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1446,24 +1424,24 @@ type EndDeviceDefinition_VideosValidationError struct {
 }
 
 // Field function returns field value.
-func (e EndDeviceDefinition_VideosValidationError) Field() string { return e.field }
+func (e EndDeviceModel_VideosValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e EndDeviceDefinition_VideosValidationError) Reason() string { return e.reason }
+func (e EndDeviceModel_VideosValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e EndDeviceDefinition_VideosValidationError) Cause() error { return e.cause }
+func (e EndDeviceModel_VideosValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e EndDeviceDefinition_VideosValidationError) Key() bool { return e.key }
+func (e EndDeviceModel_VideosValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e EndDeviceDefinition_VideosValidationError) ErrorName() string {
-	return "EndDeviceDefinition_VideosValidationError"
+func (e EndDeviceModel_VideosValidationError) ErrorName() string {
+	return "EndDeviceModel_VideosValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e EndDeviceDefinition_VideosValidationError) Error() string {
+func (e EndDeviceModel_VideosValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1475,14 +1453,14 @@ func (e EndDeviceDefinition_VideosValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sEndDeviceDefinition_Videos.%s: %s%s",
+		"invalid %sEndDeviceModel_Videos.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = EndDeviceDefinition_VideosValidationError{}
+var _ error = EndDeviceModel_VideosValidationError{}
 
 var _ interface {
 	Field() string
@@ -1490,18 +1468,18 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = EndDeviceDefinition_VideosValidationError{}
+} = EndDeviceModel_VideosValidationError{}
 
-// ValidateFields checks the field values on EndDeviceDefinition_Compliances
-// with the rules defined in the proto definition for this message. If any
-// rules are violated, an error is returned.
-func (m *EndDeviceDefinition_Compliances) ValidateFields(paths ...string) error {
+// ValidateFields checks the field values on EndDeviceModel_Compliances with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, an error is returned.
+func (m *EndDeviceModel_Compliances) ValidateFields(paths ...string) error {
 	if m == nil {
 		return nil
 	}
 
 	if len(paths) == 0 {
-		paths = EndDeviceDefinition_CompliancesFieldPathsNested
+		paths = EndDeviceModel_CompliancesFieldPathsNested
 	}
 
 	for name, subs := range _processPaths(append(paths[:0:0], paths...)) {
@@ -1514,7 +1492,7 @@ func (m *EndDeviceDefinition_Compliances) ValidateFields(paths ...string) error 
 
 				if v, ok := interface{}(item).(interface{ ValidateFields(...string) error }); ok {
 					if err := v.ValidateFields(subs...); err != nil {
-						return EndDeviceDefinition_CompliancesValidationError{
+						return EndDeviceModel_CompliancesValidationError{
 							field:  fmt.Sprintf("safety[%v]", idx),
 							reason: "embedded message failed validation",
 							cause:  err,
@@ -1531,7 +1509,7 @@ func (m *EndDeviceDefinition_Compliances) ValidateFields(paths ...string) error 
 
 				if v, ok := interface{}(item).(interface{ ValidateFields(...string) error }); ok {
 					if err := v.ValidateFields(subs...); err != nil {
-						return EndDeviceDefinition_CompliancesValidationError{
+						return EndDeviceModel_CompliancesValidationError{
 							field:  fmt.Sprintf("radio_equipment[%v]", idx),
 							reason: "embedded message failed validation",
 							cause:  err,
@@ -1542,7 +1520,7 @@ func (m *EndDeviceDefinition_Compliances) ValidateFields(paths ...string) error 
 			}
 
 		default:
-			return EndDeviceDefinition_CompliancesValidationError{
+			return EndDeviceModel_CompliancesValidationError{
 				field:  name,
 				reason: "invalid field path",
 			}
@@ -1551,10 +1529,10 @@ func (m *EndDeviceDefinition_Compliances) ValidateFields(paths ...string) error 
 	return nil
 }
 
-// EndDeviceDefinition_CompliancesValidationError is the validation error
-// returned by EndDeviceDefinition_Compliances.ValidateFields if the
-// designated constraints aren't met.
-type EndDeviceDefinition_CompliancesValidationError struct {
+// EndDeviceModel_CompliancesValidationError is the validation error returned
+// by EndDeviceModel_Compliances.ValidateFields if the designated constraints
+// aren't met.
+type EndDeviceModel_CompliancesValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1562,24 +1540,24 @@ type EndDeviceDefinition_CompliancesValidationError struct {
 }
 
 // Field function returns field value.
-func (e EndDeviceDefinition_CompliancesValidationError) Field() string { return e.field }
+func (e EndDeviceModel_CompliancesValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e EndDeviceDefinition_CompliancesValidationError) Reason() string { return e.reason }
+func (e EndDeviceModel_CompliancesValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e EndDeviceDefinition_CompliancesValidationError) Cause() error { return e.cause }
+func (e EndDeviceModel_CompliancesValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e EndDeviceDefinition_CompliancesValidationError) Key() bool { return e.key }
+func (e EndDeviceModel_CompliancesValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e EndDeviceDefinition_CompliancesValidationError) ErrorName() string {
-	return "EndDeviceDefinition_CompliancesValidationError"
+func (e EndDeviceModel_CompliancesValidationError) ErrorName() string {
+	return "EndDeviceModel_CompliancesValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e EndDeviceDefinition_CompliancesValidationError) Error() string {
+func (e EndDeviceModel_CompliancesValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1591,14 +1569,14 @@ func (e EndDeviceDefinition_CompliancesValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sEndDeviceDefinition_Compliances.%s: %s%s",
+		"invalid %sEndDeviceModel_Compliances.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = EndDeviceDefinition_CompliancesValidationError{}
+var _ error = EndDeviceModel_CompliancesValidationError{}
 
 var _ interface {
 	Field() string
@@ -1606,18 +1584,18 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = EndDeviceDefinition_CompliancesValidationError{}
+} = EndDeviceModel_CompliancesValidationError{}
 
 // ValidateFields checks the field values on
-// EndDeviceDefinition_FirmwareVersion_Profile with the rules defined in the
-// proto definition for this message. If any rules are violated, an error is returned.
-func (m *EndDeviceDefinition_FirmwareVersion_Profile) ValidateFields(paths ...string) error {
+// EndDeviceModel_FirmwareVersion_Profile with the rules defined in the proto
+// definition for this message. If any rules are violated, an error is returned.
+func (m *EndDeviceModel_FirmwareVersion_Profile) ValidateFields(paths ...string) error {
 	if m == nil {
 		return nil
 	}
 
 	if len(paths) == 0 {
-		paths = EndDeviceDefinition_FirmwareVersion_ProfileFieldPathsNested
+		paths = EndDeviceModel_FirmwareVersion_ProfileFieldPathsNested
 	}
 
 	for name, subs := range _processPaths(append(paths[:0:0], paths...)) {
@@ -1630,7 +1608,7 @@ func (m *EndDeviceDefinition_FirmwareVersion_Profile) ValidateFields(paths ...st
 		case "codec_id":
 			// no validation rules for CodecID
 		default:
-			return EndDeviceDefinition_FirmwareVersion_ProfileValidationError{
+			return EndDeviceModel_FirmwareVersion_ProfileValidationError{
 				field:  name,
 				reason: "invalid field path",
 			}
@@ -1639,11 +1617,10 @@ func (m *EndDeviceDefinition_FirmwareVersion_Profile) ValidateFields(paths ...st
 	return nil
 }
 
-// EndDeviceDefinition_FirmwareVersion_ProfileValidationError is the validation
-// error returned by
-// EndDeviceDefinition_FirmwareVersion_Profile.ValidateFields if the
-// designated constraints aren't met.
-type EndDeviceDefinition_FirmwareVersion_ProfileValidationError struct {
+// EndDeviceModel_FirmwareVersion_ProfileValidationError is the validation
+// error returned by EndDeviceModel_FirmwareVersion_Profile.ValidateFields if
+// the designated constraints aren't met.
+type EndDeviceModel_FirmwareVersion_ProfileValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1651,24 +1628,24 @@ type EndDeviceDefinition_FirmwareVersion_ProfileValidationError struct {
 }
 
 // Field function returns field value.
-func (e EndDeviceDefinition_FirmwareVersion_ProfileValidationError) Field() string { return e.field }
+func (e EndDeviceModel_FirmwareVersion_ProfileValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e EndDeviceDefinition_FirmwareVersion_ProfileValidationError) Reason() string { return e.reason }
+func (e EndDeviceModel_FirmwareVersion_ProfileValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e EndDeviceDefinition_FirmwareVersion_ProfileValidationError) Cause() error { return e.cause }
+func (e EndDeviceModel_FirmwareVersion_ProfileValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e EndDeviceDefinition_FirmwareVersion_ProfileValidationError) Key() bool { return e.key }
+func (e EndDeviceModel_FirmwareVersion_ProfileValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e EndDeviceDefinition_FirmwareVersion_ProfileValidationError) ErrorName() string {
-	return "EndDeviceDefinition_FirmwareVersion_ProfileValidationError"
+func (e EndDeviceModel_FirmwareVersion_ProfileValidationError) ErrorName() string {
+	return "EndDeviceModel_FirmwareVersion_ProfileValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e EndDeviceDefinition_FirmwareVersion_ProfileValidationError) Error() string {
+func (e EndDeviceModel_FirmwareVersion_ProfileValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1680,14 +1657,14 @@ func (e EndDeviceDefinition_FirmwareVersion_ProfileValidationError) Error() stri
 	}
 
 	return fmt.Sprintf(
-		"invalid %sEndDeviceDefinition_FirmwareVersion_Profile.%s: %s%s",
+		"invalid %sEndDeviceModel_FirmwareVersion_Profile.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = EndDeviceDefinition_FirmwareVersion_ProfileValidationError{}
+var _ error = EndDeviceModel_FirmwareVersion_ProfileValidationError{}
 
 var _ interface {
 	Field() string
@@ -1695,19 +1672,18 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = EndDeviceDefinition_FirmwareVersion_ProfileValidationError{}
+} = EndDeviceModel_FirmwareVersion_ProfileValidationError{}
 
 // ValidateFields checks the field values on
-// EndDeviceDefinition_OperatingConditions_Limits with the rules defined in
-// the proto definition for this message. If any rules are violated, an error
-// is returned.
-func (m *EndDeviceDefinition_OperatingConditions_Limits) ValidateFields(paths ...string) error {
+// EndDeviceModel_OperatingConditions_Limits with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *EndDeviceModel_OperatingConditions_Limits) ValidateFields(paths ...string) error {
 	if m == nil {
 		return nil
 	}
 
 	if len(paths) == 0 {
-		paths = EndDeviceDefinition_OperatingConditions_LimitsFieldPathsNested
+		paths = EndDeviceModel_OperatingConditions_LimitsFieldPathsNested
 	}
 
 	for name, subs := range _processPaths(append(paths[:0:0], paths...)) {
@@ -1717,7 +1693,7 @@ func (m *EndDeviceDefinition_OperatingConditions_Limits) ValidateFields(paths ..
 
 			if v, ok := interface{}(m.GetMin()).(interface{ ValidateFields(...string) error }); ok {
 				if err := v.ValidateFields(subs...); err != nil {
-					return EndDeviceDefinition_OperatingConditions_LimitsValidationError{
+					return EndDeviceModel_OperatingConditions_LimitsValidationError{
 						field:  "min",
 						reason: "embedded message failed validation",
 						cause:  err,
@@ -1729,7 +1705,7 @@ func (m *EndDeviceDefinition_OperatingConditions_Limits) ValidateFields(paths ..
 
 			if v, ok := interface{}(m.GetMax()).(interface{ ValidateFields(...string) error }); ok {
 				if err := v.ValidateFields(subs...); err != nil {
-					return EndDeviceDefinition_OperatingConditions_LimitsValidationError{
+					return EndDeviceModel_OperatingConditions_LimitsValidationError{
 						field:  "max",
 						reason: "embedded message failed validation",
 						cause:  err,
@@ -1738,7 +1714,7 @@ func (m *EndDeviceDefinition_OperatingConditions_Limits) ValidateFields(paths ..
 			}
 
 		default:
-			return EndDeviceDefinition_OperatingConditions_LimitsValidationError{
+			return EndDeviceModel_OperatingConditions_LimitsValidationError{
 				field:  name,
 				reason: "invalid field path",
 			}
@@ -1747,11 +1723,10 @@ func (m *EndDeviceDefinition_OperatingConditions_Limits) ValidateFields(paths ..
 	return nil
 }
 
-// EndDeviceDefinition_OperatingConditions_LimitsValidationError is the
-// validation error returned by
-// EndDeviceDefinition_OperatingConditions_Limits.ValidateFields if the
-// designated constraints aren't met.
-type EndDeviceDefinition_OperatingConditions_LimitsValidationError struct {
+// EndDeviceModel_OperatingConditions_LimitsValidationError is the validation
+// error returned by EndDeviceModel_OperatingConditions_Limits.ValidateFields
+// if the designated constraints aren't met.
+type EndDeviceModel_OperatingConditions_LimitsValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1759,26 +1734,24 @@ type EndDeviceDefinition_OperatingConditions_LimitsValidationError struct {
 }
 
 // Field function returns field value.
-func (e EndDeviceDefinition_OperatingConditions_LimitsValidationError) Field() string { return e.field }
+func (e EndDeviceModel_OperatingConditions_LimitsValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e EndDeviceDefinition_OperatingConditions_LimitsValidationError) Reason() string {
-	return e.reason
-}
+func (e EndDeviceModel_OperatingConditions_LimitsValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e EndDeviceDefinition_OperatingConditions_LimitsValidationError) Cause() error { return e.cause }
+func (e EndDeviceModel_OperatingConditions_LimitsValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e EndDeviceDefinition_OperatingConditions_LimitsValidationError) Key() bool { return e.key }
+func (e EndDeviceModel_OperatingConditions_LimitsValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e EndDeviceDefinition_OperatingConditions_LimitsValidationError) ErrorName() string {
-	return "EndDeviceDefinition_OperatingConditions_LimitsValidationError"
+func (e EndDeviceModel_OperatingConditions_LimitsValidationError) ErrorName() string {
+	return "EndDeviceModel_OperatingConditions_LimitsValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e EndDeviceDefinition_OperatingConditions_LimitsValidationError) Error() string {
+func (e EndDeviceModel_OperatingConditions_LimitsValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1790,14 +1763,14 @@ func (e EndDeviceDefinition_OperatingConditions_LimitsValidationError) Error() s
 	}
 
 	return fmt.Sprintf(
-		"invalid %sEndDeviceDefinition_OperatingConditions_Limits.%s: %s%s",
+		"invalid %sEndDeviceModel_OperatingConditions_Limits.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = EndDeviceDefinition_OperatingConditions_LimitsValidationError{}
+var _ error = EndDeviceModel_OperatingConditions_LimitsValidationError{}
 
 var _ interface {
 	Field() string
@@ -1805,18 +1778,18 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = EndDeviceDefinition_OperatingConditions_LimitsValidationError{}
+} = EndDeviceModel_OperatingConditions_LimitsValidationError{}
 
 // ValidateFields checks the field values on
-// EndDeviceDefinition_Compliances_Compliance with the rules defined in the
-// proto definition for this message. If any rules are violated, an error is returned.
-func (m *EndDeviceDefinition_Compliances_Compliance) ValidateFields(paths ...string) error {
+// EndDeviceModel_Compliances_Compliance with the rules defined in the proto
+// definition for this message. If any rules are violated, an error is returned.
+func (m *EndDeviceModel_Compliances_Compliance) ValidateFields(paths ...string) error {
 	if m == nil {
 		return nil
 	}
 
 	if len(paths) == 0 {
-		paths = EndDeviceDefinition_Compliances_ComplianceFieldPathsNested
+		paths = EndDeviceModel_Compliances_ComplianceFieldPathsNested
 	}
 
 	for name, subs := range _processPaths(append(paths[:0:0], paths...)) {
@@ -1831,7 +1804,7 @@ func (m *EndDeviceDefinition_Compliances_Compliance) ValidateFields(paths ...str
 		case "version":
 			// no validation rules for Version
 		default:
-			return EndDeviceDefinition_Compliances_ComplianceValidationError{
+			return EndDeviceModel_Compliances_ComplianceValidationError{
 				field:  name,
 				reason: "invalid field path",
 			}
@@ -1840,10 +1813,10 @@ func (m *EndDeviceDefinition_Compliances_Compliance) ValidateFields(paths ...str
 	return nil
 }
 
-// EndDeviceDefinition_Compliances_ComplianceValidationError is the validation
-// error returned by EndDeviceDefinition_Compliances_Compliance.ValidateFields
-// if the designated constraints aren't met.
-type EndDeviceDefinition_Compliances_ComplianceValidationError struct {
+// EndDeviceModel_Compliances_ComplianceValidationError is the validation error
+// returned by EndDeviceModel_Compliances_Compliance.ValidateFields if the
+// designated constraints aren't met.
+type EndDeviceModel_Compliances_ComplianceValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1851,24 +1824,24 @@ type EndDeviceDefinition_Compliances_ComplianceValidationError struct {
 }
 
 // Field function returns field value.
-func (e EndDeviceDefinition_Compliances_ComplianceValidationError) Field() string { return e.field }
+func (e EndDeviceModel_Compliances_ComplianceValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e EndDeviceDefinition_Compliances_ComplianceValidationError) Reason() string { return e.reason }
+func (e EndDeviceModel_Compliances_ComplianceValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e EndDeviceDefinition_Compliances_ComplianceValidationError) Cause() error { return e.cause }
+func (e EndDeviceModel_Compliances_ComplianceValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e EndDeviceDefinition_Compliances_ComplianceValidationError) Key() bool { return e.key }
+func (e EndDeviceModel_Compliances_ComplianceValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e EndDeviceDefinition_Compliances_ComplianceValidationError) ErrorName() string {
-	return "EndDeviceDefinition_Compliances_ComplianceValidationError"
+func (e EndDeviceModel_Compliances_ComplianceValidationError) ErrorName() string {
+	return "EndDeviceModel_Compliances_ComplianceValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e EndDeviceDefinition_Compliances_ComplianceValidationError) Error() string {
+func (e EndDeviceModel_Compliances_ComplianceValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1880,14 +1853,14 @@ func (e EndDeviceDefinition_Compliances_ComplianceValidationError) Error() strin
 	}
 
 	return fmt.Sprintf(
-		"invalid %sEndDeviceDefinition_Compliances_Compliance.%s: %s%s",
+		"invalid %sEndDeviceModel_Compliances_Compliance.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = EndDeviceDefinition_Compliances_ComplianceValidationError{}
+var _ error = EndDeviceModel_Compliances_ComplianceValidationError{}
 
 var _ interface {
 	Field() string
@@ -1895,4 +1868,4 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = EndDeviceDefinition_Compliances_ComplianceValidationError{}
+} = EndDeviceModel_Compliances_ComplianceValidationError{}

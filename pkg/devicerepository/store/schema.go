@@ -23,14 +23,42 @@ import (
 	"go.thethings.network/lorawan-stack/v3/pkg/ttnpb"
 )
 
+// Vendor is an end device vendor.
+type Vendor struct {
+	ID       string   `yaml:"id"`
+	Name     string   `yaml:"name"`
+	VendorID uint32   `yaml:"vendorID"`
+	Draft    bool     `yaml:"draft,omitempty"`
+	Email    string   `yaml:"email"`
+	Website  string   `yaml:"website"`
+	PEN      uint32   `yaml:"pen"`
+	OUIs     []string `yaml:"ouis"`
+	Logo     string   `yaml:"logo"`
+}
+
+// ToPB creates a ttnpb.EndDeviceBrand protocol buffer from a Vendor.
+func (v Vendor) ToPB(paths ...string) (*ttnpb.EndDeviceBrand, error) {
+	pb := &ttnpb.EndDeviceBrand{
+		BrandID:                       v.ID,
+		Name:                          v.Name,
+		VendorID:                      v.VendorID,
+		Email:                         v.Email,
+		Website:                       v.Website,
+		Logo:                          v.Logo,
+		PrivateEnterpriseNumber:       v.PEN,
+		OrganizationUniqueIdentifiers: v.OUIs,
+	}
+
+	res := &ttnpb.EndDeviceBrand{}
+	if err := res.SetFields(pb, withDefaultBrandFields(paths)...); err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
 // VendorsIndex is the format for the vendor/index.yaml file.
 type VendorsIndex struct {
-	Vendors []struct {
-		ID       string `yaml:"id"`
-		Name     string `yaml:"name"`
-		VendorID int    `yaml:"vendorID"`
-		Draft    bool   `yaml:"draft,omitempty"`
-	} `yaml:"vendors"`
+	Vendors []Vendor `yaml:"vendors"`
 }
 
 // VendorEndDevicesIndex is the format of the `vendor/<vendor-id>/index.yaml` file.
@@ -38,8 +66,8 @@ type VendorEndDevicesIndex struct {
 	EndDevices []string `yaml:"endDevices"`
 }
 
-// EndDeviceDefinition is the format of the `vendor/<vendor-id>/<model-id>.yaml` file.
-type EndDeviceDefinition struct {
+// EndDeviceModel is the format of the `vendor/<vendor-id>/<model-id>.yaml` file.
+type EndDeviceModel struct {
 	Name             string `yaml:"name"`
 	Description      string `yaml:"description"`
 	HardwareVersions []struct {
@@ -110,12 +138,12 @@ type EndDeviceDefinition struct {
 }
 
 // ToPB converts an EndDefinitionDefinition to a Protocol Buffer.
-func (d EndDeviceDefinition) ToPB(id string, paths ...string) (*ttnpb.EndDeviceDefinition, error) {
-	pb := &ttnpb.EndDeviceDefinition{
+func (d EndDeviceModel) ToPB(id string, paths ...string) (*ttnpb.EndDeviceModel, error) {
+	pb := &ttnpb.EndDeviceModel{
 		ModelID:          id,
 		Name:             d.Name,
 		Description:      d.Description,
-		FirmwareVersions: make([]*ttnpb.EndDeviceDefinition_FirmwareVersion, 0, len(d.FirmwareVersions)),
+		FirmwareVersions: make([]*ttnpb.EndDeviceModel_FirmwareVersion, 0, len(d.FirmwareVersions)),
 		Sensors:          d.Sensors,
 		Weight:           d.Weight,
 		IPCode:           d.IPCode,
@@ -128,9 +156,9 @@ func (d EndDeviceDefinition) ToPB(id string, paths ...string) (*ttnpb.EndDeviceD
 
 	paths = withDefaultDefinitionFields(paths)
 	if hwVersions := d.HardwareVersions; hwVersions != nil {
-		pb.HardwareVersions = make([]*ttnpb.EndDeviceDefinition_Version, 0, len(hwVersions))
+		pb.HardwareVersions = make([]*ttnpb.EndDeviceModel_Version, 0, len(hwVersions))
 		for _, ver := range hwVersions {
-			pb.HardwareVersions = append(pb.HardwareVersions, &ttnpb.EndDeviceDefinition_Version{
+			pb.HardwareVersions = append(pb.HardwareVersions, &ttnpb.EndDeviceModel_Version{
 				Version:    ver.Version,
 				Numeric:    ver.Numeric,
 				PartNumber: ver.PartNumber,
@@ -138,14 +166,14 @@ func (d EndDeviceDefinition) ToPB(id string, paths ...string) (*ttnpb.EndDeviceD
 		}
 	}
 	for _, ver := range d.FirmwareVersions {
-		pbver := &ttnpb.EndDeviceDefinition_FirmwareVersion{
+		pbver := &ttnpb.EndDeviceModel_FirmwareVersion{
 			Version:          ver.Version,
 			Numeric:          ver.Numeric,
 			HardwareVersions: ver.HardwareVersions,
 		}
-		pbver.Profiles = make(map[string]*ttnpb.EndDeviceDefinition_FirmwareVersion_Profile, len(ver.Profiles))
+		pbver.Profiles = make(map[string]*ttnpb.EndDeviceModel_FirmwareVersion_Profile, len(ver.Profiles))
 		for region, profile := range ver.Profiles {
-			pbver.Profiles[RegionToBandID[region]] = &ttnpb.EndDeviceDefinition_FirmwareVersion_Profile{
+			pbver.Profiles[RegionToBandID[region]] = &ttnpb.EndDeviceModel_FirmwareVersion_Profile{
 				CodecID:          profile.Codec,
 				ProfileID:        profile.ID,
 				LoRaWANCertified: profile.LoRaWANCertified,
@@ -155,7 +183,7 @@ func (d EndDeviceDefinition) ToPB(id string, paths ...string) (*ttnpb.EndDeviceD
 	}
 
 	if dim := d.Dimensions; dim != nil {
-		pb.Dimensions = &ttnpb.EndDeviceDefinition_Dimensions{
+		pb.Dimensions = &ttnpb.EndDeviceModel_Dimensions{
 			Width:    d.Dimensions.Width,
 			Height:   d.Dimensions.Height,
 			Diameter: d.Dimensions.Diameter,
@@ -164,7 +192,7 @@ func (d EndDeviceDefinition) ToPB(id string, paths ...string) (*ttnpb.EndDeviceD
 	}
 
 	if battery := d.Battery; battery != nil {
-		pb.Battery = &ttnpb.EndDeviceDefinition_Battery{
+		pb.Battery = &ttnpb.EndDeviceModel_Battery{
 			Replaceable: &pbtypes.BoolValue{
 				Value: d.Battery.Replaceable,
 			},
@@ -173,10 +201,10 @@ func (d EndDeviceDefinition) ToPB(id string, paths ...string) (*ttnpb.EndDeviceD
 	}
 
 	if oc := d.OperatingConditions; oc != nil {
-		pb.OperatingConditions = &ttnpb.EndDeviceDefinition_OperatingConditions{}
+		pb.OperatingConditions = &ttnpb.EndDeviceModel_OperatingConditions{}
 
 		if rh := oc.RelativeHumidity; rh != nil {
-			pb.OperatingConditions.RelativeHumidity = &ttnpb.EndDeviceDefinition_OperatingConditions_Limits{
+			pb.OperatingConditions.RelativeHumidity = &ttnpb.EndDeviceModel_OperatingConditions_Limits{
 				Min: &pbtypes.FloatValue{
 					Value: rh.Min,
 				},
@@ -187,7 +215,7 @@ func (d EndDeviceDefinition) ToPB(id string, paths ...string) (*ttnpb.EndDeviceD
 		}
 
 		if temp := oc.Temperature; temp != nil {
-			pb.OperatingConditions.Temperature = &ttnpb.EndDeviceDefinition_OperatingConditions_Limits{
+			pb.OperatingConditions.Temperature = &ttnpb.EndDeviceModel_OperatingConditions_Limits{
 				Min: &pbtypes.FloatValue{
 					Value: temp.Min,
 				},
@@ -199,27 +227,27 @@ func (d EndDeviceDefinition) ToPB(id string, paths ...string) (*ttnpb.EndDeviceD
 	}
 
 	if p := d.Photos; p != nil {
-		pb.Photos = &ttnpb.EndDeviceDefinition_Photos{
+		pb.Photos = &ttnpb.EndDeviceModel_Photos{
 			Main:  p.Main,
 			Other: p.Other,
 		}
 	}
 
 	if v := d.Videos; v != nil {
-		pb.Videos = &ttnpb.EndDeviceDefinition_Videos{
+		pb.Videos = &ttnpb.EndDeviceModel_Videos{
 			Main:  v.Main,
 			Other: v.Other,
 		}
 	}
 
 	if cs := d.Compliances; cs != nil {
-		pb.Compliances = &ttnpb.EndDeviceDefinition_Compliances{
-			Safety:         make([]*ttnpb.EndDeviceDefinition_Compliances_Compliance, 0, len(cs.Safety)),
-			RadioEquipment: make([]*ttnpb.EndDeviceDefinition_Compliances_Compliance, 0, len(cs.RadioEquipment)),
+		pb.Compliances = &ttnpb.EndDeviceModel_Compliances{
+			Safety:         make([]*ttnpb.EndDeviceModel_Compliances_Compliance, 0, len(cs.Safety)),
+			RadioEquipment: make([]*ttnpb.EndDeviceModel_Compliances_Compliance, 0, len(cs.RadioEquipment)),
 		}
 
 		for _, c := range cs.Safety {
-			pb.Compliances.Safety = append(pb.Compliances.Safety, &ttnpb.EndDeviceDefinition_Compliances_Compliance{
+			pb.Compliances.Safety = append(pb.Compliances.Safety, &ttnpb.EndDeviceModel_Compliances_Compliance{
 				Version:  c.Version,
 				Body:     c.Body,
 				Standard: c.Standard,
@@ -227,7 +255,7 @@ func (d EndDeviceDefinition) ToPB(id string, paths ...string) (*ttnpb.EndDeviceD
 			})
 		}
 		for _, c := range cs.RadioEquipment {
-			pb.Compliances.RadioEquipment = append(pb.Compliances.RadioEquipment, &ttnpb.EndDeviceDefinition_Compliances_Compliance{
+			pb.Compliances.RadioEquipment = append(pb.Compliances.RadioEquipment, &ttnpb.EndDeviceModel_Compliances_Compliance{
 				Version:  c.Version,
 				Body:     c.Body,
 				Standard: c.Standard,
@@ -236,7 +264,7 @@ func (d EndDeviceDefinition) ToPB(id string, paths ...string) (*ttnpb.EndDeviceD
 		}
 	}
 
-	res := &ttnpb.EndDeviceDefinition{}
+	res := &ttnpb.EndDeviceModel{}
 	if err := res.SetFields(pb, paths...); err != nil {
 		return nil, err
 	}
@@ -276,7 +304,7 @@ var (
 )
 
 // ToTemplatePB returns a ttnpb.EndDeviceTemplate from an end device profile.
-func (p EndDeviceProfile) ToTemplatePB(ids *ttnpb.EndDeviceVersionIdentifiers, info *ttnpb.EndDeviceDefinition_FirmwareVersion_Profile) (*ttnpb.EndDeviceTemplate, error) {
+func (p EndDeviceProfile) ToTemplatePB(ids *ttnpb.EndDeviceVersionIdentifiers, info *ttnpb.EndDeviceModel_FirmwareVersion_Profile) (*ttnpb.EndDeviceTemplate, error) {
 	macVersion, ok := MACVersionToPB[p.MACVersion]
 	if !ok {
 		return nil, errUnknownMACVersion.WithAttributes("mac_version", p.MACVersion)

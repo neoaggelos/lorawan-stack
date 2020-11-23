@@ -24,10 +24,11 @@ type ListBrandsRequest struct {
 	Limit,
 	Offset *pbtypes.UInt32Value
 	OrderBy string
+	Paths   []string
 }
 
-// ListDefinitionsRequest is a request to list available end device definitions.
-type ListDefinitionsRequest struct {
+// ListModelsRequest is a request to list available end device model definitions.
+type ListModelsRequest struct {
 	BrandID,
 	ModelID string
 	Limit,
@@ -47,8 +48,8 @@ type DefinitionIdentifiers struct {
 type Store interface {
 	// ListBrands lists available end device vendors.
 	ListBrands(ListBrandsRequest) ([]*ttnpb.EndDeviceBrand, error)
-	// ListDefinitions lists available end device definitions.
-	ListDefinitions(ListDefinitionsRequest) ([]*ttnpb.EndDeviceDefinition, error)
+	// ListModels lists available end device definitions.
+	ListModels(ListModelsRequest) ([]*ttnpb.EndDeviceModel, error)
 	// GetTemplate retrieves an end device template for an end device definition.
 	GetTemplate(*ttnpb.EndDeviceVersionIdentifiers) (*ttnpb.EndDeviceTemplate, error)
 	// GetFormatters retrieves the message payload formatters for an end device template.

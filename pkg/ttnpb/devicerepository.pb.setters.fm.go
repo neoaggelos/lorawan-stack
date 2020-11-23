@@ -2,7 +2,11 @@
 
 package ttnpb
 
-import fmt "fmt"
+import (
+	fmt "fmt"
+
+	types "github.com/gogo/protobuf/types"
+)
 
 func (dst *EndDeviceBrand) SetFields(src *EndDeviceBrand, paths ...string) error {
 	for name, subs := range _processPaths(paths) {
@@ -17,15 +21,15 @@ func (dst *EndDeviceBrand) SetFields(src *EndDeviceBrand, paths ...string) error
 				var zero string
 				dst.BrandID = zero
 			}
-		case "brand_name":
+		case "name":
 			if len(subs) > 0 {
-				return fmt.Errorf("'brand_name' has no subfields, but %s were specified", subs)
+				return fmt.Errorf("'name' has no subfields, but %s were specified", subs)
 			}
 			if src != nil {
-				dst.BrandName = src.BrandName
+				dst.Name = src.Name
 			} else {
 				var zero string
-				dst.BrandName = zero
+				dst.Name = zero
 			}
 		case "private_enterprise_number":
 			if len(subs) > 0 {
@@ -51,10 +55,10 @@ func (dst *EndDeviceBrand) SetFields(src *EndDeviceBrand, paths ...string) error
 				return fmt.Errorf("'vendor_id' has no subfields, but %s were specified", subs)
 			}
 			if src != nil {
-				dst.VendorId = src.VendorId
+				dst.VendorID = src.VendorID
 			} else {
 				var zero uint32
-				dst.VendorId = zero
+				dst.VendorID = zero
 			}
 		case "website":
 			if len(subs) > 0 {
@@ -94,7 +98,7 @@ func (dst *EndDeviceBrand) SetFields(src *EndDeviceBrand, paths ...string) error
 	return nil
 }
 
-func (dst *EndDeviceDefinition) SetFields(src *EndDeviceDefinition, paths ...string) error {
+func (dst *EndDeviceModel) SetFields(src *EndDeviceModel, paths ...string) error {
 	for name, subs := range _processPaths(paths) {
 		switch name {
 		case "model_id":
@@ -156,7 +160,7 @@ func (dst *EndDeviceDefinition) SetFields(src *EndDeviceDefinition, paths ...str
 			}
 		case "dimensions":
 			if len(subs) > 0 {
-				var newDst, newSrc *EndDeviceDefinition_Dimensions
+				var newDst, newSrc *EndDeviceModel_Dimensions
 				if (src == nil || src.Dimensions == nil) && dst.Dimensions == nil {
 					continue
 				}
@@ -166,7 +170,7 @@ func (dst *EndDeviceDefinition) SetFields(src *EndDeviceDefinition, paths ...str
 				if dst.Dimensions != nil {
 					newDst = dst.Dimensions
 				} else {
-					newDst = &EndDeviceDefinition_Dimensions{}
+					newDst = &EndDeviceModel_Dimensions{}
 					dst.Dimensions = newDst
 				}
 				if err := newDst.SetFields(newSrc, subs...); err != nil {
@@ -191,7 +195,7 @@ func (dst *EndDeviceDefinition) SetFields(src *EndDeviceDefinition, paths ...str
 			}
 		case "battery":
 			if len(subs) > 0 {
-				var newDst, newSrc *EndDeviceDefinition_Battery
+				var newDst, newSrc *EndDeviceModel_Battery
 				if (src == nil || src.Battery == nil) && dst.Battery == nil {
 					continue
 				}
@@ -201,7 +205,7 @@ func (dst *EndDeviceDefinition) SetFields(src *EndDeviceDefinition, paths ...str
 				if dst.Battery != nil {
 					newDst = dst.Battery
 				} else {
-					newDst = &EndDeviceDefinition_Battery{}
+					newDst = &EndDeviceModel_Battery{}
 					dst.Battery = newDst
 				}
 				if err := newDst.SetFields(newSrc, subs...); err != nil {
@@ -216,7 +220,7 @@ func (dst *EndDeviceDefinition) SetFields(src *EndDeviceDefinition, paths ...str
 			}
 		case "operating_conditions":
 			if len(subs) > 0 {
-				var newDst, newSrc *EndDeviceDefinition_OperatingConditions
+				var newDst, newSrc *EndDeviceModel_OperatingConditions
 				if (src == nil || src.OperatingConditions == nil) && dst.OperatingConditions == nil {
 					continue
 				}
@@ -226,7 +230,7 @@ func (dst *EndDeviceDefinition) SetFields(src *EndDeviceDefinition, paths ...str
 				if dst.OperatingConditions != nil {
 					newDst = dst.OperatingConditions
 				} else {
-					newDst = &EndDeviceDefinition_OperatingConditions{}
+					newDst = &EndDeviceModel_OperatingConditions{}
 					dst.OperatingConditions = newDst
 				}
 				if err := newDst.SetFields(newSrc, subs...); err != nil {
@@ -270,7 +274,7 @@ func (dst *EndDeviceDefinition) SetFields(src *EndDeviceDefinition, paths ...str
 			}
 		case "photos":
 			if len(subs) > 0 {
-				var newDst, newSrc *EndDeviceDefinition_Photos
+				var newDst, newSrc *EndDeviceModel_Photos
 				if (src == nil || src.Photos == nil) && dst.Photos == nil {
 					continue
 				}
@@ -280,7 +284,7 @@ func (dst *EndDeviceDefinition) SetFields(src *EndDeviceDefinition, paths ...str
 				if dst.Photos != nil {
 					newDst = dst.Photos
 				} else {
-					newDst = &EndDeviceDefinition_Photos{}
+					newDst = &EndDeviceModel_Photos{}
 					dst.Photos = newDst
 				}
 				if err := newDst.SetFields(newSrc, subs...); err != nil {
@@ -295,7 +299,7 @@ func (dst *EndDeviceDefinition) SetFields(src *EndDeviceDefinition, paths ...str
 			}
 		case "videos":
 			if len(subs) > 0 {
-				var newDst, newSrc *EndDeviceDefinition_Videos
+				var newDst, newSrc *EndDeviceModel_Videos
 				if (src == nil || src.Videos == nil) && dst.Videos == nil {
 					continue
 				}
@@ -305,7 +309,7 @@ func (dst *EndDeviceDefinition) SetFields(src *EndDeviceDefinition, paths ...str
 				if dst.Videos != nil {
 					newDst = dst.Videos
 				} else {
-					newDst = &EndDeviceDefinition_Videos{}
+					newDst = &EndDeviceModel_Videos{}
 					dst.Videos = newDst
 				}
 				if err := newDst.SetFields(newSrc, subs...); err != nil {
@@ -340,7 +344,7 @@ func (dst *EndDeviceDefinition) SetFields(src *EndDeviceDefinition, paths ...str
 			}
 		case "compliances":
 			if len(subs) > 0 {
-				var newDst, newSrc *EndDeviceDefinition_Compliances
+				var newDst, newSrc *EndDeviceModel_Compliances
 				if (src == nil || src.Compliances == nil) && dst.Compliances == nil {
 					continue
 				}
@@ -350,7 +354,7 @@ func (dst *EndDeviceDefinition) SetFields(src *EndDeviceDefinition, paths ...str
 				if dst.Compliances != nil {
 					newDst = dst.Compliances
 				} else {
-					newDst = &EndDeviceDefinition_Compliances{}
+					newDst = &EndDeviceModel_Compliances{}
 					dst.Compliances = newDst
 				}
 				if err := newDst.SetFields(newSrc, subs...); err != nil {
@@ -421,6 +425,26 @@ func (dst *ListEndDeviceBrandsRequest) SetFields(src *ListEndDeviceBrandsRequest
 				var zero string
 				dst.OrderBy = zero
 			}
+		case "search":
+			if len(subs) > 0 {
+				return fmt.Errorf("'search' has no subfields, but %s were specified", subs)
+			}
+			if src != nil {
+				dst.Search = src.Search
+			} else {
+				var zero string
+				dst.Search = zero
+			}
+		case "field_mask":
+			if len(subs) > 0 {
+				return fmt.Errorf("'field_mask' has no subfields, but %s were specified", subs)
+			}
+			if src != nil {
+				dst.FieldMask = src.FieldMask
+			} else {
+				var zero types.FieldMask
+				dst.FieldMask = zero
+			}
 
 		default:
 			return fmt.Errorf("invalid field: '%s'", name)
@@ -429,7 +453,7 @@ func (dst *ListEndDeviceBrandsRequest) SetFields(src *ListEndDeviceBrandsRequest
 	return nil
 }
 
-func (dst *ListEndDeviceDefinitionsRequest) SetFields(src *ListEndDeviceDefinitionsRequest, paths ...string) error {
+func (dst *ListEndDeviceModelsRequest) SetFields(src *ListEndDeviceModelsRequest, paths ...string) error {
 	for name, subs := range _processPaths(paths) {
 		switch name {
 		case "brand_id":
@@ -497,7 +521,8 @@ func (dst *ListEndDeviceDefinitionsRequest) SetFields(src *ListEndDeviceDefiniti
 			if src != nil {
 				dst.FieldMask = src.FieldMask
 			} else {
-				dst.FieldMask = nil
+				var zero types.FieldMask
+				dst.FieldMask = zero
 			}
 
 		default:
@@ -527,17 +552,17 @@ func (dst *ListEndDeviceBrandsResponse) SetFields(src *ListEndDeviceBrandsRespon
 	return nil
 }
 
-func (dst *ListEndDeviceDefinitionsResponse) SetFields(src *ListEndDeviceDefinitionsResponse, paths ...string) error {
+func (dst *ListEndDeviceModelsResponse) SetFields(src *ListEndDeviceModelsResponse, paths ...string) error {
 	for name, subs := range _processPaths(paths) {
 		switch name {
-		case "definitions":
+		case "models":
 			if len(subs) > 0 {
-				return fmt.Errorf("'definitions' has no subfields, but %s were specified", subs)
+				return fmt.Errorf("'models' has no subfields, but %s were specified", subs)
 			}
 			if src != nil {
-				dst.Definitions = src.Definitions
+				dst.Models = src.Models
 			} else {
-				dst.Definitions = nil
+				dst.Models = nil
 			}
 
 		default:
@@ -547,7 +572,7 @@ func (dst *ListEndDeviceDefinitionsResponse) SetFields(src *ListEndDeviceDefinit
 	return nil
 }
 
-func (dst *EndDeviceDefinition_Version) SetFields(src *EndDeviceDefinition_Version, paths ...string) error {
+func (dst *EndDeviceModel_Version) SetFields(src *EndDeviceModel_Version, paths ...string) error {
 	for name, subs := range _processPaths(paths) {
 		switch name {
 		case "version":
@@ -588,7 +613,7 @@ func (dst *EndDeviceDefinition_Version) SetFields(src *EndDeviceDefinition_Versi
 	return nil
 }
 
-func (dst *EndDeviceDefinition_FirmwareVersion) SetFields(src *EndDeviceDefinition_FirmwareVersion, paths ...string) error {
+func (dst *EndDeviceModel_FirmwareVersion) SetFields(src *EndDeviceModel_FirmwareVersion, paths ...string) error {
 	for name, subs := range _processPaths(paths) {
 		switch name {
 		case "version":
@@ -637,7 +662,7 @@ func (dst *EndDeviceDefinition_FirmwareVersion) SetFields(src *EndDeviceDefiniti
 	return nil
 }
 
-func (dst *EndDeviceDefinition_Dimensions) SetFields(src *EndDeviceDefinition_Dimensions, paths ...string) error {
+func (dst *EndDeviceModel_Dimensions) SetFields(src *EndDeviceModel_Dimensions, paths ...string) error {
 	for name, subs := range _processPaths(paths) {
 		switch name {
 		case "width":
@@ -688,7 +713,7 @@ func (dst *EndDeviceDefinition_Dimensions) SetFields(src *EndDeviceDefinition_Di
 	return nil
 }
 
-func (dst *EndDeviceDefinition_Battery) SetFields(src *EndDeviceDefinition_Battery, paths ...string) error {
+func (dst *EndDeviceModel_Battery) SetFields(src *EndDeviceModel_Battery, paths ...string) error {
 	for name, subs := range _processPaths(paths) {
 		switch name {
 		case "replaceable":
@@ -718,12 +743,12 @@ func (dst *EndDeviceDefinition_Battery) SetFields(src *EndDeviceDefinition_Batte
 	return nil
 }
 
-func (dst *EndDeviceDefinition_OperatingConditions) SetFields(src *EndDeviceDefinition_OperatingConditions, paths ...string) error {
+func (dst *EndDeviceModel_OperatingConditions) SetFields(src *EndDeviceModel_OperatingConditions, paths ...string) error {
 	for name, subs := range _processPaths(paths) {
 		switch name {
 		case "temperature":
 			if len(subs) > 0 {
-				var newDst, newSrc *EndDeviceDefinition_OperatingConditions_Limits
+				var newDst, newSrc *EndDeviceModel_OperatingConditions_Limits
 				if (src == nil || src.Temperature == nil) && dst.Temperature == nil {
 					continue
 				}
@@ -733,7 +758,7 @@ func (dst *EndDeviceDefinition_OperatingConditions) SetFields(src *EndDeviceDefi
 				if dst.Temperature != nil {
 					newDst = dst.Temperature
 				} else {
-					newDst = &EndDeviceDefinition_OperatingConditions_Limits{}
+					newDst = &EndDeviceModel_OperatingConditions_Limits{}
 					dst.Temperature = newDst
 				}
 				if err := newDst.SetFields(newSrc, subs...); err != nil {
@@ -748,7 +773,7 @@ func (dst *EndDeviceDefinition_OperatingConditions) SetFields(src *EndDeviceDefi
 			}
 		case "relative_humidity":
 			if len(subs) > 0 {
-				var newDst, newSrc *EndDeviceDefinition_OperatingConditions_Limits
+				var newDst, newSrc *EndDeviceModel_OperatingConditions_Limits
 				if (src == nil || src.RelativeHumidity == nil) && dst.RelativeHumidity == nil {
 					continue
 				}
@@ -758,7 +783,7 @@ func (dst *EndDeviceDefinition_OperatingConditions) SetFields(src *EndDeviceDefi
 				if dst.RelativeHumidity != nil {
 					newDst = dst.RelativeHumidity
 				} else {
-					newDst = &EndDeviceDefinition_OperatingConditions_Limits{}
+					newDst = &EndDeviceModel_OperatingConditions_Limits{}
 					dst.RelativeHumidity = newDst
 				}
 				if err := newDst.SetFields(newSrc, subs...); err != nil {
@@ -779,7 +804,7 @@ func (dst *EndDeviceDefinition_OperatingConditions) SetFields(src *EndDeviceDefi
 	return nil
 }
 
-func (dst *EndDeviceDefinition_Photos) SetFields(src *EndDeviceDefinition_Photos, paths ...string) error {
+func (dst *EndDeviceModel_Photos) SetFields(src *EndDeviceModel_Photos, paths ...string) error {
 	for name, subs := range _processPaths(paths) {
 		switch name {
 		case "main":
@@ -809,7 +834,7 @@ func (dst *EndDeviceDefinition_Photos) SetFields(src *EndDeviceDefinition_Photos
 	return nil
 }
 
-func (dst *EndDeviceDefinition_Videos) SetFields(src *EndDeviceDefinition_Videos, paths ...string) error {
+func (dst *EndDeviceModel_Videos) SetFields(src *EndDeviceModel_Videos, paths ...string) error {
 	for name, subs := range _processPaths(paths) {
 		switch name {
 		case "main":
@@ -839,7 +864,7 @@ func (dst *EndDeviceDefinition_Videos) SetFields(src *EndDeviceDefinition_Videos
 	return nil
 }
 
-func (dst *EndDeviceDefinition_Compliances) SetFields(src *EndDeviceDefinition_Compliances, paths ...string) error {
+func (dst *EndDeviceModel_Compliances) SetFields(src *EndDeviceModel_Compliances, paths ...string) error {
 	for name, subs := range _processPaths(paths) {
 		switch name {
 		case "safety":
@@ -868,7 +893,7 @@ func (dst *EndDeviceDefinition_Compliances) SetFields(src *EndDeviceDefinition_C
 	return nil
 }
 
-func (dst *EndDeviceDefinition_FirmwareVersion_Profile) SetFields(src *EndDeviceDefinition_FirmwareVersion_Profile, paths ...string) error {
+func (dst *EndDeviceModel_FirmwareVersion_Profile) SetFields(src *EndDeviceModel_FirmwareVersion_Profile, paths ...string) error {
 	for name, subs := range _processPaths(paths) {
 		switch name {
 		case "profile_id":
@@ -909,7 +934,7 @@ func (dst *EndDeviceDefinition_FirmwareVersion_Profile) SetFields(src *EndDevice
 	return nil
 }
 
-func (dst *EndDeviceDefinition_OperatingConditions_Limits) SetFields(src *EndDeviceDefinition_OperatingConditions_Limits, paths ...string) error {
+func (dst *EndDeviceModel_OperatingConditions_Limits) SetFields(src *EndDeviceModel_OperatingConditions_Limits, paths ...string) error {
 	for name, subs := range _processPaths(paths) {
 		switch name {
 		case "min":
@@ -938,7 +963,7 @@ func (dst *EndDeviceDefinition_OperatingConditions_Limits) SetFields(src *EndDev
 	return nil
 }
 
-func (dst *EndDeviceDefinition_Compliances_Compliance) SetFields(src *EndDeviceDefinition_Compliances_Compliance, paths ...string) error {
+func (dst *EndDeviceModel_Compliances_Compliance) SetFields(src *EndDeviceModel_Compliances_Compliance, paths ...string) error {
 	for name, subs := range _processPaths(paths) {
 		switch name {
 		case "body":

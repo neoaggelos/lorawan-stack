@@ -4,9 +4,9 @@ package ttnpb
 
 var EndDeviceBrandFieldPathsNested = []string{
 	"brand_id",
-	"brand_name",
 	"email",
 	"logo",
+	"name",
 	"organization_unique_identifiers",
 	"private_enterprise_number",
 	"vendor_id",
@@ -15,15 +15,15 @@ var EndDeviceBrandFieldPathsNested = []string{
 
 var EndDeviceBrandFieldPathsTopLevel = []string{
 	"brand_id",
-	"brand_name",
 	"email",
 	"logo",
+	"name",
 	"organization_unique_identifiers",
 	"private_enterprise_number",
 	"vendor_id",
 	"website",
 }
-var EndDeviceDefinitionFieldPathsNested = []string{
+var EndDeviceModelFieldPathsNested = []string{
 	"additional_radios",
 	"battery",
 	"battery.replaceable",
@@ -63,7 +63,7 @@ var EndDeviceDefinitionFieldPathsNested = []string{
 	"weight",
 }
 
-var EndDeviceDefinitionFieldPathsTopLevel = []string{
+var EndDeviceModelFieldPathsTopLevel = []string{
 	"additional_radios",
 	"battery",
 	"compliances",
@@ -86,18 +86,22 @@ var EndDeviceDefinitionFieldPathsTopLevel = []string{
 }
 var ListEndDeviceBrandsRequestFieldPathsNested = []string{
 	"brand_id",
+	"field_mask",
 	"limit",
 	"offset",
 	"order_by",
+	"search",
 }
 
 var ListEndDeviceBrandsRequestFieldPathsTopLevel = []string{
 	"brand_id",
+	"field_mask",
 	"limit",
 	"offset",
 	"order_by",
+	"search",
 }
-var ListEndDeviceDefinitionsRequestFieldPathsNested = []string{
+var ListEndDeviceModelsRequestFieldPathsNested = []string{
 	"brand_id",
 	"field_mask",
 	"limit",
@@ -107,7 +111,7 @@ var ListEndDeviceDefinitionsRequestFieldPathsNested = []string{
 	"search",
 }
 
-var ListEndDeviceDefinitionsRequestFieldPathsTopLevel = []string{
+var ListEndDeviceModelsRequestFieldPathsTopLevel = []string{
 	"brand_id",
 	"field_mask",
 	"limit",
@@ -123,60 +127,60 @@ var ListEndDeviceBrandsResponseFieldPathsNested = []string{
 var ListEndDeviceBrandsResponseFieldPathsTopLevel = []string{
 	"brands",
 }
-var ListEndDeviceDefinitionsResponseFieldPathsNested = []string{
-	"definitions",
+var ListEndDeviceModelsResponseFieldPathsNested = []string{
+	"models",
 }
 
-var ListEndDeviceDefinitionsResponseFieldPathsTopLevel = []string{
-	"definitions",
+var ListEndDeviceModelsResponseFieldPathsTopLevel = []string{
+	"models",
 }
-var EndDeviceDefinition_VersionFieldPathsNested = []string{
+var EndDeviceModel_VersionFieldPathsNested = []string{
 	"numeric",
 	"part_number",
 	"version",
 }
 
-var EndDeviceDefinition_VersionFieldPathsTopLevel = []string{
+var EndDeviceModel_VersionFieldPathsTopLevel = []string{
 	"numeric",
 	"part_number",
 	"version",
 }
-var EndDeviceDefinition_FirmwareVersionFieldPathsNested = []string{
+var EndDeviceModel_FirmwareVersionFieldPathsNested = []string{
 	"hardware_versions",
 	"numeric",
 	"profiles",
 	"version",
 }
 
-var EndDeviceDefinition_FirmwareVersionFieldPathsTopLevel = []string{
+var EndDeviceModel_FirmwareVersionFieldPathsTopLevel = []string{
 	"hardware_versions",
 	"numeric",
 	"profiles",
 	"version",
 }
-var EndDeviceDefinition_DimensionsFieldPathsNested = []string{
+var EndDeviceModel_DimensionsFieldPathsNested = []string{
 	"diameter",
 	"height",
 	"length",
 	"width",
 }
 
-var EndDeviceDefinition_DimensionsFieldPathsTopLevel = []string{
+var EndDeviceModel_DimensionsFieldPathsTopLevel = []string{
 	"diameter",
 	"height",
 	"length",
 	"width",
 }
-var EndDeviceDefinition_BatteryFieldPathsNested = []string{
+var EndDeviceModel_BatteryFieldPathsNested = []string{
 	"replaceable",
 	"type",
 }
 
-var EndDeviceDefinition_BatteryFieldPathsTopLevel = []string{
+var EndDeviceModel_BatteryFieldPathsTopLevel = []string{
 	"replaceable",
 	"type",
 }
-var EndDeviceDefinition_OperatingConditionsFieldPathsNested = []string{
+var EndDeviceModel_OperatingConditionsFieldPathsNested = []string{
 	"relative_humidity",
 	"relative_humidity.max",
 	"relative_humidity.min",
@@ -185,65 +189,65 @@ var EndDeviceDefinition_OperatingConditionsFieldPathsNested = []string{
 	"temperature.min",
 }
 
-var EndDeviceDefinition_OperatingConditionsFieldPathsTopLevel = []string{
+var EndDeviceModel_OperatingConditionsFieldPathsTopLevel = []string{
 	"relative_humidity",
 	"temperature",
 }
-var EndDeviceDefinition_PhotosFieldPathsNested = []string{
+var EndDeviceModel_PhotosFieldPathsNested = []string{
 	"main",
 	"other",
 }
 
-var EndDeviceDefinition_PhotosFieldPathsTopLevel = []string{
+var EndDeviceModel_PhotosFieldPathsTopLevel = []string{
 	"main",
 	"other",
 }
-var EndDeviceDefinition_VideosFieldPathsNested = []string{
+var EndDeviceModel_VideosFieldPathsNested = []string{
 	"main",
 	"other",
 }
 
-var EndDeviceDefinition_VideosFieldPathsTopLevel = []string{
+var EndDeviceModel_VideosFieldPathsTopLevel = []string{
 	"main",
 	"other",
 }
-var EndDeviceDefinition_CompliancesFieldPathsNested = []string{
+var EndDeviceModel_CompliancesFieldPathsNested = []string{
 	"radio_equipment",
 	"safety",
 }
 
-var EndDeviceDefinition_CompliancesFieldPathsTopLevel = []string{
+var EndDeviceModel_CompliancesFieldPathsTopLevel = []string{
 	"radio_equipment",
 	"safety",
 }
-var EndDeviceDefinition_FirmwareVersion_ProfileFieldPathsNested = []string{
+var EndDeviceModel_FirmwareVersion_ProfileFieldPathsNested = []string{
 	"codec_id",
 	"lorawan_certified",
 	"profile_id",
 }
 
-var EndDeviceDefinition_FirmwareVersion_ProfileFieldPathsTopLevel = []string{
+var EndDeviceModel_FirmwareVersion_ProfileFieldPathsTopLevel = []string{
 	"codec_id",
 	"lorawan_certified",
 	"profile_id",
 }
-var EndDeviceDefinition_OperatingConditions_LimitsFieldPathsNested = []string{
+var EndDeviceModel_OperatingConditions_LimitsFieldPathsNested = []string{
 	"max",
 	"min",
 }
 
-var EndDeviceDefinition_OperatingConditions_LimitsFieldPathsTopLevel = []string{
+var EndDeviceModel_OperatingConditions_LimitsFieldPathsTopLevel = []string{
 	"max",
 	"min",
 }
-var EndDeviceDefinition_Compliances_ComplianceFieldPathsNested = []string{
+var EndDeviceModel_Compliances_ComplianceFieldPathsNested = []string{
 	"body",
 	"norm",
 	"standard",
 	"version",
 }
 
-var EndDeviceDefinition_Compliances_ComplianceFieldPathsTopLevel = []string{
+var EndDeviceModel_Compliances_ComplianceFieldPathsTopLevel = []string{
 	"body",
 	"norm",
 	"standard",

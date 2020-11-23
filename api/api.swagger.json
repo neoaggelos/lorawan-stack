@@ -3315,6 +3315,24 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "search",
+            "description": "TODO: searching and field mask paths.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "field_mask.paths",
+            "description": "The set of field mask paths.",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
           }
         ],
         "tags": [
@@ -3369,6 +3387,24 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "search",
+            "description": "TODO: searching and field mask paths.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "field_mask.paths",
+            "description": "The set of field mask paths.",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
           }
         ],
         "tags": [
@@ -3376,14 +3412,14 @@
         ]
       }
     },
-    "/dr/brands/{brand_id}/definitions": {
+    "/dr/brands/{brand_id}/models": {
       "get": {
-        "operationId": "DeviceRepository_ListDefinitions",
+        "operationId": "DeviceRepository_ListModels",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v3ListEndDeviceDefinitionsResponse"
+              "$ref": "#/definitions/v3ListEndDeviceModelsResponse"
             }
           },
           "default": {
@@ -3455,14 +3491,14 @@
         ]
       }
     },
-    "/dr/brands/{brand_id}/models/{model_id}/definitions": {
+    "/dr/brands/{brand_id}/models/{model_id}": {
       "get": {
-        "operationId": "DeviceRepository_ListDefinitions2",
+        "operationId": "DeviceRepository_ListModels2",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v3ListEndDeviceDefinitionsResponse"
+              "$ref": "#/definitions/v3ListEndDeviceModelsResponse"
             }
           },
           "default": {
@@ -8397,7 +8433,7 @@
         }
       }
     },
-    "EndDeviceDefinitionBattery": {
+    "EndDeviceModelBattery": {
       "type": "object",
       "properties": {
         "replaceable": {
@@ -8408,7 +8444,7 @@
         }
       }
     },
-    "EndDeviceDefinitionCompliances": {
+    "EndDeviceModelCompliances": {
       "type": "object",
       "properties": {
         "safety": {
@@ -8425,7 +8461,7 @@
         }
       }
     },
-    "EndDeviceDefinitionDimensions": {
+    "EndDeviceModelDimensions": {
       "type": "object",
       "properties": {
         "width": {
@@ -8446,7 +8482,7 @@
         }
       }
     },
-    "EndDeviceDefinitionFirmwareVersion": {
+    "EndDeviceModelFirmwareVersion": {
       "type": "object",
       "properties": {
         "version": {
@@ -8470,7 +8506,7 @@
         }
       }
     },
-    "EndDeviceDefinitionOperatingConditions": {
+    "EndDeviceModelOperatingConditions": {
       "type": "object",
       "properties": {
         "temperature": {
@@ -8481,7 +8517,7 @@
         }
       }
     },
-    "EndDeviceDefinitionPhotos": {
+    "EndDeviceModelPhotos": {
       "type": "object",
       "properties": {
         "main": {
@@ -8495,7 +8531,7 @@
         }
       }
     },
-    "EndDeviceDefinitionVersion": {
+    "EndDeviceModelVersion": {
       "type": "object",
       "properties": {
         "version": {
@@ -8510,7 +8546,7 @@
         }
       }
     },
-    "EndDeviceDefinitionVideos": {
+    "EndDeviceModelVideos": {
       "type": "object",
       "properties": {
         "main": {
@@ -11368,7 +11404,7 @@
         "brand_id": {
           "type": "string"
         },
-        "brand_name": {
+        "name": {
           "type": "string"
         },
         "private_enterprise_number": {
@@ -11396,84 +11432,6 @@
         }
       }
     },
-    "v3EndDeviceDefinition": {
-      "type": "object",
-      "properties": {
-        "model_id": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "hardware_versions": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/EndDeviceDefinitionVersion"
-          }
-        },
-        "firmware_versions": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/EndDeviceDefinitionFirmwareVersion"
-          }
-        },
-        "sensors": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "dimensions": {
-          "$ref": "#/definitions/EndDeviceDefinitionDimensions"
-        },
-        "weight": {
-          "type": "number",
-          "format": "float"
-        },
-        "battery": {
-          "$ref": "#/definitions/EndDeviceDefinitionBattery"
-        },
-        "operating_conditions": {
-          "$ref": "#/definitions/EndDeviceDefinitionOperatingConditions"
-        },
-        "ip_code": {
-          "type": "string"
-        },
-        "key_provisioning": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "key_security": {
-          "type": "string"
-        },
-        "photos": {
-          "$ref": "#/definitions/EndDeviceDefinitionPhotos"
-        },
-        "videos": {
-          "$ref": "#/definitions/EndDeviceDefinitionVideos"
-        },
-        "product_url": {
-          "type": "string"
-        },
-        "datasheet_url": {
-          "type": "string"
-        },
-        "compliances": {
-          "$ref": "#/definitions/EndDeviceDefinitionCompliances"
-        },
-        "additional_radios": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "v3EndDeviceIdentifiers": {
       "type": "object",
       "properties": {
@@ -11497,6 +11455,84 @@
           "type": "string",
           "format": "byte",
           "description": "The LoRaWAN DevAddr."
+        }
+      }
+    },
+    "v3EndDeviceModel": {
+      "type": "object",
+      "properties": {
+        "model_id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "hardware_versions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EndDeviceModelVersion"
+          }
+        },
+        "firmware_versions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EndDeviceModelFirmwareVersion"
+          }
+        },
+        "sensors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dimensions": {
+          "$ref": "#/definitions/EndDeviceModelDimensions"
+        },
+        "weight": {
+          "type": "number",
+          "format": "float"
+        },
+        "battery": {
+          "$ref": "#/definitions/EndDeviceModelBattery"
+        },
+        "operating_conditions": {
+          "$ref": "#/definitions/EndDeviceModelOperatingConditions"
+        },
+        "ip_code": {
+          "type": "string"
+        },
+        "key_provisioning": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "key_security": {
+          "type": "string"
+        },
+        "photos": {
+          "$ref": "#/definitions/EndDeviceModelPhotos"
+        },
+        "videos": {
+          "$ref": "#/definitions/EndDeviceModelVideos"
+        },
+        "product_url": {
+          "type": "string"
+        },
+        "datasheet_url": {
+          "type": "string"
+        },
+        "compliances": {
+          "$ref": "#/definitions/EndDeviceModelCompliances"
+        },
+        "additional_radios": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },
@@ -12332,13 +12368,13 @@
         }
       }
     },
-    "v3ListEndDeviceDefinitionsResponse": {
+    "v3ListEndDeviceModelsResponse": {
       "type": "object",
       "properties": {
-        "definitions": {
+        "models": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/v3EndDeviceDefinition"
+            "$ref": "#/definitions/v3EndDeviceModel"
           }
         }
       }

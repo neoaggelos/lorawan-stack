@@ -65,10 +65,15 @@ func (s *remoteStore) ListBrands(req ListBrandsRequest) ([]*ttnpb.EndDeviceBrand
 
 	brands := make([]*ttnpb.EndDeviceBrand, 0, end-start)
 	for idx := start; idx < end; idx++ {
-		brands = append(brands, &ttnpb.EndDeviceBrand{
-			BrandID:   rawVendors.Vendors[idx].ID,
-			BrandName: rawVendors.Vendors[idx].Name,
-		})
+		// Skip draft vendors
+		if rawVendors.Vendors[idx].Draft {
+			continue
+		}
+		pb, err := rawVendors.Vendors[idx].ToPB(req.Paths...)
+		if err != nil {
+			return nil, err
+		}
+		brands = append(brands, pb)
 	}
 
 	return brands, nil
@@ -78,8 +83,8 @@ var (
 	errUnknownBrand = errors.DefineNotFound("unknown_brand", "unknown brand `{brand_id}`")
 )
 
-// ListDefinitions lists available end device definitions.
-func (s *remoteStore) ListDefinitions(req ListDefinitionsRequest) ([]*ttnpb.EndDeviceDefinition, error) {
+// ListModels lists available end device definitions.
+func (s *remoteStore) ListModels(req ListModelsRequest) ([]*ttnpb.EndDeviceModel, error) {
 	b, err := s.fetcher.File("vendor", req.BrandID, "index.yaml")
 	if err != nil {
 		return nil, errUnknownBrand.WithAttributes("brand_id", req.BrandID)
@@ -90,10 +95,10 @@ func (s *remoteStore) ListDefinitions(req ListDefinitionsRequest) ([]*ttnpb.EndD
 	}
 	start, end, ok := paginate(len(index.EndDevices), req.Limit, req.Offset)
 	if !ok {
-		return []*ttnpb.EndDeviceDefinition{}, nil
+		return []*ttnpb.EndDeviceModel{}, nil
 	}
 
-	defs := make([]*ttnpb.EndDeviceDefinition, 0, end-start)
+	defs := make([]*ttnpb.EndDeviceModel, 0, end-start)
 	for idx := start; idx < end; idx++ {
 		definitionID := index.EndDevices[idx]
 		if req.ModelID != "" && definitionID != req.ModelID {
@@ -103,7 +108,7 @@ func (s *remoteStore) ListDefinitions(req ListDefinitionsRequest) ([]*ttnpb.EndD
 		if err != nil {
 			return nil, err
 		}
-		definition := EndDeviceDefinition{}
+		definition := EndDeviceModel{}
 		if err := yaml.Unmarshal(b, &definition); err != nil {
 			return nil, err
 		}
@@ -122,7 +127,7 @@ var (
 
 // GetTemplate retrieves an end device template for an end device definition.
 func (s *remoteStore) GetTemplate(ids *ttnpb.EndDeviceVersionIdentifiers) (*ttnpb.EndDeviceTemplate, error) {
-	defs, err := s.ListDefinitions(ListDefinitionsRequest{
+	defs, err := s.ListModels(ListModelsRequest{
 		BrandID: ids.BrandID,
 		ModelID: ids.ModelID,
 		Paths: []string{
@@ -169,7 +174,7 @@ var (
 
 // GetFormatters retrieves the message payload formatters for an end device template
 func (s *remoteStore) GetFormatters(ids *ttnpb.EndDeviceVersionIdentifiers) (*ttnpb.MessagePayloadFormatters, error) {
-	defs, err := s.ListDefinitions(ListDefinitionsRequest{
+	defs, err := s.ListModels(ListModelsRequest{
 		BrandID: ids.BrandID,
 		ModelID: ids.ModelID,
 		Paths: []string{

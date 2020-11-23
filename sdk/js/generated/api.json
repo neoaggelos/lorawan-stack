@@ -7010,22 +7010,10 @@
               "longType": "string",
               "fullType": "string",
               "ismap": false,
-              "defaultValue": "",
-              "options": {
-                "validate.rules": [
-                  {
-                    "name": "string.max_len",
-                    "value": 36
-                  },
-                  {
-                    "name": "string.pattern",
-                    "value": "^[a-z0-9](?:[-]?[a-z0-9]){2,}$"
-                  }
-                ]
-              }
+              "defaultValue": ""
             },
             {
-              "name": "brand_name",
+              "name": "name",
               "description": "",
               "label": "",
               "type": "string",
@@ -7097,9 +7085,9 @@
           ]
         },
         {
-          "name": "EndDeviceDefinition",
-          "longName": "EndDeviceDefinition",
-          "fullName": "ttn.lorawan.v3.EndDeviceDefinition",
+          "name": "EndDeviceModel",
+          "longName": "EndDeviceModel",
+          "fullName": "ttn.lorawan.v3.EndDeviceModel",
           "description": "",
           "hasExtensions": false,
           "hasFields": true,
@@ -7140,8 +7128,8 @@
               "description": "",
               "label": "repeated",
               "type": "Version",
-              "longType": "EndDeviceDefinition.Version",
-              "fullType": "ttn.lorawan.v3.EndDeviceDefinition.Version",
+              "longType": "EndDeviceModel.Version",
+              "fullType": "ttn.lorawan.v3.EndDeviceModel.Version",
               "ismap": false,
               "defaultValue": ""
             },
@@ -7150,8 +7138,8 @@
               "description": "",
               "label": "repeated",
               "type": "FirmwareVersion",
-              "longType": "EndDeviceDefinition.FirmwareVersion",
-              "fullType": "ttn.lorawan.v3.EndDeviceDefinition.FirmwareVersion",
+              "longType": "EndDeviceModel.FirmwareVersion",
+              "fullType": "ttn.lorawan.v3.EndDeviceModel.FirmwareVersion",
               "ismap": false,
               "defaultValue": ""
             },
@@ -7170,8 +7158,8 @@
               "description": "",
               "label": "",
               "type": "Dimensions",
-              "longType": "EndDeviceDefinition.Dimensions",
-              "fullType": "ttn.lorawan.v3.EndDeviceDefinition.Dimensions",
+              "longType": "EndDeviceModel.Dimensions",
+              "fullType": "ttn.lorawan.v3.EndDeviceModel.Dimensions",
               "ismap": false,
               "defaultValue": ""
             },
@@ -7190,8 +7178,8 @@
               "description": "",
               "label": "",
               "type": "Battery",
-              "longType": "EndDeviceDefinition.Battery",
-              "fullType": "ttn.lorawan.v3.EndDeviceDefinition.Battery",
+              "longType": "EndDeviceModel.Battery",
+              "fullType": "ttn.lorawan.v3.EndDeviceModel.Battery",
               "ismap": false,
               "defaultValue": ""
             },
@@ -7200,8 +7188,8 @@
               "description": "",
               "label": "",
               "type": "OperatingConditions",
-              "longType": "EndDeviceDefinition.OperatingConditions",
-              "fullType": "ttn.lorawan.v3.EndDeviceDefinition.OperatingConditions",
+              "longType": "EndDeviceModel.OperatingConditions",
+              "fullType": "ttn.lorawan.v3.EndDeviceModel.OperatingConditions",
               "ismap": false,
               "defaultValue": ""
             },
@@ -7240,8 +7228,8 @@
               "description": "",
               "label": "",
               "type": "Photos",
-              "longType": "EndDeviceDefinition.Photos",
-              "fullType": "ttn.lorawan.v3.EndDeviceDefinition.Photos",
+              "longType": "EndDeviceModel.Photos",
+              "fullType": "ttn.lorawan.v3.EndDeviceModel.Photos",
               "ismap": false,
               "defaultValue": ""
             },
@@ -7250,8 +7238,8 @@
               "description": "",
               "label": "",
               "type": "Videos",
-              "longType": "EndDeviceDefinition.Videos",
-              "fullType": "ttn.lorawan.v3.EndDeviceDefinition.Videos",
+              "longType": "EndDeviceModel.Videos",
+              "fullType": "ttn.lorawan.v3.EndDeviceModel.Videos",
               "ismap": false,
               "defaultValue": ""
             },
@@ -7280,8 +7268,8 @@
               "description": "",
               "label": "",
               "type": "Compliances",
-              "longType": "EndDeviceDefinition.Compliances",
-              "fullType": "ttn.lorawan.v3.EndDeviceDefinition.Compliances",
+              "longType": "EndDeviceModel.Compliances",
+              "fullType": "ttn.lorawan.v3.EndDeviceModel.Compliances",
               "ismap": false,
               "defaultValue": ""
             },
@@ -7299,8 +7287,8 @@
         },
         {
           "name": "Battery",
-          "longName": "EndDeviceDefinition.Battery",
-          "fullName": "ttn.lorawan.v3.EndDeviceDefinition.Battery",
+          "longName": "EndDeviceModel.Battery",
+          "fullName": "ttn.lorawan.v3.EndDeviceModel.Battery",
           "description": "",
           "hasExtensions": false,
           "hasFields": true,
@@ -7330,8 +7318,8 @@
         },
         {
           "name": "Compliances",
-          "longName": "EndDeviceDefinition.Compliances",
-          "fullName": "ttn.lorawan.v3.EndDeviceDefinition.Compliances",
+          "longName": "EndDeviceModel.Compliances",
+          "fullName": "ttn.lorawan.v3.EndDeviceModel.Compliances",
           "description": "",
           "hasExtensions": false,
           "hasFields": true,
@@ -7342,8 +7330,8 @@
               "description": "",
               "label": "repeated",
               "type": "Compliance",
-              "longType": "EndDeviceDefinition.Compliances.Compliance",
-              "fullType": "ttn.lorawan.v3.EndDeviceDefinition.Compliances.Compliance",
+              "longType": "EndDeviceModel.Compliances.Compliance",
+              "fullType": "ttn.lorawan.v3.EndDeviceModel.Compliances.Compliance",
               "ismap": false,
               "defaultValue": ""
             },
@@ -7352,8 +7340,8 @@
               "description": "",
               "label": "repeated",
               "type": "Compliance",
-              "longType": "EndDeviceDefinition.Compliances.Compliance",
-              "fullType": "ttn.lorawan.v3.EndDeviceDefinition.Compliances.Compliance",
+              "longType": "EndDeviceModel.Compliances.Compliance",
+              "fullType": "ttn.lorawan.v3.EndDeviceModel.Compliances.Compliance",
               "ismap": false,
               "defaultValue": ""
             }
@@ -7361,8 +7349,8 @@
         },
         {
           "name": "Compliance",
-          "longName": "EndDeviceDefinition.Compliances.Compliance",
-          "fullName": "ttn.lorawan.v3.EndDeviceDefinition.Compliances.Compliance",
+          "longName": "EndDeviceModel.Compliances.Compliance",
+          "fullName": "ttn.lorawan.v3.EndDeviceModel.Compliances.Compliance",
           "description": "",
           "hasExtensions": false,
           "hasFields": true,
@@ -7412,8 +7400,8 @@
         },
         {
           "name": "Dimensions",
-          "longName": "EndDeviceDefinition.Dimensions",
-          "fullName": "ttn.lorawan.v3.EndDeviceDefinition.Dimensions",
+          "longName": "EndDeviceModel.Dimensions",
+          "fullName": "ttn.lorawan.v3.EndDeviceModel.Dimensions",
           "description": "",
           "hasExtensions": false,
           "hasFields": true,
@@ -7463,8 +7451,8 @@
         },
         {
           "name": "FirmwareVersion",
-          "longName": "EndDeviceDefinition.FirmwareVersion",
-          "fullName": "ttn.lorawan.v3.EndDeviceDefinition.FirmwareVersion",
+          "longName": "EndDeviceModel.FirmwareVersion",
+          "fullName": "ttn.lorawan.v3.EndDeviceModel.FirmwareVersion",
           "description": "",
           "hasExtensions": false,
           "hasFields": true,
@@ -7505,8 +7493,8 @@
               "description": "",
               "label": "repeated",
               "type": "ProfilesEntry",
-              "longType": "EndDeviceDefinition.FirmwareVersion.ProfilesEntry",
-              "fullType": "ttn.lorawan.v3.EndDeviceDefinition.FirmwareVersion.ProfilesEntry",
+              "longType": "EndDeviceModel.FirmwareVersion.ProfilesEntry",
+              "fullType": "ttn.lorawan.v3.EndDeviceModel.FirmwareVersion.ProfilesEntry",
               "ismap": true,
               "defaultValue": ""
             }
@@ -7514,8 +7502,8 @@
         },
         {
           "name": "Profile",
-          "longName": "EndDeviceDefinition.FirmwareVersion.Profile",
-          "fullName": "ttn.lorawan.v3.EndDeviceDefinition.FirmwareVersion.Profile",
+          "longName": "EndDeviceModel.FirmwareVersion.Profile",
+          "fullName": "ttn.lorawan.v3.EndDeviceModel.FirmwareVersion.Profile",
           "description": "",
           "hasExtensions": false,
           "hasFields": true,
@@ -7555,8 +7543,8 @@
         },
         {
           "name": "ProfilesEntry",
-          "longName": "EndDeviceDefinition.FirmwareVersion.ProfilesEntry",
-          "fullName": "ttn.lorawan.v3.EndDeviceDefinition.FirmwareVersion.ProfilesEntry",
+          "longName": "EndDeviceModel.FirmwareVersion.ProfilesEntry",
+          "fullName": "ttn.lorawan.v3.EndDeviceModel.FirmwareVersion.ProfilesEntry",
           "description": "",
           "hasExtensions": false,
           "hasFields": true,
@@ -7577,8 +7565,8 @@
               "description": "",
               "label": "",
               "type": "Profile",
-              "longType": "EndDeviceDefinition.FirmwareVersion.Profile",
-              "fullType": "ttn.lorawan.v3.EndDeviceDefinition.FirmwareVersion.Profile",
+              "longType": "EndDeviceModel.FirmwareVersion.Profile",
+              "fullType": "ttn.lorawan.v3.EndDeviceModel.FirmwareVersion.Profile",
               "ismap": false,
               "defaultValue": ""
             }
@@ -7586,8 +7574,8 @@
         },
         {
           "name": "OperatingConditions",
-          "longName": "EndDeviceDefinition.OperatingConditions",
-          "fullName": "ttn.lorawan.v3.EndDeviceDefinition.OperatingConditions",
+          "longName": "EndDeviceModel.OperatingConditions",
+          "fullName": "ttn.lorawan.v3.EndDeviceModel.OperatingConditions",
           "description": "",
           "hasExtensions": false,
           "hasFields": true,
@@ -7598,8 +7586,8 @@
               "description": "",
               "label": "",
               "type": "Limits",
-              "longType": "EndDeviceDefinition.OperatingConditions.Limits",
-              "fullType": "ttn.lorawan.v3.EndDeviceDefinition.OperatingConditions.Limits",
+              "longType": "EndDeviceModel.OperatingConditions.Limits",
+              "fullType": "ttn.lorawan.v3.EndDeviceModel.OperatingConditions.Limits",
               "ismap": false,
               "defaultValue": ""
             },
@@ -7608,8 +7596,8 @@
               "description": "",
               "label": "",
               "type": "Limits",
-              "longType": "EndDeviceDefinition.OperatingConditions.Limits",
-              "fullType": "ttn.lorawan.v3.EndDeviceDefinition.OperatingConditions.Limits",
+              "longType": "EndDeviceModel.OperatingConditions.Limits",
+              "fullType": "ttn.lorawan.v3.EndDeviceModel.OperatingConditions.Limits",
               "ismap": false,
               "defaultValue": ""
             }
@@ -7617,8 +7605,8 @@
         },
         {
           "name": "Limits",
-          "longName": "EndDeviceDefinition.OperatingConditions.Limits",
-          "fullName": "ttn.lorawan.v3.EndDeviceDefinition.OperatingConditions.Limits",
+          "longName": "EndDeviceModel.OperatingConditions.Limits",
+          "fullName": "ttn.lorawan.v3.EndDeviceModel.OperatingConditions.Limits",
           "description": "",
           "hasExtensions": false,
           "hasFields": true,
@@ -7648,8 +7636,8 @@
         },
         {
           "name": "Photos",
-          "longName": "EndDeviceDefinition.Photos",
-          "fullName": "ttn.lorawan.v3.EndDeviceDefinition.Photos",
+          "longName": "EndDeviceModel.Photos",
+          "fullName": "ttn.lorawan.v3.EndDeviceModel.Photos",
           "description": "",
           "hasExtensions": false,
           "hasFields": true,
@@ -7679,8 +7667,8 @@
         },
         {
           "name": "Version",
-          "longName": "EndDeviceDefinition.Version",
-          "fullName": "ttn.lorawan.v3.EndDeviceDefinition.Version",
+          "longName": "EndDeviceModel.Version",
+          "fullName": "ttn.lorawan.v3.EndDeviceModel.Version",
           "description": "",
           "hasExtensions": false,
           "hasFields": true,
@@ -7720,8 +7708,8 @@
         },
         {
           "name": "Videos",
-          "longName": "EndDeviceDefinition.Videos",
-          "fullName": "ttn.lorawan.v3.EndDeviceDefinition.Videos",
+          "longName": "EndDeviceModel.Videos",
+          "fullName": "ttn.lorawan.v3.EndDeviceModel.Videos",
           "description": "",
           "hasExtensions": false,
           "hasFields": true,
@@ -7766,19 +7754,7 @@
               "longType": "string",
               "fullType": "string",
               "ismap": false,
-              "defaultValue": "",
-              "options": {
-                "validate.rules": [
-                  {
-                    "name": "string.max_len",
-                    "value": 36
-                  },
-                  {
-                    "name": "string.pattern",
-                    "value": "^[a-z0-9](?:[-]?[a-z0-9]){2,}$"
-                  }
-                ]
-              }
+              "defaultValue": ""
             },
             {
               "name": "limit",
@@ -7816,11 +7792,33 @@
                     "value": [
                       "",
                       "brand_id",
-                      "-brand_id"
+                      "-brand_id",
+                      "name",
+                      "-name"
                     ]
                   }
                 ]
               }
+            },
+            {
+              "name": "search",
+              "description": "TODO: searching and field mask paths.",
+              "label": "",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            },
+            {
+              "name": "field_mask",
+              "description": "",
+              "label": "",
+              "type": "FieldMask",
+              "longType": "google.protobuf.FieldMask",
+              "fullType": "google.protobuf.FieldMask",
+              "ismap": false,
+              "defaultValue": ""
             }
           ]
         },
@@ -7846,9 +7844,9 @@
           ]
         },
         {
-          "name": "ListEndDeviceDefinitionsRequest",
-          "longName": "ListEndDeviceDefinitionsRequest",
-          "fullName": "ttn.lorawan.v3.ListEndDeviceDefinitionsRequest",
+          "name": "ListEndDeviceModelsRequest",
+          "longName": "ListEndDeviceModelsRequest",
+          "fullName": "ttn.lorawan.v3.ListEndDeviceModelsRequest",
           "description": "",
           "hasExtensions": false,
           "hasFields": true,
@@ -7941,21 +7939,21 @@
           ]
         },
         {
-          "name": "ListEndDeviceDefinitionsResponse",
-          "longName": "ListEndDeviceDefinitionsResponse",
-          "fullName": "ttn.lorawan.v3.ListEndDeviceDefinitionsResponse",
+          "name": "ListEndDeviceModelsResponse",
+          "longName": "ListEndDeviceModelsResponse",
+          "fullName": "ttn.lorawan.v3.ListEndDeviceModelsResponse",
           "description": "",
           "hasExtensions": false,
           "hasFields": true,
           "extensions": [],
           "fields": [
             {
-              "name": "definitions",
+              "name": "models",
               "description": "",
               "label": "repeated",
-              "type": "EndDeviceDefinition",
-              "longType": "EndDeviceDefinition",
-              "fullType": "ttn.lorawan.v3.EndDeviceDefinition",
+              "type": "EndDeviceModel",
+              "longType": "EndDeviceModel",
+              "fullType": "ttn.lorawan.v3.EndDeviceModel",
               "ismap": false,
               "defaultValue": ""
             }
@@ -7996,26 +7994,26 @@
               }
             },
             {
-              "name": "ListDefinitions",
+              "name": "ListModels",
               "description": "",
-              "requestType": "ListEndDeviceDefinitionsRequest",
-              "requestLongType": "ListEndDeviceDefinitionsRequest",
-              "requestFullType": "ttn.lorawan.v3.ListEndDeviceDefinitionsRequest",
+              "requestType": "ListEndDeviceModelsRequest",
+              "requestLongType": "ListEndDeviceModelsRequest",
+              "requestFullType": "ttn.lorawan.v3.ListEndDeviceModelsRequest",
               "requestStreaming": false,
-              "responseType": "ListEndDeviceDefinitionsResponse",
-              "responseLongType": "ListEndDeviceDefinitionsResponse",
-              "responseFullType": "ttn.lorawan.v3.ListEndDeviceDefinitionsResponse",
+              "responseType": "ListEndDeviceModelsResponse",
+              "responseLongType": "ListEndDeviceModelsResponse",
+              "responseFullType": "ttn.lorawan.v3.ListEndDeviceModelsResponse",
               "responseStreaming": false,
               "options": {
                 "google.api.http": {
                   "rules": [
                     {
                       "method": "GET",
-                      "pattern": "/dr/brands/{brand_id}/definitions"
+                      "pattern": "/dr/brands/{brand_id}/models"
                     },
                     {
                       "method": "GET",
-                      "pattern": "/dr/brands/{brand_id}/models/{model_id}/definitions"
+                      "pattern": "/dr/brands/{brand_id}/models/{model_id}"
                     }
                   ]
                 }
