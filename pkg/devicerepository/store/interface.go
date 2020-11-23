@@ -50,7 +50,7 @@ type Store interface {
 	// ListDefinitions lists available end device definitions.
 	ListDefinitions(ListDefinitionsRequest) ([]*ttnpb.EndDeviceDefinition, error)
 	// GetTemplate retrieves an end device template for an end device definition.
-	GetTemplate(DefinitionIdentifiers) (*ttnpb.EndDeviceTemplate, error)
-	// GetFormatters retrieves the message payload formatters for an end device template
-	GetFormatters(DefinitionIdentifiers) (*ttnpb.MessagePayloadFormatters, error)
+	GetTemplate(*ttnpb.EndDeviceVersionIdentifiers) (*ttnpb.EndDeviceTemplate, error)
+	// GetFormatters retrieves the message payload formatters for an end device template.
+	GetFormatters(*ttnpb.EndDeviceVersionIdentifiers) (*ttnpb.MessagePayloadFormatters, error)
 }

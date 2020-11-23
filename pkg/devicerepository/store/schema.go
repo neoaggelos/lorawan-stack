@@ -15,8 +15,11 @@
 package store
 
 import (
+	"time"
+
 	pbtypes "github.com/gogo/protobuf/types"
 
+	"go.thethings.network/lorawan-stack/v3/pkg/errors"
 	"go.thethings.network/lorawan-stack/v3/pkg/ttnpb"
 )
 
@@ -134,8 +137,8 @@ func (d EndDeviceDefinition) ToPB(id string, paths ...string) (*ttnpb.EndDeviceD
 			HardwareVersions: ver.HardwareVersions,
 		}
 		pbver.Profiles = make(map[string]*ttnpb.EndDeviceDefinition_FirmwareVersion_Profile, len(ver.Profiles))
-		for bandID, profile := range ver.Profiles {
-			pbver.Profiles[bandID] = &ttnpb.EndDeviceDefinition_FirmwareVersion_Profile{
+		for region, profile := range ver.Profiles {
+			pbver.Profiles[RegionToBandID[region]] = &ttnpb.EndDeviceDefinition_FirmwareVersion_Profile{
 				CodecID:          profile.Codec,
 				ProfileID:        profile.ID,
 				LoRaWANCertified: profile.LoRaWANCertified,
@@ -237,10 +240,144 @@ type EndDeviceProfile struct {
 	ClassBTimeout   uint32 `yaml:"classBTimeout"`
 	PingSlotPeriod  uint32 `yaml:"pingSlotPeriod"`
 
-	SupportsClassC            bool   `yaml:"supportsClassC"`
-	MACVersion                string `yaml:"macVersion"`
-	RegionalParametersVersion string `yaml:"regionalParametersVersion"`
-	SupportsJoin              bool   `yaml:"supportsJoin"`
-	MaxEIRP                   uint32 `yaml:"maxEIRP"`
-	Supports32BitFCnt         bool   `yaml:"supports32bitFCnt"`
+	PingSlotDataRateIndex     ttnpb.DataRateIndex `yaml:"pingSlotDataRateIndex"`
+	PingSlotFrequency         float64             `yaml:"pingSlotFrequency"`
+	SupportsClassC            bool                `yaml:"supportsClassC"`
+	ClassCTimeout             uint32              `yaml:"classCTimeout"`
+	MACVersion                string              `yaml:"macVersion"`
+	RegionalParametersVersion string              `yaml:"regionalParametersVersion"`
+	SupportsJoin              bool                `yaml:"supportsJoin"`
+	Rx1Delay                  ttnpb.RxDelay       `yaml:"rx1Delay"`
+	Rx1DataRateOffset         uint32              `yaml:"rx1DataRateOffset"`
+	Rx2DataRateIndex          ttnpb.DataRateIndex `yaml:"rx2DataRateIndex"`
+	Rx2Frequency              float64             `yaml:"rx2Frequency"`
+	FactoryPresetFrequencies  []float64           `yaml:"factoryPresetFrequencies"`
+	MaxEIRP                   float32             `yaml:"maxEIRP"`
+	MaxDutyCycle              float32             `yaml:"maxDutyCycle"`
+	Supports32BitFCnt         bool                `yaml:"supports32bitFCnt"`
+}
+
+var (
+	errUnknownBand = errors.DefineNotFound("unknown_band", "unknown band `{band_id}`")
+	errNoProfile   = errors.DefineNotFound("no_profile", "device does not support region `{region}`")
+
+	errUnknownMACVersion                = errors.DefineNotFound("unknown_mac_version", "unknown LoRaWAN version `{mac_version}`")
+	errUnknownRegionalParametersVersion = errors.DefineNotFound("unknown_regional_parameters_version", "unknown Regional Parameters version `{phyVersion}`")
+)
+
+// ToTemplatePB returns a ttnpb.EndDeviceTemplate from an end device profile.
+func (p EndDeviceProfile) ToTemplatePB(ids *ttnpb.EndDeviceVersionIdentifiers, info *ttnpb.EndDeviceDefinition_FirmwareVersion_Profile) (*ttnpb.EndDeviceTemplate, error) {
+	macVersion, ok := MACVersionToPB[p.MACVersion]
+	if !ok {
+		return nil, errUnknownMACVersion.WithAttributes("mac_version", p.MACVersion)
+	}
+	phyVersion, ok := RegionalParametersToPB[p.RegionalParametersVersion]
+	if !ok {
+		return nil, errUnknownRegionalParametersVersion.WithAttributes("phyVersion", p.RegionalParametersVersion)
+	}
+
+	paths := []string{
+		"version_ids",
+		"supports_join",
+		"supports_class_b",
+		"supports_class_c",
+		"lorawan_version",
+		"lorawan_phy_version",
+	}
+	dev := ttnpb.EndDevice{
+		VersionIDs:        ids,
+		SupportsJoin:      p.SupportsJoin,
+		SupportsClassB:    p.SupportsClassB,
+		SupportsClassC:    p.SupportsClassC,
+		LoRaWANVersion:    macVersion,
+		LoRaWANPHYVersion: phyVersion,
+	}
+
+	if info.CodecID != "" {
+		dev.Formatters = &ttnpb.MessagePayloadFormatters{
+			DownFormatter: ttnpb.PayloadFormatter_FORMATTER_REPOSITORY,
+			UpFormatter:   ttnpb.PayloadFormatter_FORMATTER_REPOSITORY,
+		}
+		paths = append(paths, "formatters")
+	}
+
+	dev.MACSettings = &ttnpb.MACSettings{}
+	if p.ClassBTimeout > 0 {
+		t := time.Duration(p.ClassBTimeout) * time.Second
+		dev.MACSettings.ClassBTimeout = &t
+		paths = append(paths, "mac_settings.class_b_timeout")
+	}
+	if p.ClassCTimeout > 0 {
+		t := time.Duration(p.ClassCTimeout) * time.Second
+		dev.MACSettings.ClassCTimeout = &t
+		paths = append(paths, "mac_settings.class_c_timeout")
+	}
+	if p.PingSlotDataRateIndex > 0 {
+		dev.MACSettings.PingSlotDataRateIndex = &ttnpb.DataRateIndexValue{
+			Value: p.PingSlotDataRateIndex,
+		}
+		paths = append(paths, "mac_settings.ping_slot_data_rate_index")
+	}
+	if p.PingSlotFrequency > 0 {
+		dev.MACSettings.PingSlotFrequency = &pbtypes.UInt64Value{
+			Value: uint64(p.PingSlotFrequency * 100000),
+		}
+		paths = append(paths, "mac_settings.ping_slot_frequency")
+	}
+	if p.PingSlotPeriod > 0 {
+		dev.MACSettings.PingSlotPeriodicity = &ttnpb.PingSlotPeriodValue{
+			Value: PingSlotPeriodToPB[p.PingSlotPeriod],
+		}
+		paths = append(paths, "mac_settings.ping_slot_periodicity")
+	}
+	if p.Rx1Delay > 0 {
+		dev.MACSettings.Rx1Delay = &ttnpb.RxDelayValue{
+			Value: p.Rx1Delay,
+		}
+		paths = append(paths, "mac_settings.rx1_delay")
+	}
+	if p.Rx1DataRateOffset > 0 {
+		dev.MACSettings.Rx1DataRateOffset = &pbtypes.UInt32Value{
+			Value: p.Rx1DataRateOffset,
+		}
+		paths = append(paths, "mac_settings.rx1_data_rate_offset")
+	}
+	if p.Rx2DataRateIndex > 0 {
+		dev.MACSettings.Rx2DataRateIndex = &ttnpb.DataRateIndexValue{
+			Value: p.Rx2DataRateIndex,
+		}
+		paths = append(paths, "mac_settings.rx2_data_rate_index")
+	}
+	if p.Rx2Frequency > 0 {
+		dev.MACSettings.Rx2Frequency = &pbtypes.UInt64Value{
+			Value: uint64(p.Rx2Frequency * 100000),
+		}
+	}
+	if p.Supports32BitFCnt {
+		dev.MACSettings.Supports32BitFCnt = &pbtypes.BoolValue{
+			Value: true,
+		}
+		paths = append(paths, "mac_settings.supports_32_bit_f_cnt")
+	}
+	if fs := p.FactoryPresetFrequencies; fs != nil && len(fs) > 0 {
+		dev.MACSettings.FactoryPresetFrequencies = make([]uint64, 0, len(fs))
+		for _, freq := range fs {
+			dev.MACSettings.FactoryPresetFrequencies = append(dev.MACSettings.FactoryPresetFrequencies, uint64(freq*100000))
+		}
+		paths = append(paths, "mac_settings.factory_preset_frequencies")
+	}
+
+	dev.MACState = &ttnpb.MACState{
+		DesiredParameters: ttnpb.MACParameters{},
+	}
+	if p.MaxEIRP > 0 {
+		dev.MACState.DesiredParameters.MaxEIRP = p.MaxEIRP
+		paths = append(paths, "mac_state.desired_parameters.max_eirp")
+	}
+	return &ttnpb.EndDeviceTemplate{
+		EndDevice: dev,
+		FieldMask: pbtypes.FieldMask{
+			Paths: paths,
+		},
+	}, nil
 }

@@ -32,11 +32,11 @@ func (*NoopStore) ListDefinitions(ListDefinitionsRequest) ([]*ttnpb.EndDeviceDef
 }
 
 // GetTemplate retrieves an end device template for an end device definition.
-func (*NoopStore) GetTemplate(DefinitionIdentifiers) (*ttnpb.EndDeviceTemplate, error) {
+func (*NoopStore) GetTemplate(*ttnpb.EndDeviceVersionIdentifiers) (*ttnpb.EndDeviceTemplate, error) {
 	return nil, nil
 }
 
 // GetFormatters retrieves the message payload formatters for an end device template
-func (*NoopStore) GetFormatters(DefinitionIdentifiers) (*ttnpb.MessagePayloadFormatters, error) {
+func (*NoopStore) GetFormatters(*ttnpb.EndDeviceVersionIdentifiers) (*ttnpb.MessagePayloadFormatters, error) {
 	return nil, nil
 }

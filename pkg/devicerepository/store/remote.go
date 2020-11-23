@@ -116,12 +116,54 @@ func (s *remoteStore) ListDefinitions(req ListDefinitionsRequest) ([]*ttnpb.EndD
 	return defs, nil
 }
 
+var (
+	errNoModel = errors.DefineNotFound("no_model", "no model for brand `{brand_id}` and model ID `{model_id}`")
+)
+
 // GetTemplate retrieves an end device template for an end device definition.
-func (s *remoteStore) GetTemplate(DefinitionIdentifiers) (*ttnpb.EndDeviceTemplate, error) {
-	return nil, nil
+func (s *remoteStore) GetTemplate(ids *ttnpb.EndDeviceVersionIdentifiers) (*ttnpb.EndDeviceTemplate, error) {
+	defs, err := s.ListDefinitions(ListDefinitionsRequest{
+		BrandID: ids.BrandID,
+		ModelID: ids.ModelID,
+		Paths: []string{
+			"firmware_versions",
+		},
+	})
+	if err != nil {
+		return nil, err
+	}
+	for _, def := range defs {
+		for _, ver := range def.FirmwareVersions {
+			if ver.Version != ids.FirmwareVersion {
+				continue
+			}
+
+			if _, ok := BandIDToRegion[ids.BandID]; !ok {
+				return nil, errUnknownBand.WithAttributes("unknown_band", ids.BandID)
+			}
+			profileInfo, ok := ver.Profiles[ids.BandID]
+			if !ok {
+				return nil, errNoProfile.WithAttributes(
+					"band_id", ids.BandID,
+				)
+			}
+
+			b, err := s.fetcher.File("vendor", ids.BrandID, profileInfo.ProfileID+".yaml")
+			if err != nil {
+				return nil, err
+			}
+			profile := EndDeviceProfile{}
+			if err := yaml.Unmarshal(b, &profile); err != nil {
+				return nil, err
+			}
+
+			return profile.ToTemplatePB(ids, profileInfo)
+		}
+	}
+	return nil, errNoModel.WithAttributes("brand_id", ids.BrandID, "model_id", ids.ModelID)
 }
 
 // GetFormatters retrieves the message payload formatters for an end device template
-func (s *remoteStore) GetFormatters(DefinitionIdentifiers) (*ttnpb.MessagePayloadFormatters, error) {
+func (s *remoteStore) GetFormatters(*ttnpb.EndDeviceVersionIdentifiers) (*ttnpb.MessagePayloadFormatters, error) {
 	return nil, nil
 }
