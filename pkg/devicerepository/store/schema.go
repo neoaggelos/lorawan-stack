@@ -291,7 +291,7 @@ type EndDeviceProfile struct {
 	Rx2Frequency              float64             `yaml:"rx2Frequency"`
 	FactoryPresetFrequencies  []float64           `yaml:"factoryPresetFrequencies"`
 	MaxEIRP                   float32             `yaml:"maxEIRP"`
-	MaxDutyCycle              float32             `yaml:"maxDutyCycle"`
+	MaxDutyCycle              float64             `yaml:"maxDutyCycle"`
 	Supports32BitFCnt         bool                `yaml:"supports32bitFCnt"`
 }
 
@@ -403,6 +403,12 @@ func (p EndDeviceProfile) ToTemplatePB(ids *ttnpb.EndDeviceVersionIdentifiers, i
 			dev.MACSettings.FactoryPresetFrequencies = append(dev.MACSettings.FactoryPresetFrequencies, uint64(freq*100000))
 		}
 		paths = append(paths, "mac_settings.factory_preset_frequencies")
+	}
+	if dc := p.MaxDutyCycle; dc > 0 {
+		dev.MACSettings.DesiredMaxDutyCycle = &ttnpb.AggregatedDutyCycleValue{
+			Value: DutyCycleFromFloat(dc),
+		}
+		paths = append(paths, "mac_settings.desired_max_duty_cycle")
 	}
 
 	dev.MACState = &ttnpb.MACState{
