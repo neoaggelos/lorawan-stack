@@ -134,6 +134,13 @@ var ListEndDeviceModelsResponseFieldPathsNested = []string{
 var ListEndDeviceModelsResponseFieldPathsTopLevel = []string{
 	"models",
 }
+var MessagePayloadFormatterFieldPathsNested = []string{
+	"codec",
+}
+
+var MessagePayloadFormatterFieldPathsTopLevel = []string{
+	"codec",
+}
 var EndDeviceModel_VersionFieldPathsNested = []string{
 	"numeric",
 	"part_number",

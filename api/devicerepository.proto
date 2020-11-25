@@ -20,7 +20,6 @@ import "google/api/annotations.proto";
 import "google/protobuf/wrappers.proto";
 import "google/protobuf/field_mask.proto";
 import "lorawan-stack/api/end_device.proto";
-import "lorawan-stack/api/messages.proto";
 
 package ttn.lorawan.v3;
 
@@ -172,6 +171,10 @@ message ListEndDeviceModelsResponse {
   repeated EndDeviceModel models = 1;
 }
 
+message MessagePayloadFormatter {
+  string codec = 1;
+}
+
 service DeviceRepository {
   rpc ListBrands(ListEndDeviceBrandsRequest) returns (ListEndDeviceBrandsResponse) {
     option (google.api.http) = {
@@ -199,9 +202,21 @@ service DeviceRepository {
     };
   };
 
-  rpc GetMessagePayloadFormatters(EndDeviceVersionIdentifiers) returns (MessagePayloadFormatters) {
+  rpc GetUplinkDecoder(EndDeviceVersionIdentifiers) returns (MessagePayloadFormatter) {
     option (google.api.http) = {
-      get: "/dr/brands/{brand_id}/models/{model_id}/{firmware_version}/{band_id}/formatters"
+      get: "/dr/brands/{brand_id}/models/{model_id}/{firmware_version}/{band_id}/formatters/uplink_decoder"
+    };
+  };
+
+  rpc GetDownlinkDecoder(EndDeviceVersionIdentifiers) returns (MessagePayloadFormatter) {
+    option (google.api.http) = {
+      get: "/dr/brands/{brand_id}/models/{model_id}/{firmware_version}/{band_id}/formatters/downlink_decoder"
+    };
+  };
+
+  rpc GetDownlinkEncoder(EndDeviceVersionIdentifiers) returns (MessagePayloadFormatter) {
+    option (google.api.http) = {
+      get: "/dr/brands/{brand_id}/models/{model_id}/{firmware_version}/{band_id}/formatters/downlink_encoder"
     };
   };
 }

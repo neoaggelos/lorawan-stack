@@ -52,6 +52,10 @@ type Store interface {
 	ListModels(ListModelsRequest) ([]*ttnpb.EndDeviceModel, error)
 	// GetTemplate retrieves an end device template for an end device definition.
 	GetTemplate(*ttnpb.EndDeviceVersionIdentifiers) (*ttnpb.EndDeviceTemplate, error)
-	// GetFormatters retrieves the message payload formatters for an end device template.
-	GetFormatters(*ttnpb.EndDeviceVersionIdentifiers) (*ttnpb.MessagePayloadFormatters, error)
+	// GetUplinkDecoder retrieves the codec for decoding uplink messages.
+	GetUplinkDecoder(*ttnpb.EndDeviceVersionIdentifiers) (string, error)
+	// GetDownlinkDecoder retrieves the codec for decoding downlink messages.
+	GetDownlinkDecoder(*ttnpb.EndDeviceVersionIdentifiers) (string, error)
+	// GetDownlinkEncoder retrieves the codec for encoding downlink messages.
+	GetDownlinkEncoder(*ttnpb.EndDeviceVersionIdentifiers) (string, error)
 }

@@ -7958,6 +7958,27 @@
               "defaultValue": ""
             }
           ]
+        },
+        {
+          "name": "MessagePayloadFormatter",
+          "longName": "MessagePayloadFormatter",
+          "fullName": "ttn.lorawan.v3.MessagePayloadFormatter",
+          "description": "",
+          "hasExtensions": false,
+          "hasFields": true,
+          "extensions": [],
+          "fields": [
+            {
+              "name": "codec",
+              "description": "",
+              "label": "",
+              "type": "string",
+              "longType": "string",
+              "fullType": "string",
+              "ismap": false,
+              "defaultValue": ""
+            }
+          ]
         }
       ],
       "services": [
@@ -8042,22 +8063,66 @@
               }
             },
             {
-              "name": "GetMessagePayloadFormatters",
+              "name": "GetUplinkDecoder",
               "description": "",
               "requestType": "EndDeviceVersionIdentifiers",
               "requestLongType": "EndDeviceVersionIdentifiers",
               "requestFullType": "ttn.lorawan.v3.EndDeviceVersionIdentifiers",
               "requestStreaming": false,
-              "responseType": "MessagePayloadFormatters",
-              "responseLongType": "MessagePayloadFormatters",
-              "responseFullType": "ttn.lorawan.v3.MessagePayloadFormatters",
+              "responseType": "MessagePayloadFormatter",
+              "responseLongType": "MessagePayloadFormatter",
+              "responseFullType": "ttn.lorawan.v3.MessagePayloadFormatter",
               "responseStreaming": false,
               "options": {
                 "google.api.http": {
                   "rules": [
                     {
                       "method": "GET",
-                      "pattern": "/dr/brands/{brand_id}/models/{model_id}/{firmware_version}/{band_id}/formatters"
+                      "pattern": "/dr/brands/{brand_id}/models/{model_id}/{firmware_version}/{band_id}/formatters/uplink_decoder"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "GetDownlinkDecoder",
+              "description": "",
+              "requestType": "EndDeviceVersionIdentifiers",
+              "requestLongType": "EndDeviceVersionIdentifiers",
+              "requestFullType": "ttn.lorawan.v3.EndDeviceVersionIdentifiers",
+              "requestStreaming": false,
+              "responseType": "MessagePayloadFormatter",
+              "responseLongType": "MessagePayloadFormatter",
+              "responseFullType": "ttn.lorawan.v3.MessagePayloadFormatter",
+              "responseStreaming": false,
+              "options": {
+                "google.api.http": {
+                  "rules": [
+                    {
+                      "method": "GET",
+                      "pattern": "/dr/brands/{brand_id}/models/{model_id}/{firmware_version}/{band_id}/formatters/downlink_decoder"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "GetDownlinkEncoder",
+              "description": "",
+              "requestType": "EndDeviceVersionIdentifiers",
+              "requestLongType": "EndDeviceVersionIdentifiers",
+              "requestFullType": "ttn.lorawan.v3.EndDeviceVersionIdentifiers",
+              "requestStreaming": false,
+              "responseType": "MessagePayloadFormatter",
+              "responseLongType": "MessagePayloadFormatter",
+              "responseFullType": "ttn.lorawan.v3.MessagePayloadFormatter",
+              "responseStreaming": false,
+              "options": {
+                "google.api.http": {
+                  "rules": [
+                    {
+                      "method": "GET",
+                      "pattern": "/dr/brands/{brand_id}/models/{model_id}/{firmware_version}/{band_id}/formatters/downlink_encoder"
                     }
                   ]
                 }

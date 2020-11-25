@@ -143,6 +143,7 @@
   - [Message `ListEndDeviceBrandsResponse`](#ttn.lorawan.v3.ListEndDeviceBrandsResponse)
   - [Message `ListEndDeviceModelsRequest`](#ttn.lorawan.v3.ListEndDeviceModelsRequest)
   - [Message `ListEndDeviceModelsResponse`](#ttn.lorawan.v3.ListEndDeviceModelsResponse)
+  - [Message `MessagePayloadFormatter`](#ttn.lorawan.v3.MessagePayloadFormatter)
   - [Service `DeviceRepository`](#ttn.lorawan.v3.DeviceRepository)
 - [File `lorawan-stack/api/end_device.proto`](#lorawan-stack/api/end_device.proto)
   - [Message `ConvertEndDeviceTemplateRequest`](#ttn.lorawan.v3.ConvertEndDeviceTemplateRequest)
@@ -2212,6 +2213,12 @@ PeerInfo
 | ----- | ---- | ----- | ----------- |
 | `models` | [`EndDeviceModel`](#ttn.lorawan.v3.EndDeviceModel) | repeated |  |
 
+### <a name="ttn.lorawan.v3.MessagePayloadFormatter">Message `MessagePayloadFormatter`</a>
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| `codec` | [`string`](#string) |  |  |
+
 ### <a name="ttn.lorawan.v3.DeviceRepository">Service `DeviceRepository`</a>
 
 | Method Name | Request Type | Response Type | Description |
@@ -2219,7 +2226,9 @@ PeerInfo
 | `ListBrands` | [`ListEndDeviceBrandsRequest`](#ttn.lorawan.v3.ListEndDeviceBrandsRequest) | [`ListEndDeviceBrandsResponse`](#ttn.lorawan.v3.ListEndDeviceBrandsResponse) |  |
 | `ListModels` | [`ListEndDeviceModelsRequest`](#ttn.lorawan.v3.ListEndDeviceModelsRequest) | [`ListEndDeviceModelsResponse`](#ttn.lorawan.v3.ListEndDeviceModelsResponse) |  |
 | `GetTemplate` | [`EndDeviceVersionIdentifiers`](#ttn.lorawan.v3.EndDeviceVersionIdentifiers) | [`EndDeviceTemplate`](#ttn.lorawan.v3.EndDeviceTemplate) |  |
-| `GetMessagePayloadFormatters` | [`EndDeviceVersionIdentifiers`](#ttn.lorawan.v3.EndDeviceVersionIdentifiers) | [`MessagePayloadFormatters`](#ttn.lorawan.v3.MessagePayloadFormatters) |  |
+| `GetUplinkDecoder` | [`EndDeviceVersionIdentifiers`](#ttn.lorawan.v3.EndDeviceVersionIdentifiers) | [`MessagePayloadFormatter`](#ttn.lorawan.v3.MessagePayloadFormatter) |  |
+| `GetDownlinkDecoder` | [`EndDeviceVersionIdentifiers`](#ttn.lorawan.v3.EndDeviceVersionIdentifiers) | [`MessagePayloadFormatter`](#ttn.lorawan.v3.MessagePayloadFormatter) |  |
+| `GetDownlinkEncoder` | [`EndDeviceVersionIdentifiers`](#ttn.lorawan.v3.EndDeviceVersionIdentifiers) | [`MessagePayloadFormatter`](#ttn.lorawan.v3.MessagePayloadFormatter) |  |
 
 #### HTTP bindings
 
@@ -2230,7 +2239,9 @@ PeerInfo
 | `ListModels` | `GET` | `/api/v3/dr/brands/{brand_id}/models` |  |
 | `ListModels` | `GET` | `/api/v3/dr/brands/{brand_id}/models/{model_id}` |  |
 | `GetTemplate` | `GET` | `/api/v3/dr/brands/{brand_id}/models/{model_id}/{firmware_version}/{band_id}/template` |  |
-| `GetMessagePayloadFormatters` | `GET` | `/api/v3/dr/brands/{brand_id}/models/{model_id}/{firmware_version}/{band_id}/formatters` |  |
+| `GetUplinkDecoder` | `GET` | `/api/v3/dr/brands/{brand_id}/models/{model_id}/{firmware_version}/{band_id}/formatters/uplink_decoder` |  |
+| `GetDownlinkDecoder` | `GET` | `/api/v3/dr/brands/{brand_id}/models/{model_id}/{firmware_version}/{band_id}/formatters/downlink_decoder` |  |
+| `GetDownlinkEncoder` | `GET` | `/api/v3/dr/brands/{brand_id}/models/{model_id}/{firmware_version}/{band_id}/formatters/downlink_encoder` |  |
 
 ## <a name="lorawan-stack/api/end_device.proto">File `lorawan-stack/api/end_device.proto`</a>
 

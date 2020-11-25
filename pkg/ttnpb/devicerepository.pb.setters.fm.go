@@ -572,6 +572,27 @@ func (dst *ListEndDeviceModelsResponse) SetFields(src *ListEndDeviceModelsRespon
 	return nil
 }
 
+func (dst *MessagePayloadFormatter) SetFields(src *MessagePayloadFormatter, paths ...string) error {
+	for name, subs := range _processPaths(paths) {
+		switch name {
+		case "codec":
+			if len(subs) > 0 {
+				return fmt.Errorf("'codec' has no subfields, but %s were specified", subs)
+			}
+			if src != nil {
+				dst.Codec = src.Codec
+			} else {
+				var zero string
+				dst.Codec = zero
+			}
+
+		default:
+			return fmt.Errorf("invalid field: '%s'", name)
+		}
+	}
+	return nil
+}
+
 func (dst *EndDeviceModel_Version) SetFields(src *EndDeviceModel_Version, paths ...string) error {
 	for name, subs := range _processPaths(paths) {
 		switch name {

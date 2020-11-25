@@ -36,7 +36,17 @@ func (*NoopStore) GetTemplate(*ttnpb.EndDeviceVersionIdentifiers) (*ttnpb.EndDev
 	return nil, nil
 }
 
-// GetFormatters retrieves the message payload formatters for an end device template
-func (*NoopStore) GetFormatters(*ttnpb.EndDeviceVersionIdentifiers) (*ttnpb.MessagePayloadFormatters, error) {
-	return nil, nil
+// GetUplinkDecoder retrieves the codec for decoding uplink messages.
+func (*NoopStore) GetUplinkDecoder(*ttnpb.EndDeviceVersionIdentifiers) (string, error) {
+	return "", nil
+}
+
+// GetDownlinkDecoder retrieves the codec for decoding downlink messages.
+func (*NoopStore) GetDownlinkDecoder(*ttnpb.EndDeviceVersionIdentifiers) (string, error) {
+	return "", nil
+}
+
+// GetDownlinkEncoder retrieves the codec for encoding downlink messages.
+func (*NoopStore) GetDownlinkEncoder(*ttnpb.EndDeviceVersionIdentifiers) (string, error) {
+	return "", nil
 }

@@ -60,7 +60,35 @@ func (dr *DeviceRepository) GetTemplate(ctx context.Context, ids *ttnpb.EndDevic
 	return dr.store.GetTemplate(ids)
 }
 
-// GetMessagePayloadFormatters implements the ttnpb.DeviceRepositoryServer interface.
-func (dr *DeviceRepository) GetMessagePayloadFormatters(ctx context.Context, ids *ttnpb.EndDeviceVersionIdentifiers) (*ttnpb.MessagePayloadFormatters, error) {
-	return dr.store.GetFormatters(ids)
+// GetUplinkDecoder implements the ttnpb.DeviceRepositoryServer interface.
+func (dr *DeviceRepository) GetUplinkDecoder(ctx context.Context, ids *ttnpb.EndDeviceVersionIdentifiers) (*ttnpb.MessagePayloadFormatter, error) {
+	s, err := dr.store.GetUplinkDecoder(ids)
+	if err != nil {
+		return nil, err
+	}
+	return &ttnpb.MessagePayloadFormatter{
+		Codec: s,
+	}, nil
+}
+
+// GetDownlinkDecoder implements the ttnpb.DeviceRepositoryServer interface.
+func (dr *DeviceRepository) GetDownlinkDecoder(ctx context.Context, ids *ttnpb.EndDeviceVersionIdentifiers) (*ttnpb.MessagePayloadFormatter, error) {
+	s, err := dr.store.GetDownlinkDecoder(ids)
+	if err != nil {
+		return nil, err
+	}
+	return &ttnpb.MessagePayloadFormatter{
+		Codec: s,
+	}, nil
+}
+
+// GetDownlinkEncoder implements the ttnpb.DeviceRepositoryServer interface.
+func (dr *DeviceRepository) GetDownlinkEncoder(ctx context.Context, ids *ttnpb.EndDeviceVersionIdentifiers) (*ttnpb.MessagePayloadFormatter, error) {
+	s, err := dr.store.GetDownlinkEncoder(ids)
+	if err != nil {
+		return nil, err
+	}
+	return &ttnpb.MessagePayloadFormatter{
+		Codec: s,
+	}, nil
 }

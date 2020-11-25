@@ -3570,14 +3570,122 @@
         ]
       }
     },
-    "/dr/brands/{brand_id}/models/{model_id}/{firmware_version}/{band_id}/formatters": {
+    "/dr/brands/{brand_id}/models/{model_id}/{firmware_version}/{band_id}/formatters/downlink_decoder": {
       "get": {
-        "operationId": "DeviceRepository_GetMessagePayloadFormatters",
+        "operationId": "DeviceRepository_GetDownlinkDecoder",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v3MessagePayloadFormatters"
+              "$ref": "#/definitions/v3MessagePayloadFormatter"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "brand_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "model_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "firmware_version",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "band_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "hardware_version",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "DeviceRepository"
+        ]
+      }
+    },
+    "/dr/brands/{brand_id}/models/{model_id}/{firmware_version}/{band_id}/formatters/downlink_encoder": {
+      "get": {
+        "operationId": "DeviceRepository_GetDownlinkEncoder",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v3MessagePayloadFormatter"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "brand_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "model_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "firmware_version",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "band_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "hardware_version",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "DeviceRepository"
+        ]
+      }
+    },
+    "/dr/brands/{brand_id}/models/{model_id}/{firmware_version}/{band_id}/formatters/uplink_decoder": {
+      "get": {
+        "operationId": "DeviceRepository_GetUplinkDecoder",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v3MessagePayloadFormatter"
             }
           },
           "default": {
@@ -13019,6 +13127,14 @@
         "LORAWAN_R1"
       ],
       "default": "LORAWAN_R1"
+    },
+    "v3MessagePayloadFormatter": {
+      "type": "object",
+      "properties": {
+        "codec": {
+          "type": "string"
+        }
+      }
     },
     "v3MessagePayloadFormatters": {
       "type": "object",
