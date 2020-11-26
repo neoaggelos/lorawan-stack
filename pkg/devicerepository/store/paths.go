@@ -20,7 +20,7 @@ import (
 
 // withDefaultDefinitionFields appends default ttnpb.EndDeviceModel fields.
 func withDefaultDefinitionFields(paths []string) []string {
-	return ttnpb.AddFields(paths, "model_id")
+	return ttnpb.AddFields(paths, "model_id", "name")
 }
 
 // withDefaultBrandFields appends default ttnpb.EndDeviceBrand paths.
