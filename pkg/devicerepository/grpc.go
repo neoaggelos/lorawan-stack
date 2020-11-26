@@ -28,7 +28,7 @@ var (
 
 // ListBrands implements the ttnpb.DeviceRepositoryServer interface.
 func (dr *DeviceRepository) ListBrands(ctx context.Context, request *ttnpb.ListEndDeviceBrandsRequest) (*ttnpb.ListEndDeviceBrandsResponse, error) {
-	brands, err := dr.store.ListBrands(store.ListBrandsRequest{
+	response, err := dr.store.ListBrands(store.ListBrandsRequest{
 		Limit:   request.Limit,
 		Offset:  request.Offset,
 		OrderBy: request.OrderBy,
@@ -37,12 +37,17 @@ func (dr *DeviceRepository) ListBrands(ctx context.Context, request *ttnpb.ListE
 	if err != nil {
 		return nil, err
 	}
-	return &ttnpb.ListEndDeviceBrandsResponse{Brands: brands}, nil
+	return &ttnpb.ListEndDeviceBrandsResponse{
+		Brands: response.Brands,
+		Count:  response.Count,
+		Offset: response.Offset,
+		Total:  response.Total,
+	}, nil
 }
 
 // ListModels implements the ttnpb.DeviceRepositoryServer interface.
 func (dr *DeviceRepository) ListModels(ctx context.Context, request *ttnpb.ListEndDeviceModelsRequest) (*ttnpb.ListEndDeviceModelsResponse, error) {
-	defs, err := dr.store.ListModels(store.ListModelsRequest{
+	response, err := dr.store.ListModels(store.ListModelsRequest{
 		BrandID: request.BrandID,
 		ModelID: request.ModelID,
 		Limit:   request.Limit,
@@ -52,7 +57,12 @@ func (dr *DeviceRepository) ListModels(ctx context.Context, request *ttnpb.ListE
 	if err != nil {
 		return nil, err
 	}
-	return &ttnpb.ListEndDeviceModelsResponse{Models: defs}, nil
+	return &ttnpb.ListEndDeviceModelsResponse{
+		Models: response.Models,
+		Count:  response.Count,
+		Offset: response.Offset,
+		Total:  response.Total,
+	}, nil
 }
 
 // GetTemplate implements the ttnpb.DeviceRepositoryServer interface.

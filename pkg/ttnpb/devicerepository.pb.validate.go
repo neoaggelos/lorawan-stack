@@ -651,6 +651,12 @@ func (m *ListEndDeviceBrandsResponse) ValidateFields(paths ...string) error {
 
 			}
 
+		case "total":
+			// no validation rules for Total
+		case "count":
+			// no validation rules for Count
+		case "offset":
+			// no validation rules for Offset
 		default:
 			return ListEndDeviceBrandsResponseValidationError{
 				field:  name,
@@ -750,6 +756,12 @@ func (m *ListEndDeviceModelsResponse) ValidateFields(paths ...string) error {
 
 			}
 
+		case "total":
+			// no validation rules for Total
+		case "count":
+			// no validation rules for Count
+		case "offset":
+			// no validation rules for Offset
 		default:
 			return ListEndDeviceModelsResponseValidationError{
 				field:  name,

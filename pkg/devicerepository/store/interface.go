@@ -27,6 +27,14 @@ type ListBrandsRequest struct {
 	Paths   []string
 }
 
+// ListBrandsResponse is a list of brands, along with pagination information.
+type ListBrandsResponse struct {
+	Count,
+	Offset,
+	Total uint32
+	Brands []*ttnpb.EndDeviceBrand
+}
+
 // ListModelsRequest is a request to list available end device model definitions.
 type ListModelsRequest struct {
 	BrandID,
@@ -34,6 +42,14 @@ type ListModelsRequest struct {
 	Limit,
 	Offset *pbtypes.UInt32Value
 	Paths []string
+}
+
+// ListModelsResponse is a list of models, along with model information
+type ListModelsResponse struct {
+	Count,
+	Offset,
+	Total uint32
+	Models []*ttnpb.EndDeviceModel
 }
 
 // DefinitionIdentifiers is a request to retrieve an end device template for an end device definition.
@@ -47,9 +63,9 @@ type DefinitionIdentifiers struct {
 // Store contains end device definitions.
 type Store interface {
 	// ListBrands lists available end device vendors.
-	ListBrands(ListBrandsRequest) ([]*ttnpb.EndDeviceBrand, error)
+	ListBrands(ListBrandsRequest) (*ListBrandsResponse, error)
 	// ListModels lists available end device definitions.
-	ListModels(ListModelsRequest) ([]*ttnpb.EndDeviceModel, error)
+	ListModels(ListModelsRequest) (*ListModelsResponse, error)
 	// GetTemplate retrieves an end device template for an end device definition.
 	GetTemplate(*ttnpb.EndDeviceVersionIdentifiers) (*ttnpb.EndDeviceTemplate, error)
 	// GetUplinkDecoder retrieves the codec for decoding uplink messages.

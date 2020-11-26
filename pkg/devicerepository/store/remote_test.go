@@ -166,7 +166,7 @@ func TestRemoteStore(t *testing.T) {
 		t.Run("DefaultPaths", func(t *testing.T) {
 			list, err := s.ListBrands(store.ListBrandsRequest{})
 			a.So(err, should.BeNil)
-			a.So(list, should.Resemble, []*ttnpb.EndDeviceBrand{
+			a.So(list.Brands, should.Resemble, []*ttnpb.EndDeviceBrand{
 				{
 					BrandID: "foo-vendor",
 					Name:    "Foo Vendor",
@@ -185,7 +185,7 @@ func TestRemoteStore(t *testing.T) {
 				},
 			})
 			a.So(err, should.BeNil)
-			a.So(list, should.Resemble, []*ttnpb.EndDeviceBrand{
+			a.So(list.Brands, should.Resemble, []*ttnpb.EndDeviceBrand{
 				{
 					BrandID: "foo-vendor",
 					Name:    "Foo Vendor",
@@ -200,7 +200,7 @@ func TestRemoteStore(t *testing.T) {
 				},
 			})
 			a.So(err, should.BeNil)
-			a.So(list, should.Resemble, []*ttnpb.EndDeviceBrand{
+			a.So(list.Brands, should.Resemble, []*ttnpb.EndDeviceBrand{
 				{
 					BrandID: "full-vendor",
 					Name:    "Full Vendor",
@@ -213,7 +213,7 @@ func TestRemoteStore(t *testing.T) {
 				Paths: ttnpb.EndDeviceBrandFieldPathsNested,
 			})
 			a.So(err, should.BeNil)
-			a.So(list, should.Resemble, []*ttnpb.EndDeviceBrand{
+			a.So(list.Brands, should.Resemble, []*ttnpb.EndDeviceBrand{
 				{
 					BrandID:  "foo-vendor",
 					Name:     "Foo Vendor",
@@ -239,7 +239,7 @@ func TestRemoteStore(t *testing.T) {
 				BrandID: "foo-vendor",
 			})
 			a.So(err, should.BeNil)
-			a.So(list, should.Resemble, []*ttnpb.EndDeviceModel{
+			a.So(list.Models, should.Resemble, []*ttnpb.EndDeviceModel{
 				{
 					BrandID: "foo-vendor",
 					ModelID: "dev1",
@@ -256,7 +256,7 @@ func TestRemoteStore(t *testing.T) {
 		t.Run("AllBrands", func(t *testing.T) {
 			list, err := s.ListModels(store.ListModelsRequest{})
 			a.So(err, should.BeNil)
-			a.So(list, should.Resemble, []*ttnpb.EndDeviceModel{
+			a.So(list.Models, should.Resemble, []*ttnpb.EndDeviceModel{
 				{
 					BrandID: "foo-vendor",
 					ModelID: "dev1",
@@ -283,7 +283,7 @@ func TestRemoteStore(t *testing.T) {
 				},
 			})
 			a.So(err, should.BeNil)
-			a.So(list, should.Resemble, []*ttnpb.EndDeviceModel{
+			a.So(list.Models, should.Resemble, []*ttnpb.EndDeviceModel{
 				{
 					BrandID: "foo-vendor",
 					ModelID: "dev1",
@@ -300,7 +300,7 @@ func TestRemoteStore(t *testing.T) {
 				},
 			})
 			a.So(err, should.BeNil)
-			a.So(list, should.Resemble, []*ttnpb.EndDeviceModel{
+			a.So(list.Models, should.Resemble, []*ttnpb.EndDeviceModel{
 				{
 					BrandID: "foo-vendor",
 					ModelID: "dev2",
@@ -315,7 +315,7 @@ func TestRemoteStore(t *testing.T) {
 				Paths:   ttnpb.EndDeviceModelFieldPathsNested,
 			})
 			a.So(err, should.BeNil)
-			a.So(list, should.Resemble, []*ttnpb.EndDeviceModel{
+			a.So(list.Models, should.Resemble, []*ttnpb.EndDeviceModel{
 				{
 					BrandID:     "foo-vendor",
 					ModelID:     "dev1",
@@ -383,7 +383,7 @@ func TestRemoteStore(t *testing.T) {
 				Paths:   ttnpb.EndDeviceModelFieldPathsNested,
 			})
 			a.So(err, should.BeNil)
-			a.So(list[0], should.Resemble, &ttnpb.EndDeviceModel{
+			a.So(list.Models[0], should.Resemble, &ttnpb.EndDeviceModel{
 				BrandID:     "full-vendor",
 				ModelID:     "full-device",
 				Name:        "Full Device",

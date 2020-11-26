@@ -22,12 +22,12 @@ import (
 type NoopStore struct{}
 
 // ListBrands lists available end device vendors.
-func (*NoopStore) ListBrands(ListBrandsRequest) ([]*ttnpb.EndDeviceBrand, error) {
+func (*NoopStore) ListBrands(ListBrandsRequest) (*ListBrandsResponse, error) {
 	return nil, nil
 }
 
 // ListModels lists available end device definitions.
-func (*NoopStore) ListModels(ListModelsRequest) ([]*ttnpb.EndDeviceModel, error) {
+func (*NoopStore) ListModels(ListModelsRequest) (*ListModelsResponse, error) {
 	return nil, nil
 }
 
