@@ -194,6 +194,9 @@ service DeviceRepository {
       additional_bindings {
         get: "/dr/brands/{brand_id}/models/{model_id}"
       }
+      additional_bindings {
+        get: "/dr/models"
+      }
     };
   };
 

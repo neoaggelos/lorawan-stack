@@ -27,7 +27,9 @@ type remoteStore struct {
 	fetcher fetch.Interface
 }
 
-// NewRemoteStore initializes a new Store using a fetcher.
+// NewRemoteStore initializes a new Store using a fetcher. Avoid using directly,
+// use bleve.NewIndexedStore instead. Searching and ordering are not supported,
+// and some operations can be very slow.
 func NewRemoteStore(fetcher fetch.Interface) (Store, error) {
 	return &remoteStore{fetcher}, nil
 }
@@ -83,8 +85,8 @@ var (
 	errUnknownBrand = errors.DefineNotFound("unknown_brand", "unknown brand `{brand_id}`")
 )
 
-// ListModels lists available end device models.
-func (s *remoteStore) ListModels(req ListModelsRequest) ([]*ttnpb.EndDeviceModel, error) {
+// listModelsByBrand lists available end device models by a single brand.
+func (s *remoteStore) listModelsByBrand(req ListModelsRequest) ([]*ttnpb.EndDeviceModel, error) {
 	b, err := s.fetcher.File("vendor", req.BrandID, "index.yaml")
 	if err != nil {
 		return nil, errUnknownBrand.WithAttributes("brand_id", req.BrandID)
@@ -98,7 +100,7 @@ func (s *remoteStore) ListModels(req ListModelsRequest) ([]*ttnpb.EndDeviceModel
 		return []*ttnpb.EndDeviceModel{}, nil
 	}
 
-	defs := make([]*ttnpb.EndDeviceModel, 0, end-start)
+	models := make([]*ttnpb.EndDeviceModel, 0, end-start)
 	for idx := start; idx < end; idx++ {
 		modelID := index.EndDevices[idx]
 		if req.ModelID != "" && modelID != req.ModelID {
@@ -116,9 +118,41 @@ func (s *remoteStore) ListModels(req ListModelsRequest) ([]*ttnpb.EndDeviceModel
 		if err != nil {
 			return nil, err
 		}
-		defs = append(defs, pb)
+		models = append(models, pb)
 	}
-	return defs, nil
+	return models, nil
+}
+
+// ListModels lists available end device models. Note that this can be very slow, and does not support searching/sorting.
+func (s *remoteStore) ListModels(req ListModelsRequest) ([]*ttnpb.EndDeviceModel, error) {
+	if req.BrandID != "" {
+		return s.listModelsByBrand(req)
+	}
+	all := []*ttnpb.EndDeviceModel{}
+	brands, err := s.ListBrands(ListBrandsRequest{})
+	if err != nil {
+		return nil, err
+	}
+	for _, brand := range brands {
+		models, err := s.ListModels(ListModelsRequest{
+			Paths:   req.Paths,
+			BrandID: brand.BrandID,
+			Limit:   req.Limit,
+		})
+		if errors.IsNotFound(err) || models == nil || len(models) == 0 {
+			// Skip vendors without any models
+			continue
+		} else if err != nil {
+			return nil, err
+		}
+		all = append(all, models...)
+	}
+
+	start, end, ok := paginate(len(all), req.Limit, req.Offset)
+	if ok {
+		return all[start:end], nil
+	}
+	return all, nil
 }
 
 var (

@@ -2239,6 +2239,7 @@ PeerInfo
 | `ListBrands` | `GET` | `/api/v3/dr/brands/{brand_id}` |  |
 | `ListModels` | `GET` | `/api/v3/dr/brands/{brand_id}/models` |  |
 | `ListModels` | `GET` | `/api/v3/dr/brands/{brand_id}/models/{model_id}` |  |
+| `ListModels` | `GET` | `/api/v3/dr/models` |  |
 | `GetTemplate` | `GET` | `/api/v3/dr/brands/{brand_id}/models/{model_id}/{firmware_version}/{band_id}/template` |  |
 | `GetUplinkDecoder` | `GET` | `/api/v3/dr/brands/{brand_id}/models/{model_id}/{firmware_version}/{band_id}/formatters/uplink_decoder` |  |
 | `GetDownlinkDecoder` | `GET` | `/api/v3/dr/brands/{brand_id}/models/{model_id}/{firmware_version}/{band_id}/formatters/downlink_decoder` |  |

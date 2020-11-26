@@ -33,7 +33,7 @@ vendors:
 - id: foo-vendor
   name: Foo Vendor
   vendorID: 42
-- id: foo-vendor-full
+- id: full-vendor
   name: Full Vendor
   vendorID: 44
   email: mail@example.com
@@ -172,7 +172,7 @@ func TestRemoteStore(t *testing.T) {
 					Name:    "Foo Vendor",
 				},
 				{
-					BrandID: "foo-vendor-full",
+					BrandID: "full-vendor",
 					Name:    "Full Vendor",
 				},
 			})
@@ -202,7 +202,7 @@ func TestRemoteStore(t *testing.T) {
 			a.So(err, should.BeNil)
 			a.So(list, should.Resemble, []*ttnpb.EndDeviceBrand{
 				{
-					BrandID: "foo-vendor-full",
+					BrandID: "full-vendor",
 					Name:    "Full Vendor",
 				},
 			})
@@ -220,7 +220,7 @@ func TestRemoteStore(t *testing.T) {
 					VendorID: 42,
 				},
 				{
-					BrandID:                       "foo-vendor-full",
+					BrandID:                       "full-vendor",
 					Name:                          "Full Vendor",
 					VendorID:                      44,
 					Email:                         "mail@example.com",
@@ -249,6 +249,28 @@ func TestRemoteStore(t *testing.T) {
 					BrandID: "foo-vendor",
 					ModelID: "dev2",
 					Name:    "Device 2",
+				},
+			})
+		})
+
+		t.Run("AllBrands", func(t *testing.T) {
+			list, err := s.ListModels(store.ListModelsRequest{})
+			a.So(err, should.BeNil)
+			a.So(list, should.Resemble, []*ttnpb.EndDeviceModel{
+				{
+					BrandID: "foo-vendor",
+					ModelID: "dev1",
+					Name:    "Device 1",
+				},
+				{
+					BrandID: "foo-vendor",
+					ModelID: "dev2",
+					Name:    "Device 2",
+				},
+				{
+					BrandID: "full-vendor",
+					ModelID: "full-device",
+					Name:    "Full Device",
 				},
 			})
 		})

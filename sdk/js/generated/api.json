@@ -8045,6 +8045,10 @@
                     {
                       "method": "GET",
                       "pattern": "/dr/brands/{brand_id}/models/{model_id}"
+                    },
+                    {
+                      "method": "GET",
+                      "pattern": "/dr/models"
                     }
                   ]
                 }

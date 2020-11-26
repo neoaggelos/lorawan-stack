@@ -3786,6 +3786,85 @@
         ]
       }
     },
+    "/dr/models": {
+      "get": {
+        "operationId": "DeviceRepository_ListModels3",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v3ListEndDeviceModelsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "brand_id",
+            "description": "Query end devices from a specific brand.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "model_id",
+            "description": "Query end devices matching a specific model.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "search",
+            "description": "Query end devices matching a search string.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "order_by",
+            "description": "Order end devices.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "description": "Limit number of results.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "offset",
+            "description": "Start returning devices at offset.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "field_mask.paths",
+            "description": "The set of field mask paths.",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "DeviceRepository"
+        ]
+      }
+    },
     "/edcs/applications/{application_ids.application_id}/authorize": {
       "post": {
         "operationId": "EndDeviceClaimingServer_AuthorizeApplication",
