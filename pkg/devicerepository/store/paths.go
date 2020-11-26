@@ -20,10 +20,10 @@ import (
 
 // withDefaultModelFields appends default ttnpb.EndDeviceModel fields.
 func withDefaultModelFields(paths []string) []string {
-	return ttnpb.AddFields(paths, "brand_id", "model_id", "name")
+	return ttnpb.AddFields(paths, "brand_id", "model_id")
 }
 
 // withDefaultBrandFields appends default ttnpb.EndDeviceBrand paths.
 func withDefaultBrandFields(paths []string) []string {
-	return ttnpb.AddFields(paths, "brand_id", "name")
+	return ttnpb.AddFields(paths, "brand_id")
 }
