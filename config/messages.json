@@ -1124,6 +1124,15 @@
       "file": "errors.go"
     }
   },
+  "error:cmd/internal/shared:initialize_device_repository": {
+    "translations": {
+      "en": "could not initialize Device Repository"
+    },
+    "description": {
+      "package": "cmd/internal/shared",
+      "file": "errors.go"
+    }
+  },
   "error:cmd/internal/shared:initialize_device_template_converter": {
     "translations": {
       "en": "could not initialize Device Template Converter"
@@ -2931,6 +2940,78 @@
     "description": {
       "package": "pkg/crypto",
       "file": "errors.go"
+    }
+  },
+  "error:pkg/devicerepository/store:no_codec": {
+    "translations": {
+      "en": "no codec defined for firmware version `{firmware_version}` and band `{band_id}`"
+    },
+    "description": {
+      "package": "pkg/devicerepository/store",
+      "file": "remote.go"
+    }
+  },
+  "error:pkg/devicerepository/store:no_model": {
+    "translations": {
+      "en": "no model for brand `{brand_id}` and model ID `{model_id}`"
+    },
+    "description": {
+      "package": "pkg/devicerepository/store",
+      "file": "remote.go"
+    }
+  },
+  "error:pkg/devicerepository/store:no_profile": {
+    "translations": {
+      "en": "device does not support region `{region}`"
+    },
+    "description": {
+      "package": "pkg/devicerepository/store",
+      "file": "schema.go"
+    }
+  },
+  "error:pkg/devicerepository/store:unknown_band": {
+    "translations": {
+      "en": "unknown band `{band_id}`"
+    },
+    "description": {
+      "package": "pkg/devicerepository/store",
+      "file": "schema.go"
+    }
+  },
+  "error:pkg/devicerepository/store:unknown_brand": {
+    "translations": {
+      "en": "unknown brand `{brand_id}`"
+    },
+    "description": {
+      "package": "pkg/devicerepository/store",
+      "file": "remote.go"
+    }
+  },
+  "error:pkg/devicerepository/store:unknown_mac_version": {
+    "translations": {
+      "en": "unknown LoRaWAN version `{mac_version}`"
+    },
+    "description": {
+      "package": "pkg/devicerepository/store",
+      "file": "schema.go"
+    }
+  },
+  "error:pkg/devicerepository/store:unknown_regional_parameters_version": {
+    "translations": {
+      "en": "unknown Regional Parameters version `{phyVersion}`"
+    },
+    "description": {
+      "package": "pkg/devicerepository/store",
+      "file": "schema.go"
+    }
+  },
+  "error:pkg/devicerepository:not_implemented": {
+    "translations": {
+      "en": "not implemented"
+    },
+    "description": {
+      "package": "pkg/devicerepository",
+      "file": "grpc.go"
     }
   },
   "error:pkg/devicetemplateconverter:converter": {
