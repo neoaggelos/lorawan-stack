@@ -83,7 +83,7 @@ var (
 	errUnknownBrand = errors.DefineNotFound("unknown_brand", "unknown brand `{brand_id}`")
 )
 
-// ListModels lists available end device definitions.
+// ListModels lists available end device models.
 func (s *remoteStore) ListModels(req ListModelsRequest) ([]*ttnpb.EndDeviceModel, error) {
 	b, err := s.fetcher.File("vendor", req.BrandID, "index.yaml")
 	if err != nil {
@@ -100,19 +100,19 @@ func (s *remoteStore) ListModels(req ListModelsRequest) ([]*ttnpb.EndDeviceModel
 
 	defs := make([]*ttnpb.EndDeviceModel, 0, end-start)
 	for idx := start; idx < end; idx++ {
-		definitionID := index.EndDevices[idx]
-		if req.ModelID != "" && definitionID != req.ModelID {
+		modelID := index.EndDevices[idx]
+		if req.ModelID != "" && modelID != req.ModelID {
 			continue
 		}
-		b, err := s.fetcher.File("vendor", req.BrandID, definitionID+".yaml")
+		b, err := s.fetcher.File("vendor", req.BrandID, modelID+".yaml")
 		if err != nil {
 			return nil, err
 		}
-		definition := EndDeviceModel{}
-		if err := yaml.Unmarshal(b, &definition); err != nil {
+		model := EndDeviceModel{}
+		if err := yaml.Unmarshal(b, &model); err != nil {
 			return nil, err
 		}
-		pb, err := definition.ToPB(definitionID, req.Paths...)
+		pb, err := model.ToPB(req.BrandID, modelID, req.Paths...)
 		if err != nil {
 			return nil, err
 		}

@@ -138,9 +138,10 @@ type EndDeviceModel struct {
 }
 
 // ToPB converts an EndDefinitionDefinition to a Protocol Buffer.
-func (d EndDeviceModel) ToPB(id string, paths ...string) (*ttnpb.EndDeviceModel, error) {
+func (d EndDeviceModel) ToPB(brandID, modelID string, paths ...string) (*ttnpb.EndDeviceModel, error) {
 	pb := &ttnpb.EndDeviceModel{
-		ModelID:          id,
+		BrandID:          brandID,
+		ModelID:          modelID,
 		Name:             d.Name,
 		Description:      d.Description,
 		FirmwareVersions: make([]*ttnpb.EndDeviceModel_FirmwareVersion, 0, len(d.FirmwareVersions)),
@@ -154,7 +155,7 @@ func (d EndDeviceModel) ToPB(id string, paths ...string) (*ttnpb.EndDeviceModel,
 		AdditionalRadios: d.AdditionalRadios,
 	}
 
-	paths = withDefaultDefinitionFields(paths)
+	paths = withDefaultModelFields(paths)
 	if hwVersions := d.HardwareVersions; hwVersions != nil {
 		pb.HardwareVersions = make([]*ttnpb.EndDeviceModel_Version, 0, len(hwVersions))
 		for _, ver := range hwVersions {

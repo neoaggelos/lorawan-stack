@@ -18,9 +18,9 @@ import (
 	"go.thethings.network/lorawan-stack/v3/pkg/ttnpb"
 )
 
-// withDefaultDefinitionFields appends default ttnpb.EndDeviceModel fields.
-func withDefaultDefinitionFields(paths []string) []string {
-	return ttnpb.AddFields(paths, "model_id", "name")
+// withDefaultModelFields appends default ttnpb.EndDeviceModel fields.
+func withDefaultModelFields(paths []string) []string {
+	return ttnpb.AddFields(paths, "brand_id", "model_id", "name")
 }
 
 // withDefaultBrandFields appends default ttnpb.EndDeviceBrand paths.

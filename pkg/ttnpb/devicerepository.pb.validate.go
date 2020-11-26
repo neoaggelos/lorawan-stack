@@ -145,6 +145,8 @@ func (m *EndDeviceModel) ValidateFields(paths ...string) error {
 	for name, subs := range _processPaths(append(paths[:0:0], paths...)) {
 		_ = subs
 		switch name {
+		case "brand_id":
+			// no validation rules for BrandID
 		case "model_id":
 			// no validation rules for ModelID
 		case "name":

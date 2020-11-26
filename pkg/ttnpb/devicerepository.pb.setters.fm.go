@@ -101,6 +101,16 @@ func (dst *EndDeviceBrand) SetFields(src *EndDeviceBrand, paths ...string) error
 func (dst *EndDeviceModel) SetFields(src *EndDeviceModel, paths ...string) error {
 	for name, subs := range _processPaths(paths) {
 		switch name {
+		case "brand_id":
+			if len(subs) > 0 {
+				return fmt.Errorf("'brand_id' has no subfields, but %s were specified", subs)
+			}
+			if src != nil {
+				dst.BrandID = src.BrandID
+			} else {
+				var zero string
+				dst.BrandID = zero
+			}
 		case "model_id":
 			if len(subs) > 0 {
 				return fmt.Errorf("'model_id' has no subfields, but %s were specified", subs)

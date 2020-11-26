@@ -28,6 +28,7 @@ var EndDeviceModelFieldPathsNested = []string{
 	"battery",
 	"battery.replaceable",
 	"battery.type",
+	"brand_id",
 	"compliances",
 	"compliances.radio_equipment",
 	"compliances.safety",
@@ -66,6 +67,7 @@ var EndDeviceModelFieldPathsNested = []string{
 var EndDeviceModelFieldPathsTopLevel = []string{
 	"additional_radios",
 	"battery",
+	"brand_id",
 	"compliances",
 	"datasheet_url",
 	"description",

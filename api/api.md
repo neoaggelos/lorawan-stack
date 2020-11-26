@@ -2054,6 +2054,7 @@ PeerInfo
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
+| `brand_id` | [`string`](#string) |  |  |
 | `model_id` | [`string`](#string) |  |  |
 | `name` | [`string`](#string) |  |  |
 | `description` | [`string`](#string) |  |  |

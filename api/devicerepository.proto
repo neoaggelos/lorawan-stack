@@ -38,16 +38,17 @@ message EndDeviceBrand {
 }
 
 message EndDeviceModel {
-  string model_id = 1 [(gogoproto.customname) = "ModelID"];
-  string name = 2;
-  string description = 3;
+  string brand_id = 1 [(gogoproto.customname) = "BrandID"];
+  string model_id = 2 [(gogoproto.customname) = "ModelID"];
+  string name = 3;
+  string description = 4;
 
   message Version {
     string version = 1;
     uint32 numeric = 2;
     string part_number = 3;
   }
-  repeated Version hardware_versions = 4;
+  repeated Version hardware_versions = 5;
 
   message FirmwareVersion {
     message Profile {
@@ -60,21 +61,21 @@ message EndDeviceModel {
     repeated string hardware_versions = 3;
     map<string, Profile> profiles = 4;
   }
-  repeated FirmwareVersion firmware_versions = 5;
-  repeated string sensors = 6;
+  repeated FirmwareVersion firmware_versions = 6;
+  repeated string sensors = 7;
   message Dimensions {
     float width = 1;
     float height = 2;
     float diameter = 3;
     float length = 4;
   }
-  Dimensions dimensions = 7;
-  float weight = 8;
+  Dimensions dimensions = 8;
+  float weight = 9;
   message Battery {
     google.protobuf.BoolValue replaceable = 1;
     string type = 2;
   }
-  Battery battery = 9;
+  Battery battery = 10;
   message OperatingConditions {
     message Limits {
       google.protobuf.FloatValue min = 1;
@@ -83,25 +84,25 @@ message EndDeviceModel {
     Limits temperature = 1;
     Limits relative_humidity = 2;
   }
-  OperatingConditions operating_conditions = 10;
+  OperatingConditions operating_conditions = 11;
 
-  string ip_code = 11 [(gogoproto.customname) = "IPCode"];
-  repeated string key_provisioning = 12;
-  string key_security = 13;
+  string ip_code = 12 [(gogoproto.customname) = "IPCode"];
+  repeated string key_provisioning = 13;
+  string key_security = 14;
 
   message Photos {
     string main = 1;
     repeated string other = 2;
   }
-  Photos photos = 14;
+  Photos photos = 15;
   message Videos {
     string main = 1;
     repeated string other = 2;
   }
-  Videos videos = 15;
+  Videos videos = 16;
 
-  string product_url = 16 [(gogoproto.customname) = "ProductURL"];
-  string datasheet_url = 17 [(gogoproto.customname) = "DatasheetURL"];
+  string product_url = 17 [(gogoproto.customname) = "ProductURL"];
+  string datasheet_url = 18 [(gogoproto.customname) = "DatasheetURL"];
 
   message Compliances {
     message Compliance {
@@ -113,9 +114,9 @@ message EndDeviceModel {
     repeated Compliance safety = 1;
     repeated Compliance radio_equipment = 2;
   }
-  Compliances compliances = 18;
+  Compliances compliances = 19;
 
-  repeated string additional_radios = 19;
+  repeated string additional_radios = 20;
 }
 
 message ListEndDeviceBrandsRequest {
