@@ -1646,6 +1646,15 @@
       "file": "flags.go"
     }
   },
+  "error:cmd/ttn-lw-stack/commands:invalid_index_type": {
+    "translations": {
+      "en": "invalid index type `{type}`"
+    },
+    "description": {
+      "package": "cmd/ttn-lw-stack/commands",
+      "file": "dr.go"
+    }
+  },
   "error:cmd/ttn-lw-stack/commands:missing_flag": {
     "translations": {
       "en": "missing CLI flag `{flag}`"
@@ -2942,6 +2951,42 @@
       "file": "errors.go"
     }
   },
+  "error:pkg/devicerepository/store/bleve:corrupted_index": {
+    "translations": {
+      "en": "corrupted index file"
+    },
+    "description": {
+      "package": "pkg/devicerepository/store/bleve",
+      "file": "store.go"
+    }
+  },
+  "error:pkg/devicerepository/store/bleve:invalid_refresh_config": {
+    "translations": {
+      "en": "unknown refresh configuration `{refresh}`"
+    },
+    "description": {
+      "package": "pkg/devicerepository/store/bleve",
+      "file": "bleve.go"
+    }
+  },
+  "error:pkg/devicerepository/store/bleve:no_index_fetcher_config": {
+    "translations": {
+      "en": "no index fetcher configuration specified"
+    },
+    "description": {
+      "package": "pkg/devicerepository/store/bleve",
+      "file": "bleve.go"
+    }
+  },
+  "error:pkg/devicerepository/store/bleve:no_working_directory": {
+    "translations": {
+      "en": "no working directory specified"
+    },
+    "description": {
+      "package": "pkg/devicerepository/store/bleve",
+      "file": "bleve.go"
+    }
+  },
   "error:pkg/devicerepository/store:no_codec": {
     "translations": {
       "en": "no codec defined for firmware version `{firmware_version}` and band `{band_id}`"
@@ -3012,6 +3057,15 @@
     "description": {
       "package": "pkg/devicerepository",
       "file": "grpc.go"
+    }
+  },
+  "error:pkg/devicerepository:unknown_index_type": {
+    "translations": {
+      "en": "unknown index type `{type}`"
+    },
+    "description": {
+      "package": "pkg/devicerepository",
+      "file": "config.go"
     }
   },
   "error:pkg/devicetemplateconverter:converter": {
