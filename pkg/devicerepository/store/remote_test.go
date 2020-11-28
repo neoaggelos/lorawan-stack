@@ -163,23 +163,13 @@ func TestRemoteStore(t *testing.T) {
 	a.So(err, should.BeNil)
 
 	t.Run("TestListBrands", func(t *testing.T) {
-		t.Run("DefaultPaths", func(t *testing.T) {
-			list, err := s.ListBrands(store.ListBrandsRequest{})
-			a.So(err, should.BeNil)
-			a.So(list.Brands, should.Resemble, []*ttnpb.EndDeviceBrand{
-				{
-					BrandID: "foo-vendor",
-					Name:    "Foo Vendor",
-				},
-				{
-					BrandID: "full-vendor",
-					Name:    "Full Vendor",
-				},
-			})
-		})
 
 		t.Run("Limit", func(t *testing.T) {
 			list, err := s.ListBrands(store.ListBrandsRequest{
+				Paths: []string{
+					"brand_id",
+					"name",
+				},
 				Limit: &pbtypes.UInt32Value{
 					Value: 1,
 				},
@@ -195,6 +185,10 @@ func TestRemoteStore(t *testing.T) {
 
 		t.Run("Offset", func(t *testing.T) {
 			list, err := s.ListBrands(store.ListBrandsRequest{
+				Paths: []string{
+					"brand_id",
+					"name",
+				},
 				Offset: &pbtypes.UInt32Value{
 					Value: 1,
 				},
@@ -234,27 +228,14 @@ func TestRemoteStore(t *testing.T) {
 	})
 
 	t.Run("TestListModels", func(t *testing.T) {
-		t.Run("DefaultPaths", func(t *testing.T) {
-			list, err := s.ListModels(store.ListModelsRequest{
-				BrandID: "foo-vendor",
-			})
-			a.So(err, should.BeNil)
-			a.So(list.Models, should.Resemble, []*ttnpb.EndDeviceModel{
-				{
-					BrandID: "foo-vendor",
-					ModelID: "dev1",
-					Name:    "Device 1",
-				},
-				{
-					BrandID: "foo-vendor",
-					ModelID: "dev2",
-					Name:    "Device 2",
-				},
-			})
-		})
-
 		t.Run("AllBrands", func(t *testing.T) {
-			list, err := s.ListModels(store.ListModelsRequest{})
+			list, err := s.ListModels(store.ListModelsRequest{
+				Paths: []string{
+					"brand_id",
+					"model_id",
+					"name",
+				},
+			})
 			a.So(err, should.BeNil)
 			a.So(list.Models, should.Resemble, []*ttnpb.EndDeviceModel{
 				{
@@ -281,6 +262,11 @@ func TestRemoteStore(t *testing.T) {
 				Limit: &pbtypes.UInt32Value{
 					Value: 1,
 				},
+				Paths: []string{
+					"brand_id",
+					"model_id",
+					"name",
+				},
 			})
 			a.So(err, should.BeNil)
 			a.So(list.Models, should.Resemble, []*ttnpb.EndDeviceModel{
@@ -297,6 +283,11 @@ func TestRemoteStore(t *testing.T) {
 				BrandID: "foo-vendor",
 				Offset: &pbtypes.UInt32Value{
 					Value: 1,
+				},
+				Paths: []string{
+					"brand_id",
+					"model_id",
+					"name",
 				},
 			})
 			a.So(err, should.BeNil)

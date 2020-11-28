@@ -133,7 +133,9 @@ func (s *remoteStore) ListModels(req ListModelsRequest) (*ListModelsResponse, er
 		return s.listModelsByBrand(req)
 	}
 	all := []*ttnpb.EndDeviceModel{}
-	brands, err := s.ListBrands(ListBrandsRequest{})
+	brands, err := s.ListBrands(ListBrandsRequest{
+		Paths: []string{"brand_id"},
+	})
 	if err != nil {
 		return nil, err
 	}
