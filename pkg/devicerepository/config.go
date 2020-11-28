@@ -15,22 +15,37 @@
 package devicerepository
 
 import (
+	"context"
+
 	"go.thethings.network/lorawan-stack/v3/pkg/devicerepository/store"
+	"go.thethings.network/lorawan-stack/v3/pkg/devicerepository/store/bleve"
+	"go.thethings.network/lorawan-stack/v3/pkg/errors"
 	"go.thethings.network/lorawan-stack/v3/pkg/fetch"
 )
 
-// Config represents the DeviceRepository configuration.
-type Config struct {
-	Static        map[string][]byte `name:"-"`
-	Directory     string            `name:"directory" description:"Retrieve devices from the filesystem"`
-	URL           string            `name:"url" description:"Retrieve devices from a web server"`
-	AssetsBaseURL string            `name:"assets-base-url" description:"The base URL for static assets"`
-
-	// TODO: configuration for index
+// IndexConfig represents configuration for the DeviceRepository index files.
+type IndexConfig struct {
+	Type  string       `name:"type" description:"Service to use for indexing (bleve)"`
+	Bleve bleve.Config `name:"bleve"`
 }
 
+// Config represents the DeviceRepository configuration.
+type Config struct {
+	Static    map[string][]byte `name:"-"`
+	Directory string            `name:"directory" description:"Retrieve devices from the filesystem"`
+	URL       string            `name:"url" description:"Retrieve devices from a web server"`
+
+	PhotosBaseURL string `name:"photos-base-url" description:"The base URL for photos assets"`
+
+	Index IndexConfig `name:"index"`
+}
+
+var (
+	errUnknownIndexType = errors.DefineUnimplemented("unknown_index_type", "unknown index type `{type}`")
+)
+
 // NewStore creates a new Store for end devices.
-func (c Config) NewStore() (store.Store, error) {
+func (c Config) NewStore(ctx context.Context) (store.Store, error) {
 	var fetcher fetch.Interface
 	switch {
 	case c.Static != nil:
@@ -47,5 +62,20 @@ func (c Config) NewStore() (store.Store, error) {
 		return &store.NoopStore{}, nil
 	}
 
-	return store.NewRemoteStore(fetcher)
+	s, err := store.NewRemoteStore(fetcher)
+	if err != nil {
+		return nil, err
+	}
+
+	// Wrap with indexed store if configureds
+	switch indexConfig := c.Index; indexConfig.Type {
+	case "":
+		return s, err
+	case "bleve":
+		indexConfig.Bleve.Store = s
+		return indexConfig.Bleve.NewStore(ctx)
+
+	default:
+		return nil, errUnknownIndexType.WithAttributes("type", indexConfig.Type)
+	}
 }

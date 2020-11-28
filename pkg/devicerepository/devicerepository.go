@@ -40,14 +40,14 @@ type DeviceRepository struct {
 
 // New returns a new *DeviceRepository.
 func New(c *component.Component, conf *Config) (*DeviceRepository, error) {
-	store, err := conf.NewStore()
+	store, err := conf.NewStore(c.Context())
 	if err != nil {
 		return nil, err
 	}
 
 	dr := &DeviceRepository{
 		Component: c,
-		ctx:       log.NewContextWithField(c.Context(), "namespace", "devicerepositoryserver"),
+		ctx:       log.NewContextWithField(c.Context(), "namespace", "devicerepository"),
 		config:    conf,
 
 		store: store,
