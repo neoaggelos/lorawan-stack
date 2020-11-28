@@ -21,10 +21,12 @@ import (
 
 // ListBrandsRequest is a request to list available end device vendors, with pagination and sorting.
 type ListBrandsRequest struct {
+	BrandID string
 	Limit,
 	Offset *pbtypes.UInt32Value
 	OrderBy string
 	Paths   []string
+	Search  string
 }
 
 // ListBrandsResponse is a list of brands, along with pagination information.
@@ -41,7 +43,9 @@ type ListModelsRequest struct {
 	ModelID string
 	Limit,
 	Offset *pbtypes.UInt32Value
-	Paths []string
+	OrderBy string
+	Paths   []string
+	Search  string
 }
 
 // ListModelsResponse is a list of models, along with model information

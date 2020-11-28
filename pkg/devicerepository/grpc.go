@@ -26,13 +26,25 @@ var (
 	errNotImplemented = errors.DefineUnimplemented("not_implemented", "not implemented")
 )
 
+// withDefaultModelFields appends default ttnpb.EndDeviceModel fields.
+func withDefaultModelFields(paths []string) []string {
+	return ttnpb.AddFields(paths, "brand_id", "model_id")
+}
+
+// withDefaultBrandFields appends default ttnpb.EndDeviceBrand paths.
+func withDefaultBrandFields(paths []string) []string {
+	return ttnpb.AddFields(paths, "brand_id")
+}
+
 // ListBrands implements the ttnpb.DeviceRepositoryServer interface.
 func (dr *DeviceRepository) ListBrands(ctx context.Context, request *ttnpb.ListEndDeviceBrandsRequest) (*ttnpb.ListEndDeviceBrandsResponse, error) {
 	response, err := dr.store.ListBrands(store.ListBrandsRequest{
+		BrandID: request.BrandID,
 		Limit:   request.Limit,
 		Offset:  request.Offset,
 		OrderBy: request.OrderBy,
-		Paths:   request.FieldMask.Paths,
+		Paths:   withDefaultBrandFields(request.FieldMask.Paths),
+		Search:  request.Search,
 	})
 	if err != nil {
 		return nil, err
@@ -52,7 +64,9 @@ func (dr *DeviceRepository) ListModels(ctx context.Context, request *ttnpb.ListE
 		ModelID: request.ModelID,
 		Limit:   request.Limit,
 		Offset:  request.Offset,
-		Paths:   request.FieldMask.Paths,
+		Paths:   withDefaultModelFields(request.FieldMask.Paths),
+		Search:  request.Search,
+		OrderBy: request.OrderBy,
 	})
 	if err != nil {
 		return nil, err

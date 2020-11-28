@@ -50,7 +50,7 @@ func (v Vendor) ToPB(paths ...string) (*ttnpb.EndDeviceBrand, error) {
 	}
 
 	res := &ttnpb.EndDeviceBrand{}
-	if err := res.SetFields(pb, withDefaultBrandFields(paths)...); err != nil {
+	if err := res.SetFields(pb, paths...); err != nil {
 		return nil, err
 	}
 	return res, nil
@@ -155,7 +155,6 @@ func (d EndDeviceModel) ToPB(brandID, modelID string, paths ...string) (*ttnpb.E
 		AdditionalRadios: d.AdditionalRadios,
 	}
 
-	paths = withDefaultModelFields(paths)
 	if hwVersions := d.HardwareVersions; hwVersions != nil {
 		pb.HardwareVersions = make([]*ttnpb.EndDeviceModel_Version, 0, len(hwVersions))
 		for _, ver := range hwVersions {
