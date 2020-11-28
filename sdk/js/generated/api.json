@@ -7940,7 +7940,9 @@
                       "brand_id",
                       "-brand_id",
                       "model_id",
-                      "-model_id"
+                      "-model_id",
+                      "name",
+                      "-name"
                     ]
                   }
                 ]

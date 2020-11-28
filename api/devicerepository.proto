@@ -151,7 +151,7 @@ message ListEndDeviceModelsRequest {
 
   // Order end devices
   string order_by = 4 [(validate.rules).string = {
-    in: ["", "brand_id", "-brand_id", "model_id", "-model_id"]
+    in: ["", "brand_id", "-brand_id", "model_id", "-model_id", "name", "-name"]
   }];
 
   // Limit number of results.

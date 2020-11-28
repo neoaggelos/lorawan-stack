@@ -504,7 +504,7 @@ func (m *ListEndDeviceModelsRequest) ValidateFields(paths ...string) error {
 			if _, ok := _ListEndDeviceModelsRequest_OrderBy_InLookup[m.GetOrderBy()]; !ok {
 				return ListEndDeviceModelsRequestValidationError{
 					field:  "order_by",
-					reason: "value must be in list [ brand_id -brand_id model_id -model_id]",
+					reason: "value must be in list [ brand_id -brand_id model_id -model_id name -name]",
 				}
 			}
 
@@ -617,6 +617,8 @@ var _ListEndDeviceModelsRequest_OrderBy_InLookup = map[string]struct{}{
 	"-brand_id": {},
 	"model_id":  {},
 	"-model_id": {},
+	"name":      {},
+	"-name":     {},
 }
 
 // ValidateFields checks the field values on ListEndDeviceBrandsResponse with

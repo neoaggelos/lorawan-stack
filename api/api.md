@@ -2209,7 +2209,7 @@ PeerInfo
 
 | Field | Validations |
 | ----- | ----------- |
-| `order_by` | <p>`string.in`: `[ brand_id -brand_id model_id -model_id]`</p> |
+| `order_by` | <p>`string.in`: `[ brand_id -brand_id model_id -model_id name -name]`</p> |
 
 ### <a name="ttn.lorawan.v3.ListEndDeviceModelsResponse">Message `ListEndDeviceModelsResponse`</a>
 
