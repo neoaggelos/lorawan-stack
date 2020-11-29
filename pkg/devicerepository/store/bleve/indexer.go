@@ -22,6 +22,7 @@ import (
 	"go.thethings.network/lorawan-stack/v3/pkg/devicerepository/store"
 	"go.thethings.network/lorawan-stack/v3/pkg/errors"
 	"go.thethings.network/lorawan-stack/v3/pkg/jsonpb"
+	"go.thethings.network/lorawan-stack/v3/pkg/log"
 	"go.thethings.network/lorawan-stack/v3/pkg/ttnpb"
 )
 
@@ -74,6 +75,7 @@ func (bl *bleveStore) IndexBrands(destinationDirectory string) error {
 
 	batch := index.NewBatch()
 	for _, brand := range brands.Brands {
+		log.FromContext(bl.ctx).WithField("brand_id", brand.BrandID).Debug("Indexing")
 		models, err := bl.store.GetModels(store.GetModelsRequest{
 			Paths:   ttnpb.EndDeviceModelFieldPathsNested,
 			BrandID: brand.BrandID,
@@ -126,6 +128,7 @@ func (bl *bleveStore) IndexModels(destinationDirectory string) error {
 
 	batch := index.NewBatch()
 	for _, brand := range brands.Brands {
+		log.FromContext(bl.ctx).WithField("brand_id", brand.BrandID).Debug("Indexing")
 		brandPB, err := jsonpb.TTN().Marshal(brand)
 		if err != nil {
 			return err

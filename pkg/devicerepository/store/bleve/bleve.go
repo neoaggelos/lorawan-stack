@@ -126,10 +126,11 @@ func (c Config) NewStore(ctx context.Context) (store.Store, error) {
 }
 
 // NewIndexer creates a new indexer from configuration.
-func (c Config) NewIndexer(store store.Store) (Indexer, error) {
+func (c Config) NewIndexer(ctx context.Context, store store.Store) (Indexer, error) {
 	return &bleveStore{
-		store: store,
+		ctx: ctx,
 
+		store:    store,
 		archiver: &zipArchiver{createDirectory: true},
 	}, nil
 }

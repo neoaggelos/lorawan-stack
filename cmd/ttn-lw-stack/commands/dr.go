@@ -46,7 +46,7 @@ var (
 					return err
 				}
 				drConfig.Index.Bleve.Store = store
-				indexer, err := drConfig.Index.Bleve.NewIndexer(store)
+				indexer, err := drConfig.Index.Bleve.NewIndexer(ctx, store)
 				if err != nil {
 					return nil
 				}
