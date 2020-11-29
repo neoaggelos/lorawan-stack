@@ -163,7 +163,8 @@ func (s *remoteStore) GetModels(req GetModelsRequest) (*GetModelsResponse, error
 }
 
 var (
-	errNoModel = errors.DefineNotFound("no_model", "no model for brand `{brand_id}` and model ID `{model_id}`")
+	errModelNotFound           = errors.DefineNotFound("model_not_found", "model `{brand_id}/{model_id}` not found")
+	errFirmwareVersionNotFound = errors.DefineNotFound("firmware_version_not_found", "firwmare version `{firmware_version}` for model `{brand_id}/{model_id}` not found")
 )
 
 // GetTemplate retrieves an end device template for an end device definition.
@@ -178,35 +179,41 @@ func (s *remoteStore) GetTemplate(ids *ttnpb.EndDeviceVersionIdentifiers) (*ttnp
 	if err != nil {
 		return nil, err
 	}
-	for _, def := range models.Models {
-		for _, ver := range def.FirmwareVersions {
-			if ver.Version != ids.FirmwareVersion {
-				continue
-			}
-
-			if _, ok := BandIDToRegion[ids.BandID]; !ok {
-				return nil, errUnknownBand.WithAttributes("unknown_band", ids.BandID)
-			}
-			profileInfo, ok := ver.Profiles[ids.BandID]
-			if !ok {
-				return nil, errNoProfile.WithAttributes(
-					"band_id", ids.BandID,
-				)
-			}
-
-			b, err := s.fetcher.File("vendor", ids.BrandID, profileInfo.ProfileID+".yaml")
-			if err != nil {
-				return nil, err
-			}
-			profile := EndDeviceProfile{}
-			if err := yaml.Unmarshal(b, &profile); err != nil {
-				return nil, err
-			}
-
-			return profile.ToTemplatePB(ids, profileInfo)
-		}
+	if len(models.Models) == 0 {
+		return nil, errModelNotFound.WithAttributes("brand_id", ids.BrandID, "model_id", ids.ModelID)
 	}
-	return nil, errNoModel.WithAttributes("brand_id", ids.BrandID, "model_id", ids.ModelID)
+	model := models.Models[0]
+	for _, ver := range model.FirmwareVersions {
+		if ver.Version != ids.FirmwareVersion {
+			continue
+		}
+
+		if _, ok := bandIDToRegion[ids.BandID]; !ok {
+			return nil, errUnknownBand.WithAttributes("unknown_band", ids.BandID)
+		}
+		profileInfo, ok := ver.Profiles[ids.BandID]
+		if !ok {
+			return nil, errNoProfile.WithAttributes(
+				"band_id", ids.BandID,
+			)
+		}
+
+		b, err := s.fetcher.File("vendor", ids.BrandID, profileInfo.ProfileID+".yaml")
+		if err != nil {
+			return nil, err
+		}
+		profile := EndDeviceProfile{}
+		if err := yaml.Unmarshal(b, &profile); err != nil {
+			return nil, err
+		}
+
+		return profile.ToTemplatePB(ids, profileInfo)
+	}
+	return nil, errFirmwareVersionNotFound.WithAttributes(
+		"brand_id", ids.BrandID,
+		"model_id", ids.ModelID,
+		"firmware_version", ids.FirmwareVersion,
+	)
 }
 
 var (
@@ -225,45 +232,51 @@ func (s *remoteStore) getCodec(ids *ttnpb.EndDeviceVersionIdentifiers, chooseFil
 	if err != nil {
 		return "", err
 	}
-	for _, def := range models.Models {
-		for _, ver := range def.FirmwareVersions {
-			if ver.Version != ids.FirmwareVersion {
-				continue
-			}
+	if len(models.Models) == 0 {
+		return "", errModelNotFound.WithAttributes("brand_id", ids.BrandID, "model_id", ids.ModelID)
+	}
+	model := models.Models[0]
+	for _, ver := range model.FirmwareVersions {
+		if ver.Version != ids.FirmwareVersion {
+			continue
+		}
 
-			if _, ok := BandIDToRegion[ids.BandID]; !ok {
-				return "", errUnknownBand.WithAttributes("unknown_band", ids.BandID)
-			}
-			profileInfo, ok := ver.Profiles[ids.BandID]
-			if !ok {
-				return "", errNoProfile.WithAttributes(
-					"band_id", ids.BandID,
-				)
-			}
+		if _, ok := bandIDToRegion[ids.BandID]; !ok {
+			return "", errUnknownBand.WithAttributes("unknown_band", ids.BandID)
+		}
+		profileInfo, ok := ver.Profiles[ids.BandID]
+		if !ok {
+			return "", errNoProfile.WithAttributes(
+				"band_id", ids.BandID,
+			)
+		}
 
-			if profileInfo.CodecID == "" {
-				return "", errNoCodec.WithAttributes("firmware_version", ids.FirmwareVersion, "band_id", ids.BandID)
-			}
+		if profileInfo.CodecID == "" {
+			return "", errNoCodec.WithAttributes("firmware_version", ids.FirmwareVersion, "band_id", ids.BandID)
+		}
 
-			codec := EndDeviceCodec{}
-			b, err := s.fetcher.File("vendor", ids.BrandID, profileInfo.CodecID+".yaml")
+		codec := EndDeviceCodec{}
+		b, err := s.fetcher.File("vendor", ids.BrandID, profileInfo.CodecID+".yaml")
+		if err != nil {
+			return "", err
+		}
+		if err := yaml.Unmarshal(b, &codec); err != nil {
+			return "", err
+		}
+		if file := chooseFile(codec); file != "" {
+			b, err := s.fetcher.File("vendor", ids.BrandID, file)
 			if err != nil {
 				return "", err
 			}
-			if err := yaml.Unmarshal(b, &codec); err != nil {
-				return "", err
-			}
-			if file := chooseFile(codec); file != "" {
-				b, err := s.fetcher.File("vendor", ids.BrandID, file)
-				if err != nil {
-					return "", err
-				}
-				return string(b), nil
-			}
+			return string(b), nil
 		}
 	}
 
-	return "", errNoModel.WithAttributes("brand_id", ids.BrandID, "model_id", ids.ModelID)
+	return "", errFirmwareVersionNotFound.WithAttributes(
+		"brand_id", ids.BrandID,
+		"model_id", ids.ModelID,
+		"firmware_version", ids.FirmwareVersion,
+	)
 }
 
 // GetUplinkDecoder retrieves the codec for decoding uplink messages.
