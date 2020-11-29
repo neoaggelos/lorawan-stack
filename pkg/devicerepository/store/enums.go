@@ -19,8 +19,8 @@ import (
 	"go.thethings.network/lorawan-stack/v3/pkg/ttnpb"
 )
 
-// RegionToBandID maps LoRaWAN schema regions to TTS Band IDs.
-var RegionToBandID = map[string]string{
+// regionToBandID maps LoRaWAN schema regions to TTS Band IDs.
+var regionToBandID = map[string]string{
 	"EU863-870": band.EU_863_870,
 	"US902-928": band.US_902_928,
 	"CN779-787": band.CN_779_787,
@@ -33,21 +33,11 @@ var RegionToBandID = map[string]string{
 	"RU864-870": band.RU_864_870,
 }
 
-// BandIDToRegion is the inverse mapping of RegionToBandID.
-var BandIDToRegion map[string]string
+// bandIDToRegion is the inverse mapping of regionToBandID.
+var bandIDToRegion map[string]string
 
-// MACVersionToPB maps LoRaWAN schema MAC versions to ttnpb.MACVersion enum values.
-var MACVersionToPB = map[string]ttnpb.MACVersion{
-	"1.0":   ttnpb.MAC_V1_0,
-	"1.0.1": ttnpb.MAC_V1_0_1,
-	"1.0.2": ttnpb.MAC_V1_0_2,
-	"1.0.3": ttnpb.MAC_V1_0_3,
-	"1.0.4": ttnpb.MAC_V1_0_4,
-	"1.1":   ttnpb.MAC_V1_1,
-}
-
-// RegionalParametersToPB maps LoRaWAN schema regional parameters to ttnpb.PHYVersion enum values.
-var RegionalParametersToPB = map[string]ttnpb.PHYVersion{
+// regionalParametersToPB maps LoRaWAN schema regional parameters to ttnpb.PHYVersion enum values.
+var regionalParametersToPB = map[string]ttnpb.PHYVersion{
 	"TS001-1.0":        ttnpb.PHY_V1_0,
 	"TS001-1.0.1":      ttnpb.PHY_V1_0_1,
 	"RP001-1.0.2":      ttnpb.PHY_V1_0_2_REV_A,
@@ -60,8 +50,8 @@ var RegionalParametersToPB = map[string]ttnpb.PHYVersion{
 	"RP001-1.1-RevB": ttnpb.PHY_V1_1_REV_B,
 }
 
-// PingSlotPeriodToPB maps LoRaWAN schema ping slot period to ttnpb.PingSlotPeriod enum values.
-var PingSlotPeriodToPB = map[uint32]ttnpb.PingSlotPeriod{
+// pingSlotPeriodToPB maps LoRaWAN schema ping slot period to ttnpb.PingSlotPeriod enum values.
+var pingSlotPeriodToPB = map[uint32]ttnpb.PingSlotPeriod{
 	32:  ttnpb.PING_EVERY_32S,
 	64:  ttnpb.PING_EVERY_64S,
 	128: ttnpb.PING_EVERY_128S,
@@ -74,8 +64,8 @@ var PingSlotPeriodToPB = map[uint32]ttnpb.PingSlotPeriod{
 }
 
 func init() {
-	BandIDToRegion = make(map[string]string, len(RegionToBandID))
-	for region, bandID := range RegionToBandID {
-		BandIDToRegion[bandID] = region
+	bandIDToRegion = make(map[string]string, len(regionToBandID))
+	for region, bandID := range regionToBandID {
+		bandIDToRegion[bandID] = region
 	}
 }

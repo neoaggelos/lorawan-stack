@@ -173,7 +173,7 @@ func (d EndDeviceModel) ToPB(brandID, modelID string, paths ...string) (*ttnpb.E
 		}
 		pbver.Profiles = make(map[string]*ttnpb.EndDeviceModel_FirmwareVersion_Profile, len(ver.Profiles))
 		for region, profile := range ver.Profiles {
-			pbver.Profiles[RegionToBandID[region]] = &ttnpb.EndDeviceModel_FirmwareVersion_Profile{
+			pbver.Profiles[regionToBandID[region]] = &ttnpb.EndDeviceModel_FirmwareVersion_Profile{
 				CodecID:          profile.Codec,
 				ProfileID:        profile.ID,
 				LoRaWANCertified: profile.LoRaWANCertified,
@@ -282,7 +282,7 @@ type EndDeviceProfile struct {
 	PingSlotFrequency         float64             `yaml:"pingSlotFrequency"`
 	SupportsClassC            bool                `yaml:"supportsClassC"`
 	ClassCTimeout             uint32              `yaml:"classCTimeout"`
-	MACVersion                string              `yaml:"macVersion"`
+	MACVersion                ttnpb.MACVersion    `yaml:"macVersion"`
 	RegionalParametersVersion string              `yaml:"regionalParametersVersion"`
 	SupportsJoin              bool                `yaml:"supportsJoin"`
 	Rx1Delay                  ttnpb.RxDelay       `yaml:"rx1Delay"`
@@ -305,11 +305,7 @@ var (
 
 // ToTemplatePB returns a ttnpb.EndDeviceTemplate from an end device profile.
 func (p EndDeviceProfile) ToTemplatePB(ids *ttnpb.EndDeviceVersionIdentifiers, info *ttnpb.EndDeviceModel_FirmwareVersion_Profile) (*ttnpb.EndDeviceTemplate, error) {
-	macVersion, ok := MACVersionToPB[p.MACVersion]
-	if !ok {
-		return nil, errUnknownMACVersion.WithAttributes("mac_version", p.MACVersion)
-	}
-	phyVersion, ok := RegionalParametersToPB[p.RegionalParametersVersion]
+	phyVersion, ok := regionalParametersToPB[p.RegionalParametersVersion]
 	if !ok {
 		return nil, errUnknownRegionalParametersVersion.WithAttributes("phyVersion", p.RegionalParametersVersion)
 	}
@@ -327,7 +323,7 @@ func (p EndDeviceProfile) ToTemplatePB(ids *ttnpb.EndDeviceVersionIdentifiers, i
 		SupportsJoin:      p.SupportsJoin,
 		SupportsClassB:    p.SupportsClassB,
 		SupportsClassC:    p.SupportsClassC,
-		LoRaWANVersion:    macVersion,
+		LoRaWANVersion:    p.MACVersion,
 		LoRaWANPHYVersion: phyVersion,
 	}
 
@@ -364,7 +360,7 @@ func (p EndDeviceProfile) ToTemplatePB(ids *ttnpb.EndDeviceVersionIdentifiers, i
 	}
 	if p.PingSlotPeriod > 0 {
 		dev.MACSettings.PingSlotPeriodicity = &ttnpb.PingSlotPeriodValue{
-			Value: PingSlotPeriodToPB[p.PingSlotPeriod],
+			Value: pingSlotPeriodToPB[p.PingSlotPeriod],
 		}
 		paths = append(paths, "mac_settings.ping_slot_periodicity")
 	}
