@@ -3050,6 +3050,24 @@
       "file": "schema.go"
     }
   },
+  "error:pkg/devicerepository:brand_not_found": {
+    "translations": {
+      "en": "brand `{brand_id}` not found"
+    },
+    "description": {
+      "package": "pkg/devicerepository",
+      "file": "grpc.go"
+    }
+  },
+  "error:pkg/devicerepository:model_not_found": {
+    "translations": {
+      "en": "model `{brand_id}`/`{model_id}` not found"
+    },
+    "description": {
+      "package": "pkg/devicerepository",
+      "file": "grpc.go"
+    }
+  },
   "error:pkg/devicerepository:not_implemented": {
     "translations": {
       "en": "not implemented"
