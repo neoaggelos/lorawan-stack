@@ -2256,17 +2256,19 @@ PeerInfo
 
 | Name | Number | Description |
 | ---- | ------ | ----------- |
-| `KEY_PROVISIONING_CUSTOM` | 0 | Custom Key Provisioning. |
-| `KEY_PROVISIONING_JOIN_SERVER` | 1 | Key Provisioning from the Global Join Server. |
-| `KEY_PROVISIONING_MANIFEST` | 2 | Key Provisioning from Manifest. |
+| `KEY_PROVISIONING_UNKNOWN` | 0 | Unknown Key Provisioning. |
+| `KEY_PROVISIONING_CUSTOM` | 1 | Custom Key Provisioning. |
+| `KEY_PROVISIONING_JOIN_SERVER` | 2 | Key Provisioning from the Global Join Server. |
+| `KEY_PROVISIONING_MANIFEST` | 3 | Key Provisioning from Manifest. |
 
 ### <a name="ttn.lorawan.v3.KeySecurity">Enum `KeySecurity`</a>
 
 | Name | Number | Description |
 | ---- | ------ | ----------- |
-| `KEY_SECURITY_NONE` | 0 | No key security. |
-| `KEY_SECURITY_READ_PROTECTED` | 1 | Read Protected key security. |
-| `KEY_SECURITY_SECURE_ELEMENT` | 2 | Key security using the Security Element. |
+| `KEY_SECURITY_UNKNOWN` | 0 | Unknown key security. |
+| `KEY_SECURITY_NONE` | 1 | No key security. |
+| `KEY_SECURITY_READ_PROTECTED` | 2 | Read Protected key security. |
+| `KEY_SECURITY_SECURE_ELEMENT` | 3 | Key security using the Security Element. |
 
 ### <a name="ttn.lorawan.v3.DeviceRepository">Service `DeviceRepository`</a>
 

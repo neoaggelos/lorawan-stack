@@ -49,23 +49,27 @@ message EndDeviceBrand {
 enum KeyProvisioning {
   option (gogoproto.goproto_enum_prefix) = false;
 
+  // Unknown Key Provisioning.
+  KEY_PROVISIONING_UNKNOWN = 0;
   // Custom Key Provisioning.
-  KEY_PROVISIONING_CUSTOM = 0;
+  KEY_PROVISIONING_CUSTOM = 1;
   // Key Provisioning from the Global Join Server.
-  KEY_PROVISIONING_JOIN_SERVER = 1;
+  KEY_PROVISIONING_JOIN_SERVER = 2;
   // Key Provisioning from Manifest.
-  KEY_PROVISIONING_MANIFEST = 2;
+  KEY_PROVISIONING_MANIFEST = 3;
 }
 
 enum KeySecurity {
   option (gogoproto.goproto_enum_prefix) = false;
 
+  // Unknown key security.
+  KEY_SECURITY_UNKNOWN = 0;
   // No key security.
-  KEY_SECURITY_NONE = 0;
+  KEY_SECURITY_NONE = 1;
   // Read Protected key security.
-  KEY_SECURITY_READ_PROTECTED = 1;
+  KEY_SECURITY_READ_PROTECTED = 2;
   // Key security using the Security Element.
-  KEY_SECURITY_SECURE_ELEMENT = 2;
+  KEY_SECURITY_SECURE_ELEMENT = 3;
 }
 
 message EndDeviceModel {

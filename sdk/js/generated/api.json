@@ -6998,18 +6998,23 @@
           "description": "",
           "values": [
             {
-              "name": "KEY_PROVISIONING_CUSTOM",
+              "name": "KEY_PROVISIONING_UNKNOWN",
               "number": "0",
+              "description": "Unknown Key Provisioning."
+            },
+            {
+              "name": "KEY_PROVISIONING_CUSTOM",
+              "number": "1",
               "description": "Custom Key Provisioning."
             },
             {
               "name": "KEY_PROVISIONING_JOIN_SERVER",
-              "number": "1",
+              "number": "2",
               "description": "Key Provisioning from the Global Join Server."
             },
             {
               "name": "KEY_PROVISIONING_MANIFEST",
-              "number": "2",
+              "number": "3",
               "description": "Key Provisioning from Manifest."
             }
           ]
@@ -7021,18 +7026,23 @@
           "description": "",
           "values": [
             {
-              "name": "KEY_SECURITY_NONE",
+              "name": "KEY_SECURITY_UNKNOWN",
               "number": "0",
+              "description": "Unknown key security."
+            },
+            {
+              "name": "KEY_SECURITY_NONE",
+              "number": "1",
               "description": "No key security."
             },
             {
               "name": "KEY_SECURITY_READ_PROTECTED",
-              "number": "1",
+              "number": "2",
               "description": "Read Protected key security."
             },
             {
               "name": "KEY_SECURITY_SECURE_ELEMENT",
-              "number": "2",
+              "number": "3",
               "description": "Key security using the Security Element."
             }
           ]

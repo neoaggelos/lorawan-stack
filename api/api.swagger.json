@@ -12523,22 +12523,24 @@
     "v3KeyProvisioning": {
       "type": "string",
       "enum": [
+        "KEY_PROVISIONING_UNKNOWN",
         "KEY_PROVISIONING_CUSTOM",
         "KEY_PROVISIONING_JOIN_SERVER",
         "KEY_PROVISIONING_MANIFEST"
       ],
-      "default": "KEY_PROVISIONING_CUSTOM",
-      "description": " - KEY_PROVISIONING_CUSTOM: Custom Key Provisioning.\n - KEY_PROVISIONING_JOIN_SERVER: Key Provisioning from the Global Join Server.\n - KEY_PROVISIONING_MANIFEST: Key Provisioning from Manifest."
+      "default": "KEY_PROVISIONING_UNKNOWN",
+      "description": " - KEY_PROVISIONING_UNKNOWN: Unknown Key Provisioning.\n - KEY_PROVISIONING_CUSTOM: Custom Key Provisioning.\n - KEY_PROVISIONING_JOIN_SERVER: Key Provisioning from the Global Join Server.\n - KEY_PROVISIONING_MANIFEST: Key Provisioning from Manifest."
     },
     "v3KeySecurity": {
       "type": "string",
       "enum": [
+        "KEY_SECURITY_UNKNOWN",
         "KEY_SECURITY_NONE",
         "KEY_SECURITY_READ_PROTECTED",
         "KEY_SECURITY_SECURE_ELEMENT"
       ],
-      "default": "KEY_SECURITY_NONE",
-      "description": " - KEY_SECURITY_NONE: No key security.\n - KEY_SECURITY_READ_PROTECTED: Read Protected key security.\n - KEY_SECURITY_SECURE_ELEMENT: Key security using the Security Element."
+      "default": "KEY_SECURITY_UNKNOWN",
+      "description": " - KEY_SECURITY_UNKNOWN: Unknown key security.\n - KEY_SECURITY_NONE: No key security.\n - KEY_SECURITY_READ_PROTECTED: Read Protected key security.\n - KEY_SECURITY_SECURE_ELEMENT: Key security using the Security Element."
     },
     "v3ListEndDeviceBrandsResponse": {
       "type": "object",

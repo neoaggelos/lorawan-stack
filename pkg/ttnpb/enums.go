@@ -92,6 +92,8 @@ func (v *State) UnmarshalJSON(b []byte) error {
 // MarshalText implements encoding.TextMarshaler interface.
 func (v KeyProvisioning) MarshalText() ([]byte, error) {
 	switch v {
+	case KEY_PROVISIONING_UNKNOWN:
+		return []byte("unknown"), nil
 	case KEY_PROVISIONING_CUSTOM:
 		return []byte("custom"), nil
 	case KEY_PROVISIONING_JOIN_SERVER:
@@ -111,6 +113,8 @@ func (v *KeyProvisioning) UnmarshalText(b []byte) error {
 		return nil
 	}
 	switch s {
+	case "unknown", "KEY_PROVISIONING_UNKNOWN":
+		*v = KEY_PROVISIONING_UNKNOWN
 	case "custom", "KEY_PROVISIONING_CUSTOM":
 		*v = KEY_PROVISIONING_CUSTOM
 	case "join server", "KEY_PROVISIONING_JOIN_SERVER":
@@ -145,6 +149,8 @@ func (v *KeyProvisioning) UnmarshalJSONPB(_ *jsonpb.Unmarshaler, b []byte) error
 // MarshalText implements encoding.TextMarshaler interface.
 func (v KeySecurity) MarshalText() ([]byte, error) {
 	switch v {
+	case KEY_SECURITY_UNKNOWN:
+		return []byte("unknown"), nil
 	case KEY_SECURITY_NONE:
 		return []byte("none"), nil
 	case KEY_SECURITY_READ_PROTECTED:
@@ -164,6 +170,8 @@ func (v *KeySecurity) UnmarshalText(b []byte) error {
 		return nil
 	}
 	switch s {
+	case "unknown", "KEY_SECURITY_UNKNOWN":
+		*v = KEY_SECURITY_UNKNOWN
 	case "none", "KEY_SECURITY_NONE":
 		*v = KEY_SECURITY_NONE
 	case "read protected", "KEY_SECURITY_READ_PROTECTED":
