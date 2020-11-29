@@ -104,7 +104,7 @@ func (dr *DeviceRepository) ListModels(ctx context.Context, request *ttnpb.ListE
 }
 
 var (
-	errModelNotFound = errors.DefineNotFound("model_not_found", "model `{brand_id}`/`{model_id}` not found")
+	errModelNotFound = errors.DefineNotFound("model_not_found", "model `{brand_id}/{model_id}` not found")
 )
 
 // GetModel implements the ttnpb.DeviceRepositoryServer interface.

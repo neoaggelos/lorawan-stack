@@ -2987,18 +2987,27 @@
       "file": "bleve.go"
     }
   },
-  "error:pkg/devicerepository/store:no_codec": {
+  "error:pkg/devicerepository/store:firmware_version_not_found": {
     "translations": {
-      "en": "no codec defined for firmware version `{firmware_version}` and band `{band_id}`"
+      "en": "firwmare version `{firmware_version}` for model `{brand_id}/{model_id}` not found"
     },
     "description": {
       "package": "pkg/devicerepository/store",
       "file": "remote.go"
     }
   },
-  "error:pkg/devicerepository/store:no_model": {
+  "error:pkg/devicerepository/store:model_not_found": {
     "translations": {
-      "en": "no model for brand `{brand_id}` and model ID `{model_id}`"
+      "en": "model `{brand_id}/{model_id}` not found"
+    },
+    "description": {
+      "package": "pkg/devicerepository/store",
+      "file": "remote.go"
+    }
+  },
+  "error:pkg/devicerepository/store:no_codec": {
+    "translations": {
+      "en": "no codec defined for firmware version `{firmware_version}` and band `{band_id}`"
     },
     "description": {
       "package": "pkg/devicerepository/store",
@@ -3061,7 +3070,7 @@
   },
   "error:pkg/devicerepository:model_not_found": {
     "translations": {
-      "en": "model `{brand_id}`/`{model_id}` not found"
+      "en": "model `{brand_id}/{model_id}` not found"
     },
     "description": {
       "package": "pkg/devicerepository",
