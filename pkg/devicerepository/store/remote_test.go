@@ -136,7 +136,7 @@ operatingConditions:
   relativeHumidity: {min: 3, max: 4}
 ipCode: IP67
 keyProvisioning: [custom]
-keySecurity: security
+keySecurity: read protected
 photos:
   main: a.jpg
   other: [b.jpg, c.jpg]
@@ -445,7 +445,7 @@ func TestRemoteStore(t *testing.T) {
 				},
 				IPCode:          "IP67",
 				KeyProvisioning: []ttnpb.KeyProvisioning{ttnpb.KEY_PROVISIONING_CUSTOM},
-				KeySecurity:     ttnpb.KEY_SECURITY_NONE,
+				KeySecurity:     ttnpb.KEY_SECURITY_READ_PROTECTED,
 				Photos: &ttnpb.EndDeviceModel_Photos{
 					Main:  "a.jpg",
 					Other: []string{"b.jpg", "c.jpg"},
