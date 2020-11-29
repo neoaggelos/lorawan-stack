@@ -6,10 +6,10 @@ var EndDeviceBrandFieldPathsNested = []string{
 	"brand_id",
 	"email",
 	"logo",
+	"lora_alliance_vendor_id",
 	"name",
 	"organization_unique_identifiers",
 	"private_enterprise_number",
-	"vendor_id",
 	"website",
 }
 
@@ -17,10 +17,10 @@ var EndDeviceBrandFieldPathsTopLevel = []string{
 	"brand_id",
 	"email",
 	"logo",
+	"lora_alliance_vendor_id",
 	"name",
 	"organization_unique_identifiers",
 	"private_enterprise_number",
-	"vendor_id",
 	"website",
 }
 var EndDeviceModelFieldPathsNested = []string{
@@ -86,30 +86,47 @@ var EndDeviceModelFieldPathsTopLevel = []string{
 	"videos",
 	"weight",
 }
-var ListEndDeviceBrandsRequestFieldPathsNested = []string{
+var GetEndDeviceBrandRequestFieldPathsNested = []string{
 	"brand_id",
 	"field_mask",
+}
+
+var GetEndDeviceBrandRequestFieldPathsTopLevel = []string{
+	"brand_id",
+	"field_mask",
+}
+var ListEndDeviceBrandsRequestFieldPathsNested = []string{
+	"field_mask",
 	"limit",
-	"offset",
 	"order_by",
+	"page",
 	"search",
 }
 
 var ListEndDeviceBrandsRequestFieldPathsTopLevel = []string{
-	"brand_id",
 	"field_mask",
 	"limit",
-	"offset",
 	"order_by",
+	"page",
 	"search",
+}
+var GetEndDeviceModelRequestFieldPathsNested = []string{
+	"brand_id",
+	"field_mask",
+	"model_id",
+}
+
+var GetEndDeviceModelRequestFieldPathsTopLevel = []string{
+	"brand_id",
+	"field_mask",
+	"model_id",
 }
 var ListEndDeviceModelsRequestFieldPathsNested = []string{
 	"brand_id",
 	"field_mask",
 	"limit",
-	"model_id",
-	"offset",
 	"order_by",
+	"page",
 	"search",
 }
 
@@ -117,9 +134,8 @@ var ListEndDeviceModelsRequestFieldPathsTopLevel = []string{
 	"brand_id",
 	"field_mask",
 	"limit",
-	"model_id",
-	"offset",
 	"order_by",
+	"page",
 	"search",
 }
 var ListEndDeviceBrandsResponseFieldPathsNested = []string{
@@ -149,34 +165,36 @@ var ListEndDeviceModelsResponseFieldPathsTopLevel = []string{
 	"total",
 }
 var MessagePayloadFormatterFieldPathsNested = []string{
-	"codec",
+	"formatter",
+	"formatter_parameter",
 }
 
 var MessagePayloadFormatterFieldPathsTopLevel = []string{
-	"codec",
+	"formatter",
+	"formatter_parameter",
 }
-var EndDeviceModel_VersionFieldPathsNested = []string{
+var EndDeviceModel_HardwareVersionFieldPathsNested = []string{
 	"numeric",
 	"part_number",
 	"version",
 }
 
-var EndDeviceModel_VersionFieldPathsTopLevel = []string{
+var EndDeviceModel_HardwareVersionFieldPathsTopLevel = []string{
 	"numeric",
 	"part_number",
 	"version",
 }
 var EndDeviceModel_FirmwareVersionFieldPathsNested = []string{
-	"hardware_versions",
 	"numeric",
 	"profiles",
+	"supported_hardware_versions",
 	"version",
 }
 
 var EndDeviceModel_FirmwareVersionFieldPathsTopLevel = []string{
-	"hardware_versions",
 	"numeric",
 	"profiles",
+	"supported_hardware_versions",
 	"version",
 }
 var EndDeviceModel_DimensionsFieldPathsNested = []string{

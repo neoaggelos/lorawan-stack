@@ -58,8 +58,8 @@ func (m *EndDeviceBrand) ValidateFields(paths ...string) error {
 			// no validation rules for PrivateEnterpriseNumber
 		case "organization_unique_identifiers":
 
-		case "vendor_id":
-			// no validation rules for VendorID
+		case "lora_alliance_vendor_id":
+			// no validation rules for LoRaAllianceVendorID
 		case "website":
 			// no validation rules for Website
 		case "email":
@@ -339,6 +339,102 @@ var _ interface {
 	ErrorName() string
 } = EndDeviceModelValidationError{}
 
+// ValidateFields checks the field values on GetEndDeviceBrandRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *GetEndDeviceBrandRequest) ValidateFields(paths ...string) error {
+	if m == nil {
+		return nil
+	}
+
+	if len(paths) == 0 {
+		paths = GetEndDeviceBrandRequestFieldPathsNested
+	}
+
+	for name, subs := range _processPaths(append(paths[:0:0], paths...)) {
+		_ = subs
+		switch name {
+		case "brand_id":
+			// no validation rules for BrandID
+		case "field_mask":
+
+			if v, ok := interface{}(&m.FieldMask).(interface{ ValidateFields(...string) error }); ok {
+				if err := v.ValidateFields(subs...); err != nil {
+					return GetEndDeviceBrandRequestValidationError{
+						field:  "field_mask",
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+
+		default:
+			return GetEndDeviceBrandRequestValidationError{
+				field:  name,
+				reason: "invalid field path",
+			}
+		}
+	}
+	return nil
+}
+
+// GetEndDeviceBrandRequestValidationError is the validation error returned by
+// GetEndDeviceBrandRequest.ValidateFields if the designated constraints
+// aren't met.
+type GetEndDeviceBrandRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetEndDeviceBrandRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetEndDeviceBrandRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetEndDeviceBrandRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetEndDeviceBrandRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetEndDeviceBrandRequestValidationError) ErrorName() string {
+	return "GetEndDeviceBrandRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetEndDeviceBrandRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetEndDeviceBrandRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetEndDeviceBrandRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetEndDeviceBrandRequestValidationError{}
+
 // ValidateFields checks the field values on ListEndDeviceBrandsRequest with
 // the rules defined in the proto definition for this message. If any rules
 // are violated, an error is returned.
@@ -354,32 +450,17 @@ func (m *ListEndDeviceBrandsRequest) ValidateFields(paths ...string) error {
 	for name, subs := range _processPaths(append(paths[:0:0], paths...)) {
 		_ = subs
 		switch name {
-		case "brand_id":
-			// no validation rules for BrandID
 		case "limit":
 
-			if v, ok := interface{}(m.GetLimit()).(interface{ ValidateFields(...string) error }); ok {
-				if err := v.ValidateFields(subs...); err != nil {
-					return ListEndDeviceBrandsRequestValidationError{
-						field:  "limit",
-						reason: "embedded message failed validation",
-						cause:  err,
-					}
+			if m.GetLimit() > 1000 {
+				return ListEndDeviceBrandsRequestValidationError{
+					field:  "limit",
+					reason: "value must be less than or equal to 1000",
 				}
 			}
 
-		case "offset":
-
-			if v, ok := interface{}(m.GetOffset()).(interface{ ValidateFields(...string) error }); ok {
-				if err := v.ValidateFields(subs...); err != nil {
-					return ListEndDeviceBrandsRequestValidationError{
-						field:  "offset",
-						reason: "embedded message failed validation",
-						cause:  err,
-					}
-				}
-			}
-
+		case "page":
+			// no validation rules for Page
 		case "order_by":
 
 			if _, ok := _ListEndDeviceBrandsRequest_OrderBy_InLookup[m.GetOrderBy()]; !ok {
@@ -478,6 +559,104 @@ var _ListEndDeviceBrandsRequest_OrderBy_InLookup = map[string]struct{}{
 	"-name":     {},
 }
 
+// ValidateFields checks the field values on GetEndDeviceModelRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *GetEndDeviceModelRequest) ValidateFields(paths ...string) error {
+	if m == nil {
+		return nil
+	}
+
+	if len(paths) == 0 {
+		paths = GetEndDeviceModelRequestFieldPathsNested
+	}
+
+	for name, subs := range _processPaths(append(paths[:0:0], paths...)) {
+		_ = subs
+		switch name {
+		case "brand_id":
+			// no validation rules for BrandID
+		case "model_id":
+			// no validation rules for ModelID
+		case "field_mask":
+
+			if v, ok := interface{}(&m.FieldMask).(interface{ ValidateFields(...string) error }); ok {
+				if err := v.ValidateFields(subs...); err != nil {
+					return GetEndDeviceModelRequestValidationError{
+						field:  "field_mask",
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+
+		default:
+			return GetEndDeviceModelRequestValidationError{
+				field:  name,
+				reason: "invalid field path",
+			}
+		}
+	}
+	return nil
+}
+
+// GetEndDeviceModelRequestValidationError is the validation error returned by
+// GetEndDeviceModelRequest.ValidateFields if the designated constraints
+// aren't met.
+type GetEndDeviceModelRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetEndDeviceModelRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetEndDeviceModelRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetEndDeviceModelRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetEndDeviceModelRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetEndDeviceModelRequestValidationError) ErrorName() string {
+	return "GetEndDeviceModelRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetEndDeviceModelRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetEndDeviceModelRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetEndDeviceModelRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetEndDeviceModelRequestValidationError{}
+
 // ValidateFields checks the field values on ListEndDeviceModelsRequest with
 // the rules defined in the proto definition for this message. If any rules
 // are violated, an error is returned.
@@ -495,10 +674,17 @@ func (m *ListEndDeviceModelsRequest) ValidateFields(paths ...string) error {
 		switch name {
 		case "brand_id":
 			// no validation rules for BrandID
-		case "model_id":
-			// no validation rules for ModelID
-		case "search":
-			// no validation rules for Search
+		case "limit":
+
+			if m.GetLimit() > 1000 {
+				return ListEndDeviceModelsRequestValidationError{
+					field:  "limit",
+					reason: "value must be less than or equal to 1000",
+				}
+			}
+
+		case "page":
+			// no validation rules for Page
 		case "order_by":
 
 			if _, ok := _ListEndDeviceModelsRequest_OrderBy_InLookup[m.GetOrderBy()]; !ok {
@@ -508,30 +694,8 @@ func (m *ListEndDeviceModelsRequest) ValidateFields(paths ...string) error {
 				}
 			}
 
-		case "limit":
-
-			if v, ok := interface{}(m.GetLimit()).(interface{ ValidateFields(...string) error }); ok {
-				if err := v.ValidateFields(subs...); err != nil {
-					return ListEndDeviceModelsRequestValidationError{
-						field:  "limit",
-						reason: "embedded message failed validation",
-						cause:  err,
-					}
-				}
-			}
-
-		case "offset":
-
-			if v, ok := interface{}(m.GetOffset()).(interface{ ValidateFields(...string) error }); ok {
-				if err := v.ValidateFields(subs...); err != nil {
-					return ListEndDeviceModelsRequestValidationError{
-						field:  "offset",
-						reason: "embedded message failed validation",
-						cause:  err,
-					}
-				}
-			}
-
+		case "search":
+			// no validation rules for Search
 		case "field_mask":
 
 			if v, ok := interface{}(&m.FieldMask).(interface{ ValidateFields(...string) error }); ok {
@@ -846,8 +1010,17 @@ func (m *MessagePayloadFormatter) ValidateFields(paths ...string) error {
 	for name, subs := range _processPaths(append(paths[:0:0], paths...)) {
 		_ = subs
 		switch name {
-		case "codec":
-			// no validation rules for Codec
+		case "formatter":
+
+			if _, ok := PayloadFormatter_name[int32(m.GetFormatter())]; !ok {
+				return MessagePayloadFormatterValidationError{
+					field:  "formatter",
+					reason: "value must be one of the defined enum values",
+				}
+			}
+
+		case "formatter_parameter":
+			// no validation rules for FormatterParameter
 		default:
 			return MessagePayloadFormatterValidationError{
 				field:  name,
@@ -914,16 +1087,16 @@ var _ interface {
 	ErrorName() string
 } = MessagePayloadFormatterValidationError{}
 
-// ValidateFields checks the field values on EndDeviceModel_Version with the
-// rules defined in the proto definition for this message. If any rules are
-// violated, an error is returned.
-func (m *EndDeviceModel_Version) ValidateFields(paths ...string) error {
+// ValidateFields checks the field values on EndDeviceModel_HardwareVersion
+// with the rules defined in the proto definition for this message. If any
+// rules are violated, an error is returned.
+func (m *EndDeviceModel_HardwareVersion) ValidateFields(paths ...string) error {
 	if m == nil {
 		return nil
 	}
 
 	if len(paths) == 0 {
-		paths = EndDeviceModel_VersionFieldPathsNested
+		paths = EndDeviceModel_HardwareVersionFieldPathsNested
 	}
 
 	for name, subs := range _processPaths(append(paths[:0:0], paths...)) {
@@ -936,7 +1109,7 @@ func (m *EndDeviceModel_Version) ValidateFields(paths ...string) error {
 		case "part_number":
 			// no validation rules for PartNumber
 		default:
-			return EndDeviceModel_VersionValidationError{
+			return EndDeviceModel_HardwareVersionValidationError{
 				field:  name,
 				reason: "invalid field path",
 			}
@@ -945,9 +1118,10 @@ func (m *EndDeviceModel_Version) ValidateFields(paths ...string) error {
 	return nil
 }
 
-// EndDeviceModel_VersionValidationError is the validation error returned by
-// EndDeviceModel_Version.ValidateFields if the designated constraints aren't met.
-type EndDeviceModel_VersionValidationError struct {
+// EndDeviceModel_HardwareVersionValidationError is the validation error
+// returned by EndDeviceModel_HardwareVersion.ValidateFields if the designated
+// constraints aren't met.
+type EndDeviceModel_HardwareVersionValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -955,24 +1129,24 @@ type EndDeviceModel_VersionValidationError struct {
 }
 
 // Field function returns field value.
-func (e EndDeviceModel_VersionValidationError) Field() string { return e.field }
+func (e EndDeviceModel_HardwareVersionValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e EndDeviceModel_VersionValidationError) Reason() string { return e.reason }
+func (e EndDeviceModel_HardwareVersionValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e EndDeviceModel_VersionValidationError) Cause() error { return e.cause }
+func (e EndDeviceModel_HardwareVersionValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e EndDeviceModel_VersionValidationError) Key() bool { return e.key }
+func (e EndDeviceModel_HardwareVersionValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e EndDeviceModel_VersionValidationError) ErrorName() string {
-	return "EndDeviceModel_VersionValidationError"
+func (e EndDeviceModel_HardwareVersionValidationError) ErrorName() string {
+	return "EndDeviceModel_HardwareVersionValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e EndDeviceModel_VersionValidationError) Error() string {
+func (e EndDeviceModel_HardwareVersionValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -984,14 +1158,14 @@ func (e EndDeviceModel_VersionValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sEndDeviceModel_Version.%s: %s%s",
+		"invalid %sEndDeviceModel_HardwareVersion.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = EndDeviceModel_VersionValidationError{}
+var _ error = EndDeviceModel_HardwareVersionValidationError{}
 
 var _ interface {
 	Field() string
@@ -999,7 +1173,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = EndDeviceModel_VersionValidationError{}
+} = EndDeviceModel_HardwareVersionValidationError{}
 
 // ValidateFields checks the field values on EndDeviceModel_FirmwareVersion
 // with the rules defined in the proto definition for this message. If any
@@ -1020,7 +1194,7 @@ func (m *EndDeviceModel_FirmwareVersion) ValidateFields(paths ...string) error {
 			// no validation rules for Version
 		case "numeric":
 			// no validation rules for Numeric
-		case "hardware_versions":
+		case "supported_hardware_versions":
 
 		case "profiles":
 

@@ -20,88 +20,160 @@ import "google/api/annotations.proto";
 import "google/protobuf/wrappers.proto";
 import "google/protobuf/field_mask.proto";
 import "lorawan-stack/api/end_device.proto";
+import "lorawan-stack/api/messages.proto";
 
 package ttn.lorawan.v3;
 
 option go_package = "go.thethings.network/lorawan-stack/v3/pkg/ttnpb";
 
 message EndDeviceBrand {
+  // Brand identifier, as specified in the Device Repository.
   string brand_id = 1 [(gogoproto.customname) = "BrandID"];
+  // Brand name.
   string name = 2;
 
+  // Private Enterprise Number (PEN) assigned by IANA.
   uint32 private_enterprise_number = 3;
+  // Organization Unique Identifiers (OUI) assigned by IEEE.
   repeated string organization_unique_identifiers = 4;
-  uint32 vendor_id = 5 [(gogoproto.customname) = "VendorID"];
+  // VendorID managed by the LoRa Alliance, as defined in TR005.
+  uint32 lora_alliance_vendor_id = 5 [(gogoproto.customname) = "LoRaAllianceVendorID"];
+  // Brand website URL.
   string website = 6;
+  // Contact email address.
   string email = 7;
+  // Path to brand logo.
   string logo = 8;
 }
 
+enum KeyProvisioning {
+  option (gogoproto.goproto_enum_prefix) = false;
+
+  // Custom Key Provisioning.
+  KEY_PROVISIONING_CUSTOM = 0;
+  // Key Provisioning from the Global Join Server.
+  KEY_PROVISIONING_JOIN_SERVER = 1;
+  // Key Provisioning from Manifest.
+  KEY_PROVISIONING_MANIFEST = 2;
+}
+
+enum KeySecurity {
+  option (gogoproto.goproto_enum_prefix) = false;
+
+  // No key security.
+  KEY_SECURITY_NONE = 0;
+  // Read Protected key security.
+  KEY_SECURITY_READ_PROTECTED = 1;
+  // Key security using the Security Element.
+  KEY_SECURITY_SECURE_ELEMENT = 2;
+}
+
 message EndDeviceModel {
+  // Brand identifier, as defined in the Device Repository.
   string brand_id = 1 [(gogoproto.customname) = "BrandID"];
+  // Model identifier, as defined in the Device Repository.
   string model_id = 2 [(gogoproto.customname) = "ModelID"];
+  // Model name, as defined in the Device Repository.
   string name = 3;
+  // Model description.
   string description = 4;
 
-  message Version {
+  message HardwareVersion {
+    // Hardware version string.
     string version = 1;
+    // Numberic hardware revision number.
     uint32 numeric = 2;
+    // Hardware part number.
     string part_number = 3;
   }
-  repeated Version hardware_versions = 5;
+  // Available hardware versions.
+  repeated HardwareVersion hardware_versions = 5;
 
   message FirmwareVersion {
     message Profile {
+      // Profile identifier, as defined in the Device Repository.
       string profile_id = 1 [(gogoproto.customname) = "ProfileID"];
+      // Whether the device is LoRaWAN certified.
       bool lorawan_certified = 2 [(gogoproto.customname) = "LoRaWANCertified"];
+      // Payload formatter codec identifier, as defined in the Device Repository.
       string codec_id = 3 [(gogoproto.customname) = "CodecID"];
     }
+    // Firmware version string.
     string version = 1;
+    // Numeric firwmare revision number.
     uint32 numeric = 2;
-    repeated string hardware_versions = 3;
+    // Hardware versions supported by this firmware version.
+    repeated string supported_hardware_versions = 3;
+    // Device profiles for each supported region (band).
     map<string, Profile> profiles = 4;
   }
+  // Available firmware versions.
   repeated FirmwareVersion firmware_versions = 6;
+  // List of sensors included in the device.
   repeated string sensors = 7;
   message Dimensions {
+    // Device width (mm).
     float width = 1;
+    // Device height (mm).
     float height = 2;
+    // Device diameter (mm).
     float diameter = 3;
+    // Device length (mm).
     float length = 4;
   }
+  // Device dimensions.
   Dimensions dimensions = 8;
+  // Device weight (gram).
   float weight = 9;
   message Battery {
+    // Whether the device battery can be replaced.
     google.protobuf.BoolValue replaceable = 1;
+    // Battery type.
     string type = 2;
   }
+  // Device battery information.
   Battery battery = 10;
   message OperatingConditions {
     message Limits {
+      // Min value of operating conditions range.
       google.protobuf.FloatValue min = 1;
+      // Max value of operating conditions range.
       google.protobuf.FloatValue max = 2;
     }
+    // Temperature operating conditions.
     Limits temperature = 1;
+    // Relative humidity operating conditions.
     Limits relative_humidity = 2;
   }
+  // Device operating conditions.
   OperatingConditions operating_conditions = 11;
-
+  // Device IP rating code.
   string ip_code = 12 [(gogoproto.customname) = "IPCode"];
-  repeated string key_provisioning = 13;
-  string key_security = 14;
+  // Supported key provisioning methods.
+  repeated KeyProvisioning key_provisioning = 13;
+  // Device key security.
+  KeySecurity key_security = 14;
 
   message Photos {
+    // Main device photo.
     string main = 1;
+    // List of other device photos.
     repeated string other = 2;
   }
+  // Device photos.
   Photos photos = 15;
   message Videos {
+    // Link to main device video.
     string main = 1;
+    // Links to other device videos.
     repeated string other = 2;
   }
+  // Device videos.
   Videos videos = 16;
 
+  // Device information page URL.
   string product_url = 17 [(gogoproto.customname) = "ProductURL"];
+  // Device datasheet URL.
   string datasheet_url = 18 [(gogoproto.customname) = "DatasheetURL"];
 
   message Compliances {
@@ -111,57 +183,72 @@ message EndDeviceModel {
       string standard = 3;
       string version = 4;
     }
+    // List of safety standards the device is compliant with.
     repeated Compliance safety = 1;
+    // List of radio equipment standards the device is compliant with.
     repeated Compliance radio_equipment = 2;
   }
+  // List of standards the device is compliant with.
   Compliances compliances = 19;
 
+  // List of any additional radios included in the device.
   repeated string additional_radios = 20;
 }
 
-message ListEndDeviceBrandsRequest {
-  // Optionally limit to a specific brand ID
+message GetEndDeviceBrandRequest {
+  // Brand identifier, as defined in the Device Repository.
   string brand_id = 1 [(gogoproto.customname) = "BrandID"];
 
-  // Limit (for pagination)
-  google.protobuf.UInt32Value limit = 2;
+  // Field mask paths.
+  google.protobuf.FieldMask field_mask = 2 [(gogoproto.nullable) = false];
+}
 
-  // Offset (for pagination)
-  google.protobuf.UInt32Value offset = 3;
+message ListEndDeviceBrandsRequest {
+  // Limit the number of results per page.
+  uint32 limit = 2 [(validate.rules).uint32.lte = 1000];
+  // Page number for pagination. 0 is interpreted as 1.
+  uint32 page = 3;
 
   // Order (for pagination)
   string order_by = 4 [(validate.rules).string = {
     in: ["", "brand_id", "-brand_id", "name", "-name"]
   }];
 
-  // TODO: searching and field mask paths.
+  // Search for brands matching a query string.
   string search = 5;
 
+  // Field mask paths.
   google.protobuf.FieldMask field_mask = 6 [(gogoproto.nullable) = false];
 }
 
-message ListEndDeviceModelsRequest {
+message GetEndDeviceModelRequest {
   // Query end devices from a specific brand
   string brand_id = 1 [(gogoproto.customname) = "BrandID"];
   // Query end devices matching a specific model
   string model_id = 2 [(gogoproto.customname) = "ModelID"];
 
-  // Query end devices matching a search string
-  string search = 3;
+  // Field mask paths.
+  google.protobuf.FieldMask field_mask = 3 [(gogoproto.nullable) = false];
+}
 
+message ListEndDeviceModelsRequest {
+  // List end devices from a specific brand.
+  string brand_id = 1 [(gogoproto.customname) = "BrandID"];
+
+  // Limit the number of results per page.
+  uint32 limit = 2 [(validate.rules).uint32.lte = 1000];
+  // Page number for pagination. 0 is interpreted as 1.
+  uint32 page = 3;
   // Order end devices
   string order_by = 4 [(validate.rules).string = {
     in: ["", "brand_id", "-brand_id", "model_id", "-model_id", "name", "-name"]
   }];
 
-  // Limit number of results.
-  google.protobuf.UInt32Value limit = 5;
-
-  // Start returning devices at offset.
-  google.protobuf.UInt32Value offset = 6;
+  // List end devices matching a query string.
+  string search = 5;
 
   // Field mask paths.
-  google.protobuf.FieldMask field_mask = 7 [(gogoproto.nullable) = false];
+  google.protobuf.FieldMask field_mask = 6 [(gogoproto.nullable) = false];
 }
 
 message ListEndDeviceBrandsResponse {
@@ -179,32 +266,40 @@ message ListEndDeviceModelsResponse {
 }
 
 message MessagePayloadFormatter {
-  string codec = 1;
+  // Payload formatter type.
+  PayloadFormatter formatter = 1 [(validate.rules).enum.defined_only = true];
+  // Parameter for the formatter, must be set together.
+  string formatter_parameter = 2;
 }
 
 service DeviceRepository {
   rpc ListBrands(ListEndDeviceBrandsRequest) returns (ListEndDeviceBrandsResponse) {
     option (google.api.http) = {
       get: "/dr/brands"
-
-      additional_bindings {
-        get: "/dr/brands/{brand_id}"
-      }
     };
   };
+
+  rpc GetBrand(GetEndDeviceBrandRequest) returns (EndDeviceBrand) {
+    option (google.api.http) = {
+      get: "/dr/brands/{brand_id}"
+    };
+  }
 
   rpc ListModels(ListEndDeviceModelsRequest) returns (ListEndDeviceModelsResponse) {
     option (google.api.http) = {
       get: "/dr/brands/{brand_id}/models"
 
       additional_bindings {
-        get: "/dr/brands/{brand_id}/models/{model_id}"
-      }
-      additional_bindings {
         get: "/dr/models"
       }
     };
   };
+
+  rpc GetModel(GetEndDeviceModelRequest) returns (EndDeviceModel) {
+    option (google.api.http) = {
+      get: "/dr/brands/{brand_id}/models/{model_id}"
+    };
+  }
 
   rpc GetTemplate(EndDeviceVersionIdentifiers) returns (EndDeviceTemplate) {
     option (google.api.http) = {
@@ -214,19 +309,19 @@ service DeviceRepository {
 
   rpc GetUplinkDecoder(EndDeviceVersionIdentifiers) returns (MessagePayloadFormatter) {
     option (google.api.http) = {
-      get: "/dr/brands/{brand_id}/models/{model_id}/{firmware_version}/{band_id}/formatters/uplink_decoder"
+      get: "/dr/brands/{brand_id}/models/{model_id}/{firmware_version}/{band_id}/formatters/uplink/decoder"
     };
   };
 
   rpc GetDownlinkDecoder(EndDeviceVersionIdentifiers) returns (MessagePayloadFormatter) {
     option (google.api.http) = {
-      get: "/dr/brands/{brand_id}/models/{model_id}/{firmware_version}/{band_id}/formatters/downlink_decoder"
+      get: "/dr/brands/{brand_id}/models/{model_id}/{firmware_version}/{band_id}/formatters/downlink/decoder"
     };
   };
 
   rpc GetDownlinkEncoder(EndDeviceVersionIdentifiers) returns (MessagePayloadFormatter) {
     option (google.api.http) = {
-      get: "/dr/brands/{brand_id}/models/{model_id}/{firmware_version}/{band_id}/formatters/downlink_encoder"
+      get: "/dr/brands/{brand_id}/models/{model_id}/{firmware_version}/{band_id}/formatters/downlink/encoder"
     };
   };
 }

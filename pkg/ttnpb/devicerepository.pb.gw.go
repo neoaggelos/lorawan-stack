@@ -70,11 +70,11 @@ func local_request_DeviceRepository_ListBrands_0(ctx context.Context, marshaler 
 }
 
 var (
-	filter_DeviceRepository_ListBrands_1 = &utilities.DoubleArray{Encoding: map[string]int{"brand_id": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+	filter_DeviceRepository_GetBrand_0 = &utilities.DoubleArray{Encoding: map[string]int{"brand_id": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 )
 
-func request_DeviceRepository_ListBrands_1(ctx context.Context, marshaler runtime.Marshaler, client DeviceRepositoryClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ListEndDeviceBrandsRequest
+func request_DeviceRepository_GetBrand_0(ctx context.Context, marshaler runtime.Marshaler, client DeviceRepositoryClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetEndDeviceBrandRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -98,17 +98,17 @@ func request_DeviceRepository_ListBrands_1(ctx context.Context, marshaler runtim
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_DeviceRepository_ListBrands_1); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_DeviceRepository_GetBrand_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.ListBrands(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.GetBrand(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_DeviceRepository_ListBrands_1(ctx context.Context, marshaler runtime.Marshaler, server DeviceRepositoryServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ListEndDeviceBrandsRequest
+func local_request_DeviceRepository_GetBrand_0(ctx context.Context, marshaler runtime.Marshaler, server DeviceRepositoryServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetEndDeviceBrandRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -132,11 +132,11 @@ func local_request_DeviceRepository_ListBrands_1(ctx context.Context, marshaler 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_DeviceRepository_ListBrands_1); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_DeviceRepository_GetBrand_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.ListBrands(ctx, &protoReq)
+	msg, err := server.GetBrand(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -214,41 +214,12 @@ func local_request_DeviceRepository_ListModels_0(ctx context.Context, marshaler 
 }
 
 var (
-	filter_DeviceRepository_ListModels_1 = &utilities.DoubleArray{Encoding: map[string]int{"brand_id": 0, "model_id": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
+	filter_DeviceRepository_ListModels_1 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 )
 
 func request_DeviceRepository_ListModels_1(ctx context.Context, marshaler runtime.Marshaler, client DeviceRepositoryClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ListEndDeviceModelsRequest
 	var metadata runtime.ServerMetadata
-
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["brand_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "brand_id")
-	}
-
-	protoReq.BrandID, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "brand_id", err)
-	}
-
-	val, ok = pathParams["model_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "model_id")
-	}
-
-	protoReq.ModelID, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "model_id", err)
-	}
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
@@ -266,6 +237,26 @@ func local_request_DeviceRepository_ListModels_1(ctx context.Context, marshaler 
 	var protoReq ListEndDeviceModelsRequest
 	var metadata runtime.ServerMetadata
 
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_DeviceRepository_ListModels_1); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := server.ListModels(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+var (
+	filter_DeviceRepository_GetModel_0 = &utilities.DoubleArray{Encoding: map[string]int{"brand_id": 0, "model_id": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
+)
+
+func request_DeviceRepository_GetModel_0(ctx context.Context, marshaler runtime.Marshaler, client DeviceRepositoryClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetEndDeviceModelRequest
+	var metadata runtime.ServerMetadata
+
 	var (
 		val string
 		ok  bool
@@ -298,47 +289,56 @@ func local_request_DeviceRepository_ListModels_1(ctx context.Context, marshaler 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_DeviceRepository_ListModels_1); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_DeviceRepository_GetModel_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.ListModels(ctx, &protoReq)
+	msg, err := client.GetModel(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-var (
-	filter_DeviceRepository_ListModels_2 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
-)
-
-func request_DeviceRepository_ListModels_2(ctx context.Context, marshaler runtime.Marshaler, client DeviceRepositoryClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ListEndDeviceModelsRequest
+func local_request_DeviceRepository_GetModel_0(ctx context.Context, marshaler runtime.Marshaler, server DeviceRepositoryServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetEndDeviceModelRequest
 	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["brand_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "brand_id")
+	}
+
+	protoReq.BrandID, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "brand_id", err)
+	}
+
+	val, ok = pathParams["model_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "model_id")
+	}
+
+	protoReq.ModelID, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "model_id", err)
+	}
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_DeviceRepository_ListModels_2); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_DeviceRepository_GetModel_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.ListModels(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
-	return msg, metadata, err
-
-}
-
-func local_request_DeviceRepository_ListModels_2(ctx context.Context, marshaler runtime.Marshaler, server DeviceRepositoryServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ListEndDeviceModelsRequest
-	var metadata runtime.ServerMetadata
-
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_DeviceRepository_ListModels_2); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-
-	msg, err := server.ListModels(ctx, &protoReq)
+	msg, err := server.GetModel(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -924,7 +924,7 @@ func RegisterDeviceRepositoryHandlerServer(ctx context.Context, mux *runtime.Ser
 
 	})
 
-	mux.Handle("GET", pattern_DeviceRepository_ListBrands_1, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_DeviceRepository_GetBrand_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -935,7 +935,7 @@ func RegisterDeviceRepositoryHandlerServer(ctx context.Context, mux *runtime.Ser
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_DeviceRepository_ListBrands_1(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_DeviceRepository_GetBrand_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -943,7 +943,7 @@ func RegisterDeviceRepositoryHandlerServer(ctx context.Context, mux *runtime.Ser
 			return
 		}
 
-		forward_DeviceRepository_ListBrands_1(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_DeviceRepository_GetBrand_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -993,7 +993,7 @@ func RegisterDeviceRepositoryHandlerServer(ctx context.Context, mux *runtime.Ser
 
 	})
 
-	mux.Handle("GET", pattern_DeviceRepository_ListModels_2, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_DeviceRepository_GetModel_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -1004,7 +1004,7 @@ func RegisterDeviceRepositoryHandlerServer(ctx context.Context, mux *runtime.Ser
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_DeviceRepository_ListModels_2(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_DeviceRepository_GetModel_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -1012,7 +1012,7 @@ func RegisterDeviceRepositoryHandlerServer(ctx context.Context, mux *runtime.Ser
 			return
 		}
 
-		forward_DeviceRepository_ListModels_2(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_DeviceRepository_GetModel_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -1169,7 +1169,7 @@ func RegisterDeviceRepositoryHandlerClient(ctx context.Context, mux *runtime.Ser
 
 	})
 
-	mux.Handle("GET", pattern_DeviceRepository_ListBrands_1, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_DeviceRepository_GetBrand_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -1178,14 +1178,14 @@ func RegisterDeviceRepositoryHandlerClient(ctx context.Context, mux *runtime.Ser
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_DeviceRepository_ListBrands_1(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_DeviceRepository_GetBrand_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_DeviceRepository_ListBrands_1(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_DeviceRepository_GetBrand_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -1229,7 +1229,7 @@ func RegisterDeviceRepositoryHandlerClient(ctx context.Context, mux *runtime.Ser
 
 	})
 
-	mux.Handle("GET", pattern_DeviceRepository_ListModels_2, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_DeviceRepository_GetModel_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -1238,14 +1238,14 @@ func RegisterDeviceRepositoryHandlerClient(ctx context.Context, mux *runtime.Ser
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_DeviceRepository_ListModels_2(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_DeviceRepository_GetModel_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_DeviceRepository_ListModels_2(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_DeviceRepository_GetModel_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -1335,33 +1335,33 @@ func RegisterDeviceRepositoryHandlerClient(ctx context.Context, mux *runtime.Ser
 var (
 	pattern_DeviceRepository_ListBrands_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"dr", "brands"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_DeviceRepository_ListBrands_1 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"dr", "brands", "brand_id"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_DeviceRepository_GetBrand_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"dr", "brands", "brand_id"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_DeviceRepository_ListModels_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"dr", "brands", "brand_id", "models"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_DeviceRepository_ListModels_1 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"dr", "brands", "brand_id", "models", "model_id"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_DeviceRepository_ListModels_1 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"dr", "models"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_DeviceRepository_ListModels_2 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"dr", "models"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_DeviceRepository_GetModel_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"dr", "brands", "brand_id", "models", "model_id"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_DeviceRepository_GetTemplate_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 1, 0, 4, 1, 5, 5, 1, 0, 4, 1, 5, 6, 2, 7}, []string{"dr", "brands", "brand_id", "models", "model_id", "firmware_version", "band_id", "template"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_DeviceRepository_GetUplinkDecoder_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 1, 0, 4, 1, 5, 5, 1, 0, 4, 1, 5, 6, 2, 7, 2, 8}, []string{"dr", "brands", "brand_id", "models", "model_id", "firmware_version", "band_id", "formatters", "uplink_decoder"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_DeviceRepository_GetUplinkDecoder_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 1, 0, 4, 1, 5, 5, 1, 0, 4, 1, 5, 6, 2, 7, 2, 8, 2, 9}, []string{"dr", "brands", "brand_id", "models", "model_id", "firmware_version", "band_id", "formatters", "uplink", "decoder"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_DeviceRepository_GetDownlinkDecoder_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 1, 0, 4, 1, 5, 5, 1, 0, 4, 1, 5, 6, 2, 7, 2, 8}, []string{"dr", "brands", "brand_id", "models", "model_id", "firmware_version", "band_id", "formatters", "downlink_decoder"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_DeviceRepository_GetDownlinkDecoder_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 1, 0, 4, 1, 5, 5, 1, 0, 4, 1, 5, 6, 2, 7, 2, 8, 2, 9}, []string{"dr", "brands", "brand_id", "models", "model_id", "firmware_version", "band_id", "formatters", "downlink", "decoder"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_DeviceRepository_GetDownlinkEncoder_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 1, 0, 4, 1, 5, 5, 1, 0, 4, 1, 5, 6, 2, 7, 2, 8}, []string{"dr", "brands", "brand_id", "models", "model_id", "firmware_version", "band_id", "formatters", "downlink_encoder"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_DeviceRepository_GetDownlinkEncoder_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 1, 0, 4, 1, 5, 5, 1, 0, 4, 1, 5, 6, 2, 7, 2, 8, 2, 9}, []string{"dr", "brands", "brand_id", "models", "model_id", "firmware_version", "band_id", "formatters", "downlink", "encoder"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
 	forward_DeviceRepository_ListBrands_0 = runtime.ForwardResponseMessage
 
-	forward_DeviceRepository_ListBrands_1 = runtime.ForwardResponseMessage
+	forward_DeviceRepository_GetBrand_0 = runtime.ForwardResponseMessage
 
 	forward_DeviceRepository_ListModels_0 = runtime.ForwardResponseMessage
 
 	forward_DeviceRepository_ListModels_1 = runtime.ForwardResponseMessage
 
-	forward_DeviceRepository_ListModels_2 = runtime.ForwardResponseMessage
+	forward_DeviceRepository_GetModel_0 = runtime.ForwardResponseMessage
 
 	forward_DeviceRepository_GetTemplate_0 = runtime.ForwardResponseMessage
 
