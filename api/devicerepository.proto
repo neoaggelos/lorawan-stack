@@ -117,18 +117,18 @@ message EndDeviceModel {
   repeated string sensors = 7;
   message Dimensions {
     // Device width (mm).
-    float width = 1;
+    google.protobuf.FloatValue width = 1;
     // Device height (mm).
-    float height = 2;
+    google.protobuf.FloatValue height = 2;
     // Device diameter (mm).
-    float diameter = 3;
+    google.protobuf.FloatValue diameter = 3;
     // Device length (mm).
-    float length = 4;
+    google.protobuf.FloatValue length = 4;
   }
   // Device dimensions.
   Dimensions dimensions = 8;
   // Device weight (gram).
-  float weight = 9;
+  google.protobuf.FloatValue weight = 9;
   message Battery {
     // Whether the device battery can be replaced.
     google.protobuf.BoolValue replaceable = 1;

@@ -200,8 +200,7 @@ func (dst *EndDeviceModel) SetFields(src *EndDeviceModel, paths ...string) error
 			if src != nil {
 				dst.Weight = src.Weight
 			} else {
-				var zero float32
-				dst.Weight = zero
+				dst.Weight = nil
 			}
 		case "battery":
 			if len(subs) > 0 {
@@ -829,8 +828,7 @@ func (dst *EndDeviceModel_Dimensions) SetFields(src *EndDeviceModel_Dimensions, 
 			if src != nil {
 				dst.Width = src.Width
 			} else {
-				var zero float32
-				dst.Width = zero
+				dst.Width = nil
 			}
 		case "height":
 			if len(subs) > 0 {
@@ -839,8 +837,7 @@ func (dst *EndDeviceModel_Dimensions) SetFields(src *EndDeviceModel_Dimensions, 
 			if src != nil {
 				dst.Height = src.Height
 			} else {
-				var zero float32
-				dst.Height = zero
+				dst.Height = nil
 			}
 		case "diameter":
 			if len(subs) > 0 {
@@ -849,8 +846,7 @@ func (dst *EndDeviceModel_Dimensions) SetFields(src *EndDeviceModel_Dimensions, 
 			if src != nil {
 				dst.Diameter = src.Diameter
 			} else {
-				var zero float32
-				dst.Diameter = zero
+				dst.Diameter = nil
 			}
 		case "length":
 			if len(subs) > 0 {
@@ -859,8 +855,7 @@ func (dst *EndDeviceModel_Dimensions) SetFields(src *EndDeviceModel_Dimensions, 
 			if src != nil {
 				dst.Length = src.Length
 			} else {
-				var zero float32
-				dst.Length = zero
+				dst.Length = nil
 			}
 
 		default:

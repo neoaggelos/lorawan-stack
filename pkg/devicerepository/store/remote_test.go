@@ -403,12 +403,22 @@ func TestRemoteStore(t *testing.T) {
 				},
 				Sensors: []string{"temperature", "gas"},
 				Dimensions: &ttnpb.EndDeviceModel_Dimensions{
-					Width:    1,
-					Height:   2,
-					Diameter: 3,
-					Length:   4,
+					Width: &pbtypes.FloatValue{
+						Value: 1,
+					},
+					Height: &pbtypes.FloatValue{
+						Value: 2,
+					},
+					Diameter: &pbtypes.FloatValue{
+						Value: 3,
+					},
+					Length: &pbtypes.FloatValue{
+						Value: 4,
+					},
 				},
-				Weight: 5,
+				Weight: &pbtypes.FloatValue{
+					Value: 5,
+				},
 				Battery: &ttnpb.EndDeviceModel_Battery{
 					Replaceable: &pbtypes.BoolValue{
 						Value: true,

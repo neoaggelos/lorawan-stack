@@ -202,7 +202,17 @@ func (m *EndDeviceModel) ValidateFields(paths ...string) error {
 			}
 
 		case "weight":
-			// no validation rules for Weight
+
+			if v, ok := interface{}(m.GetWeight()).(interface{ ValidateFields(...string) error }); ok {
+				if err := v.ValidateFields(subs...); err != nil {
+					return EndDeviceModelValidationError{
+						field:  "weight",
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+
 		case "battery":
 
 			if v, ok := interface{}(m.GetBattery()).(interface{ ValidateFields(...string) error }); ok {
@@ -1298,13 +1308,53 @@ func (m *EndDeviceModel_Dimensions) ValidateFields(paths ...string) error {
 		_ = subs
 		switch name {
 		case "width":
-			// no validation rules for Width
+
+			if v, ok := interface{}(m.GetWidth()).(interface{ ValidateFields(...string) error }); ok {
+				if err := v.ValidateFields(subs...); err != nil {
+					return EndDeviceModel_DimensionsValidationError{
+						field:  "width",
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+
 		case "height":
-			// no validation rules for Height
+
+			if v, ok := interface{}(m.GetHeight()).(interface{ ValidateFields(...string) error }); ok {
+				if err := v.ValidateFields(subs...); err != nil {
+					return EndDeviceModel_DimensionsValidationError{
+						field:  "height",
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+
 		case "diameter":
-			// no validation rules for Diameter
+
+			if v, ok := interface{}(m.GetDiameter()).(interface{ ValidateFields(...string) error }); ok {
+				if err := v.ValidateFields(subs...); err != nil {
+					return EndDeviceModel_DimensionsValidationError{
+						field:  "diameter",
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+
 		case "length":
-			// no validation rules for Length
+
+			if v, ok := interface{}(m.GetLength()).(interface{ ValidateFields(...string) error }); ok {
+				if err := v.ValidateFields(subs...); err != nil {
+					return EndDeviceModel_DimensionsValidationError{
+						field:  "length",
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+
 		default:
 			return EndDeviceModel_DimensionsValidationError{
 				field:  name,

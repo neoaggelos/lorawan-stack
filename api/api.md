@@ -2066,7 +2066,7 @@ PeerInfo
 | `firmware_versions` | [`EndDeviceModel.FirmwareVersion`](#ttn.lorawan.v3.EndDeviceModel.FirmwareVersion) | repeated | Available firmware versions. |
 | `sensors` | [`string`](#string) | repeated | List of sensors included in the device. |
 | `dimensions` | [`EndDeviceModel.Dimensions`](#ttn.lorawan.v3.EndDeviceModel.Dimensions) |  | Device dimensions. |
-| `weight` | [`float`](#float) |  | Device weight (gram). |
+| `weight` | [`google.protobuf.FloatValue`](#google.protobuf.FloatValue) |  | Device weight (gram). |
 | `battery` | [`EndDeviceModel.Battery`](#ttn.lorawan.v3.EndDeviceModel.Battery) |  | Device battery information. |
 | `operating_conditions` | [`EndDeviceModel.OperatingConditions`](#ttn.lorawan.v3.EndDeviceModel.OperatingConditions) |  | Device operating conditions. |
 | `ip_code` | [`string`](#string) |  | Device IP rating code. |
@@ -2106,10 +2106,10 @@ PeerInfo
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| `width` | [`float`](#float) |  | Device width (mm). |
-| `height` | [`float`](#float) |  | Device height (mm). |
-| `diameter` | [`float`](#float) |  | Device diameter (mm). |
-| `length` | [`float`](#float) |  | Device length (mm). |
+| `width` | [`google.protobuf.FloatValue`](#google.protobuf.FloatValue) |  | Device width (mm). |
+| `height` | [`google.protobuf.FloatValue`](#google.protobuf.FloatValue) |  | Device height (mm). |
+| `diameter` | [`google.protobuf.FloatValue`](#google.protobuf.FloatValue) |  | Device diameter (mm). |
+| `length` | [`google.protobuf.FloatValue`](#google.protobuf.FloatValue) |  | Device length (mm). |
 
 ### <a name="ttn.lorawan.v3.EndDeviceModel.FirmwareVersion">Message `EndDeviceModel.FirmwareVersion`</a>
 
