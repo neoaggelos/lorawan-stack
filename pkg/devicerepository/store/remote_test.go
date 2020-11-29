@@ -403,44 +403,24 @@ func TestRemoteStore(t *testing.T) {
 				},
 				Sensors: []string{"temperature", "gas"},
 				Dimensions: &ttnpb.EndDeviceModel_Dimensions{
-					Width: &pbtypes.FloatValue{
-						Value: 1,
-					},
-					Height: &pbtypes.FloatValue{
-						Value: 2,
-					},
-					Diameter: &pbtypes.FloatValue{
-						Value: 3,
-					},
-					Length: &pbtypes.FloatValue{
-						Value: 4,
-					},
+					Width:    &pbtypes.FloatValue{Value: 1},
+					Height:   &pbtypes.FloatValue{Value: 2},
+					Diameter: &pbtypes.FloatValue{Value: 3},
+					Length:   &pbtypes.FloatValue{Value: 4},
 				},
-				Weight: &pbtypes.FloatValue{
-					Value: 5,
-				},
+				Weight: &pbtypes.FloatValue{Value: 5},
 				Battery: &ttnpb.EndDeviceModel_Battery{
-					Replaceable: &pbtypes.BoolValue{
-						Value: true,
-					},
-					Type: "AAA",
+					Replaceable: &pbtypes.BoolValue{Value: true},
+					Type:        "AAA",
 				},
 				OperatingConditions: &ttnpb.EndDeviceModel_OperatingConditions{
 					Temperature: &ttnpb.EndDeviceModel_OperatingConditions_Limits{
-						Min: &pbtypes.FloatValue{
-							Value: 1,
-						},
-						Max: &pbtypes.FloatValue{
-							Value: 2,
-						},
+						Min: &pbtypes.FloatValue{Value: 1},
+						Max: &pbtypes.FloatValue{Value: 2},
 					},
 					RelativeHumidity: &ttnpb.EndDeviceModel_OperatingConditions_Limits{
-						Min: &pbtypes.FloatValue{
-							Value: 3,
-						},
-						Max: &pbtypes.FloatValue{
-							Value: 4,
-						},
+						Min: &pbtypes.FloatValue{Value: 3},
+						Max: &pbtypes.FloatValue{Value: 4},
 					},
 				},
 				IPCode:          "IP67",
