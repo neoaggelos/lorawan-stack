@@ -38,10 +38,12 @@ func withDefaultBrandFields(paths []string) []string {
 
 // ListBrands implements the ttnpb.DeviceRepositoryServer interface.
 func (dr *DeviceRepository) ListBrands(ctx context.Context, request *ttnpb.ListEndDeviceBrandsRequest) (*ttnpb.ListEndDeviceBrandsResponse, error) {
-	response, err := dr.store.ListBrands(store.ListBrandsRequest{
-		BrandID: request.BrandID,
+	if request.Limit == 0 {
+		request.Limit = 1000
+	}
+	response, err := dr.store.GetBrands(store.GetBrandsRequest{
 		Limit:   request.Limit,
-		Offset:  request.Offset,
+		Page:    request.Page,
 		OrderBy: request.OrderBy,
 		Paths:   withDefaultBrandFields(request.FieldMask.Paths),
 		Search:  request.Search,
@@ -57,13 +59,35 @@ func (dr *DeviceRepository) ListBrands(ctx context.Context, request *ttnpb.ListE
 	}, nil
 }
 
+var (
+	errBrandNotFound = errors.DefineNotFound("brand_not_found", "brand `{brand_id}` not found")
+)
+
+// GetBrand implements the ttnpb.DeviceRepositoryServer interface.
+func (dr *DeviceRepository) GetBrand(ctx context.Context, request *ttnpb.GetEndDeviceBrandRequest) (*ttnpb.EndDeviceBrand, error) {
+	response, err := dr.store.GetBrands(store.GetBrandsRequest{
+		BrandID: request.BrandID,
+		Paths:   withDefaultBrandFields(request.FieldMask.Paths),
+		Limit:   1,
+	})
+	if err != nil {
+		return nil, err
+	}
+	if len(response.Brands) == 0 {
+		return nil, errBrandNotFound.WithAttributes("brand_id", request.BrandID)
+	}
+	return response.Brands[0], nil
+}
+
 // ListModels implements the ttnpb.DeviceRepositoryServer interface.
 func (dr *DeviceRepository) ListModels(ctx context.Context, request *ttnpb.ListEndDeviceModelsRequest) (*ttnpb.ListEndDeviceModelsResponse, error) {
-	response, err := dr.store.ListModels(store.ListModelsRequest{
+	if request.Limit == 0 {
+		request.Limit = 1000
+	}
+	response, err := dr.store.GetModels(store.GetModelsRequest{
 		BrandID: request.BrandID,
-		ModelID: request.ModelID,
 		Limit:   request.Limit,
-		Offset:  request.Offset,
+		Page:    request.Page,
 		Paths:   withDefaultModelFields(request.FieldMask.Paths),
 		Search:  request.Search,
 		OrderBy: request.OrderBy,
@@ -79,6 +103,27 @@ func (dr *DeviceRepository) ListModels(ctx context.Context, request *ttnpb.ListE
 	}, nil
 }
 
+var (
+	errModelNotFound = errors.DefineNotFound("model_not_found", "model `{brand_id}`/`{model_id}` not found")
+)
+
+// GetModel implements the ttnpb.DeviceRepositoryServer interface.
+func (dr *DeviceRepository) GetModel(ctx context.Context, request *ttnpb.GetEndDeviceModelRequest) (*ttnpb.EndDeviceModel, error) {
+	response, err := dr.store.GetModels(store.GetModelsRequest{
+		BrandID: request.BrandID,
+		ModelID: request.ModelID,
+		Limit:   1,
+		Paths:   withDefaultModelFields(request.FieldMask.Paths),
+	})
+	if err != nil {
+		return nil, err
+	}
+	if len(response.Models) == 0 {
+		return nil, errModelNotFound.WithAttributes("brand_id", request.BrandID, "model_id", request.ModelID)
+	}
+	return response.Models[0], nil
+}
+
 // GetTemplate implements the ttnpb.DeviceRepositoryServer interface.
 func (dr *DeviceRepository) GetTemplate(ctx context.Context, ids *ttnpb.EndDeviceVersionIdentifiers) (*ttnpb.EndDeviceTemplate, error) {
 	return dr.store.GetTemplate(ids)
@@ -91,7 +136,8 @@ func (dr *DeviceRepository) GetUplinkDecoder(ctx context.Context, ids *ttnpb.End
 		return nil, err
 	}
 	return &ttnpb.MessagePayloadFormatter{
-		Codec: s,
+		Formatter:          ttnpb.PayloadFormatter_FORMATTER_JAVASCRIPT,
+		FormatterParameter: s,
 	}, nil
 }
 
@@ -102,7 +148,8 @@ func (dr *DeviceRepository) GetDownlinkDecoder(ctx context.Context, ids *ttnpb.E
 		return nil, err
 	}
 	return &ttnpb.MessagePayloadFormatter{
-		Codec: s,
+		Formatter:          ttnpb.PayloadFormatter_FORMATTER_JAVASCRIPT,
+		FormatterParameter: s,
 	}, nil
 }
 
@@ -113,6 +160,7 @@ func (dr *DeviceRepository) GetDownlinkEncoder(ctx context.Context, ids *ttnpb.E
 		return nil, err
 	}
 	return &ttnpb.MessagePayloadFormatter{
-		Codec: s,
+		Formatter:          ttnpb.PayloadFormatter_FORMATTER_JAVASCRIPT,
+		FormatterParameter: s,
 	}, nil
 }

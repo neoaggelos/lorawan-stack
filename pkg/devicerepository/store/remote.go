@@ -15,7 +15,6 @@
 package store
 
 import (
-	pbtypes "github.com/gogo/protobuf/types"
 	"go.thethings.network/lorawan-stack/v3/pkg/errors"
 	"go.thethings.network/lorawan-stack/v3/pkg/fetch"
 	"go.thethings.network/lorawan-stack/v3/pkg/ttnpb"
@@ -35,22 +34,23 @@ func NewRemoteStore(fetcher fetch.Interface) (Store, error) {
 }
 
 // paginate returns page start and end indices, and false if the page is invalid.
-func paginate(size int, limit, offset *pbtypes.UInt32Value) (uint32, uint32) {
-	start, end := uint32(0), uint32(size)
-	if offset != nil && offset.Value > 0 {
-		start = offset.Value
+func paginate(size int, limit, page uint32) (uint32, uint32) {
+	if page == 0 {
+		page = 1
 	}
+	offset := (page - 1) * limit
+	start, end := offset, uint32(size)
 	if start >= end {
 		return 0, 0
 	}
-	if limit != nil && limit.Value > 0 && start+limit.Value < end {
-		end = start + limit.Value
+	if limit > 0 && start+limit < end {
+		end = start + limit
 	}
 	return start, end
 }
 
-// ListBrands lists available end device vendors from the vendor/index.yaml file.
-func (s *remoteStore) ListBrands(req ListBrandsRequest) (*ListBrandsResponse, error) {
+// GetBrands gets available end device vendors from the vendor/index.yaml file.
+func (s *remoteStore) GetBrands(req GetBrandsRequest) (*GetBrandsResponse, error) {
 	b, err := s.fetcher.File("vendor", "index.yaml")
 	if err != nil {
 		return nil, err
@@ -73,9 +73,8 @@ func (s *remoteStore) ListBrands(req ListBrandsRequest) (*ListBrandsResponse, er
 		brands = append(brands, pb)
 	}
 
-	start, end := paginate(len(brands), req.Limit, req.Offset)
-
-	return &ListBrandsResponse{
+	start, end := paginate(len(brands), req.Limit, req.Page)
+	return &GetBrandsResponse{
 		Count:  end - start,
 		Offset: start,
 		Total:  uint32(len(brands)),
@@ -87,8 +86,8 @@ var (
 	errUnknownBrand = errors.DefineNotFound("unknown_brand", "unknown brand `{brand_id}`")
 )
 
-// listModelsByBrand lists available end device models by a single brand.
-func (s *remoteStore) listModelsByBrand(req ListModelsRequest) (*ListModelsResponse, error) {
+// listModelsByBrand gets available end device models by a single brand.
+func (s *remoteStore) listModelsByBrand(req GetModelsRequest) (*GetModelsResponse, error) {
 	b, err := s.fetcher.File("vendor", req.BrandID, "index.yaml")
 	if err != nil {
 		return nil, errUnknownBrand.WithAttributes("brand_id", req.BrandID)
@@ -97,7 +96,7 @@ func (s *remoteStore) listModelsByBrand(req ListModelsRequest) (*ListModelsRespo
 	if err := yaml.Unmarshal(b, &index); err != nil {
 		return nil, err
 	}
-	start, end := paginate(len(index.EndDevices), req.Limit, req.Offset)
+	start, end := paginate(len(index.EndDevices), req.Limit, req.Page)
 
 	models := make([]*ttnpb.EndDeviceModel, 0, end-start)
 	for idx := start; idx < end; idx++ {
@@ -119,7 +118,7 @@ func (s *remoteStore) listModelsByBrand(req ListModelsRequest) (*ListModelsRespo
 		}
 		models = append(models, pb)
 	}
-	return &ListModelsResponse{
+	return &GetModelsResponse{
 		Count:  end - start,
 		Offset: start,
 		Total:  uint32(len(index.EndDevices)),
@@ -127,20 +126,20 @@ func (s *remoteStore) listModelsByBrand(req ListModelsRequest) (*ListModelsRespo
 	}, nil
 }
 
-// ListModels lists available end device models. Note that this can be very slow, and does not support searching/sorting.
-func (s *remoteStore) ListModels(req ListModelsRequest) (*ListModelsResponse, error) {
+// GetModels gets available end device models. Note that this can be very slow, and does not support searching/sorting.
+func (s *remoteStore) GetModels(req GetModelsRequest) (*GetModelsResponse, error) {
 	if req.BrandID != "" {
 		return s.listModelsByBrand(req)
 	}
 	all := []*ttnpb.EndDeviceModel{}
-	brands, err := s.ListBrands(ListBrandsRequest{
+	brands, err := s.GetBrands(GetBrandsRequest{
 		Paths: []string{"brand_id"},
 	})
 	if err != nil {
 		return nil, err
 	}
 	for _, brand := range brands.Brands {
-		models, err := s.ListModels(ListModelsRequest{
+		models, err := s.GetModels(GetModelsRequest{
 			Paths:   req.Paths,
 			BrandID: brand.BrandID,
 			Limit:   req.Limit,
@@ -154,8 +153,8 @@ func (s *remoteStore) ListModels(req ListModelsRequest) (*ListModelsResponse, er
 		all = append(all, models.Models...)
 	}
 
-	start, end := paginate(len(all), req.Limit, req.Offset)
-	return &ListModelsResponse{
+	start, end := paginate(len(all), req.Limit, req.Page)
+	return &GetModelsResponse{
 		Count:  end - start,
 		Offset: start,
 		Total:  uint32(len(all)),
@@ -169,7 +168,7 @@ var (
 
 // GetTemplate retrieves an end device template for an end device definition.
 func (s *remoteStore) GetTemplate(ids *ttnpb.EndDeviceVersionIdentifiers) (*ttnpb.EndDeviceTemplate, error) {
-	models, err := s.ListModels(ListModelsRequest{
+	models, err := s.GetModels(GetModelsRequest{
 		BrandID: ids.BrandID,
 		ModelID: ids.ModelID,
 		Paths: []string{
@@ -216,7 +215,7 @@ var (
 
 // getCodec retrieves codec information for a specific model and returns.
 func (s *remoteStore) getCodec(ids *ttnpb.EndDeviceVersionIdentifiers, chooseFile func(EndDeviceCodec) string) (string, error) {
-	models, err := s.ListModels(ListModelsRequest{
+	models, err := s.GetModels(GetModelsRequest{
 		BrandID: ids.BrandID,
 		ModelID: ids.ModelID,
 		Paths: []string{

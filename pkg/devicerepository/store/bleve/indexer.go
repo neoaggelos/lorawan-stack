@@ -32,8 +32,8 @@ type Indexer interface {
 }
 
 type indexableBrand struct {
-	BrandPB      string // *ttnpb.EndDeviceBrand marshaled into JSON string
-	ModelsString string // []*ttnpb.EndDeviceModel marshaled into JSON string
+	BrandPB  string // *ttnpb.EndDeviceBrand marshaled into JSON string
+	ModelsPB string // []*ttnpb.EndDeviceModel marshaled into JSON string
 
 	// Stored in separate fields to support ordering search results
 	BrandID   string
@@ -56,7 +56,7 @@ const (
 	modelsIndexPath = "modelsIndex.bleve"
 )
 
-// IndexBrands creates a new brands index, meant to be used by bleveStore.ListBrands()
+// IndexBrands creates a new brands index, meant to be used by bleveStore.GetBrands()
 func (bl *bleveStore) IndexBrands(destinationDirectory string) error {
 	mapping := bleve.NewIndexMapping()
 	indexPath := path.Join(destinationDirectory, brandsIndexPath)
@@ -65,7 +65,7 @@ func (bl *bleveStore) IndexBrands(destinationDirectory string) error {
 		return err
 	}
 
-	brands, err := bl.store.ListBrands(store.ListBrandsRequest{
+	brands, err := bl.store.GetBrands(store.GetBrandsRequest{
 		Paths: ttnpb.EndDeviceBrandFieldPathsNested,
 	})
 	if err != nil {
@@ -74,7 +74,7 @@ func (bl *bleveStore) IndexBrands(destinationDirectory string) error {
 
 	batch := index.NewBatch()
 	for _, brand := range brands.Brands {
-		models, err := bl.store.ListModels(store.ListModelsRequest{
+		models, err := bl.store.GetModels(store.GetModelsRequest{
 			Paths:   ttnpb.EndDeviceModelFieldPathsNested,
 			BrandID: brand.BrandID,
 		})
@@ -93,10 +93,10 @@ func (bl *bleveStore) IndexBrands(destinationDirectory string) error {
 			return err
 		}
 		if err := batch.Index(brand.BrandID, indexableBrand{
-			BrandPB:      string(brandPB),
-			ModelsString: string(modelsPB),
-			BrandID:      brand.BrandID,
-			BrandName:    brand.Name,
+			BrandPB:   string(brandPB),
+			ModelsPB:  string(modelsPB),
+			BrandID:   brand.BrandID,
+			BrandName: brand.Name,
 		}); err != nil {
 			return err
 		}
@@ -108,7 +108,7 @@ func (bl *bleveStore) IndexBrands(destinationDirectory string) error {
 	return bl.archiver.Archive(indexPath, indexPath+bl.archiver.Suffix())
 }
 
-// IndexModels creates a new models index, meant to be used by bleveStore.ListBrands()
+// IndexModels creates a new models index, meant to be used by bleveStore.GetBrands()
 func (bl *bleveStore) IndexModels(destinationDirectory string) error {
 	mapping := bleve.NewIndexMapping()
 	indexPath := path.Join(destinationDirectory, modelsIndexPath)
@@ -117,7 +117,7 @@ func (bl *bleveStore) IndexModels(destinationDirectory string) error {
 		return err
 	}
 
-	brands, err := bl.store.ListBrands(store.ListBrandsRequest{
+	brands, err := bl.store.GetBrands(store.GetBrandsRequest{
 		Paths: ttnpb.EndDeviceBrandFieldPathsNested,
 	})
 	if err != nil {
@@ -130,7 +130,7 @@ func (bl *bleveStore) IndexModels(destinationDirectory string) error {
 		if err != nil {
 			return err
 		}
-		models, err := bl.store.ListModels(store.ListModelsRequest{
+		models, err := bl.store.GetModels(store.GetModelsRequest{
 			Paths:   ttnpb.EndDeviceModelFieldPathsNested,
 			BrandID: brand.BrandID,
 		})

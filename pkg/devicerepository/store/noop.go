@@ -21,13 +21,13 @@ import (
 // NoopStore is a no-op.
 type NoopStore struct{}
 
-// ListBrands lists available end device vendors.
-func (*NoopStore) ListBrands(ListBrandsRequest) (*ListBrandsResponse, error) {
+// GetBrands gets available end device vendors.
+func (*NoopStore) GetBrands(GetBrandsRequest) (*GetBrandsResponse, error) {
 	return nil, nil
 }
 
-// ListModels lists available end device definitions.
-func (*NoopStore) ListModels(ListModelsRequest) (*ListModelsResponse, error) {
+// GetModels gets available end device definitions.
+func (*NoopStore) GetModels(GetModelsRequest) (*GetModelsResponse, error) {
 	return nil, nil
 }
 

@@ -41,7 +41,7 @@ func (v Vendor) ToPB(paths ...string) (*ttnpb.EndDeviceBrand, error) {
 	pb := &ttnpb.EndDeviceBrand{
 		BrandID:                       v.ID,
 		Name:                          v.Name,
-		VendorID:                      v.VendorID,
+		LoRaAllianceVendorID:          v.VendorID,
 		Email:                         v.Email,
 		Website:                       v.Website,
 		Logo:                          v.Logo,
@@ -107,9 +107,9 @@ type EndDeviceModel struct {
 			Max float32 `yaml:"max"`
 		} `yaml:"relativeHumidity"`
 	} `yaml:"operatingConditions"`
-	IPCode          string   `yaml:"ipCode"`
-	KeyProvisioning []string `yaml:"keyProvisioning"`
-	KeySecurity     string   `yaml:"keySecurity"`
+	IPCode          string                  `yaml:"ipCode"`
+	KeyProvisioning []ttnpb.KeyProvisioning `yaml:"keyProvisioning"`
+	KeySecurity     ttnpb.KeySecurity       `yaml:"keySecurity"`
 	Photos          *struct {
 		Main  string   `yaml:"main"`
 		Other []string `yaml:"other"`
@@ -156,9 +156,9 @@ func (d EndDeviceModel) ToPB(brandID, modelID string, paths ...string) (*ttnpb.E
 	}
 
 	if hwVersions := d.HardwareVersions; hwVersions != nil {
-		pb.HardwareVersions = make([]*ttnpb.EndDeviceModel_Version, 0, len(hwVersions))
+		pb.HardwareVersions = make([]*ttnpb.EndDeviceModel_HardwareVersion, 0, len(hwVersions))
 		for _, ver := range hwVersions {
-			pb.HardwareVersions = append(pb.HardwareVersions, &ttnpb.EndDeviceModel_Version{
+			pb.HardwareVersions = append(pb.HardwareVersions, &ttnpb.EndDeviceModel_HardwareVersion{
 				Version:    ver.Version,
 				Numeric:    ver.Numeric,
 				PartNumber: ver.PartNumber,
@@ -167,9 +167,9 @@ func (d EndDeviceModel) ToPB(brandID, modelID string, paths ...string) (*ttnpb.E
 	}
 	for _, ver := range d.FirmwareVersions {
 		pbver := &ttnpb.EndDeviceModel_FirmwareVersion{
-			Version:          ver.Version,
-			Numeric:          ver.Numeric,
-			HardwareVersions: ver.HardwareVersions,
+			Version:                   ver.Version,
+			Numeric:                   ver.Numeric,
+			SupportedHardwareVersions: ver.HardwareVersions,
 		}
 		pbver.Profiles = make(map[string]*ttnpb.EndDeviceModel_FirmwareVersion_Profile, len(ver.Profiles))
 		for region, profile := range ver.Profiles {

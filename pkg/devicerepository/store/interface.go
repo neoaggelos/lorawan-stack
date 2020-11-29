@@ -15,41 +15,40 @@
 package store
 
 import (
-	pbtypes "github.com/gogo/protobuf/types"
 	"go.thethings.network/lorawan-stack/v3/pkg/ttnpb"
 )
 
-// ListBrandsRequest is a request to list available end device vendors, with pagination and sorting.
-type ListBrandsRequest struct {
+// GetBrandsRequest is a request to list available end device vendors, with pagination and sorting.
+type GetBrandsRequest struct {
 	BrandID string
 	Limit,
-	Offset *pbtypes.UInt32Value
+	Page uint32
 	OrderBy string
 	Paths   []string
 	Search  string
 }
 
-// ListBrandsResponse is a list of brands, along with pagination information.
-type ListBrandsResponse struct {
+// GetBrandsResponse is a list of brands, along with pagination information.
+type GetBrandsResponse struct {
 	Count,
 	Offset,
 	Total uint32
 	Brands []*ttnpb.EndDeviceBrand
 }
 
-// ListModelsRequest is a request to list available end device model definitions.
-type ListModelsRequest struct {
+// GetModelsRequest is a request to list available end device model definitions.
+type GetModelsRequest struct {
 	BrandID,
 	ModelID string
 	Limit,
-	Offset *pbtypes.UInt32Value
+	Page uint32
 	OrderBy string
 	Paths   []string
 	Search  string
 }
 
-// ListModelsResponse is a list of models, along with model information
-type ListModelsResponse struct {
+// GetModelsResponse is a list of models, along with model information
+type GetModelsResponse struct {
 	Count,
 	Offset,
 	Total uint32
@@ -66,10 +65,10 @@ type DefinitionIdentifiers struct {
 
 // Store contains end device definitions.
 type Store interface {
-	// ListBrands lists available end device vendors.
-	ListBrands(ListBrandsRequest) (*ListBrandsResponse, error)
-	// ListModels lists available end device definitions.
-	ListModels(ListModelsRequest) (*ListModelsResponse, error)
+	// GetBrands lists available end device vendors.
+	GetBrands(GetBrandsRequest) (*GetBrandsResponse, error)
+	// GetModels lists available end device definitions.
+	GetModels(GetModelsRequest) (*GetModelsResponse, error)
 	// GetTemplate retrieves an end device template for an end device definition.
 	GetTemplate(*ttnpb.EndDeviceVersionIdentifiers) (*ttnpb.EndDeviceTemplate, error)
 	// GetUplinkDecoder retrieves the codec for decoding uplink messages.

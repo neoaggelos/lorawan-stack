@@ -27,8 +27,8 @@ var (
 	errCorruptedIndex = errors.DefineCorruption("corrupted_index", "corrupted index file")
 )
 
-// ListBrands lists available end device vendors.
-func (bl *bleveStore) ListBrands(req store.ListBrandsRequest) (*store.ListBrandsResponse, error) {
+// GetBrands lists available end device vendors.
+func (bl *bleveStore) GetBrands(req store.GetBrandsRequest) (*store.GetBrandsResponse, error) {
 	queries := []query.Query{
 		bleve.NewMatchAllQuery(),
 	}
@@ -36,16 +36,18 @@ func (bl *bleveStore) ListBrands(req store.ListBrandsRequest) (*store.ListBrands
 		queries = append(queries, bleve.NewQueryStringQuery(q))
 	}
 	if q := req.BrandID; q != "" {
-		queries = append(queries, bleve.NewPhraseQuery([]string{q}, "BrandID"))
+		query := bleve.NewMatchQuery(q)
+		query.SetField("BrandID")
+		queries = append(queries, query)
 	}
 
 	searchRequest := bleve.NewSearchRequest(bleve.NewConjunctionQuery(queries...))
-	if limit := req.Limit; limit != nil && limit.Value > 0 {
-		searchRequest.Size = int(limit.Value)
+	searchRequest.Size = int(req.Limit)
+	if req.Page == 0 {
+		req.Page = 1
 	}
-	if offset := req.Offset; offset != nil && offset.Value > 0 {
-		searchRequest.From = int(offset.Value)
-	}
+	searchRequest.From = int((req.Page - 1) * req.Limit)
+
 	searchRequest.Fields = []string{"BrandPB"}
 	switch req.OrderBy {
 	case "brand_id":
@@ -81,7 +83,7 @@ func (bl *bleveStore) ListBrands(req store.ListBrandsRequest) (*store.ListBrands
 		}
 		brands = append(brands, pb)
 	}
-	return &store.ListBrandsResponse{
+	return &store.GetBrandsResponse{
 		Count:  uint32(len(result.Hits)),
 		Total:  uint32(result.Total),
 		Offset: uint32(searchRequest.From),
@@ -89,8 +91,8 @@ func (bl *bleveStore) ListBrands(req store.ListBrandsRequest) (*store.ListBrands
 	}, nil
 }
 
-// ListModels lists available end device definitions.
-func (bl *bleveStore) ListModels(req store.ListModelsRequest) (*store.ListModelsResponse, error) {
+// GetModels lists available end device definitions.
+func (bl *bleveStore) GetModels(req store.GetModelsRequest) (*store.GetModelsResponse, error) {
 	queries := []query.Query{
 		bleve.NewMatchAllQuery(),
 	}
@@ -98,19 +100,22 @@ func (bl *bleveStore) ListModels(req store.ListModelsRequest) (*store.ListModels
 		queries = append(queries, bleve.NewQueryStringQuery(q))
 	}
 	if q := req.BrandID; q != "" {
-		queries = append(queries, bleve.NewPhraseQuery([]string{q}, "BrandID"))
+		query := bleve.NewMatchQuery(q)
+		query.SetField("BrandID")
+		queries = append(queries, query)
 	}
 	if q := req.ModelID; q != "" {
-		queries = append(queries, bleve.NewPhraseQuery([]string{q}, "ModelID"))
+		query := bleve.NewMatchQuery(q)
+		query.SetField("ModelID")
+		queries = append(queries, query)
 	}
 
 	searchRequest := bleve.NewSearchRequest(bleve.NewConjunctionQuery(queries...))
-	if limit := req.Limit; limit != nil && limit.Value > 0 {
-		searchRequest.Size = int(limit.Value)
+	searchRequest.Size = int(req.Limit)
+	if req.Page == 0 {
+		req.Page = 1
 	}
-	if offset := req.Offset; offset != nil && offset.Value > 0 {
-		searchRequest.From = int(offset.Value)
-	}
+	searchRequest.From = int((req.Page - 1) * req.Limit)
 	searchRequest.Fields = []string{"ModelPB"}
 	switch req.OrderBy {
 	case "brand_id":
@@ -150,7 +155,7 @@ func (bl *bleveStore) ListModels(req store.ListModelsRequest) (*store.ListModels
 		}
 		models = append(models, pb)
 	}
-	return &store.ListModelsResponse{
+	return &store.GetModelsResponse{
 		Count:  uint32(len(result.Hits)),
 		Total:  uint32(result.Total),
 		Offset: uint32(searchRequest.From),

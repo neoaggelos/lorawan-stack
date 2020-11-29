@@ -162,17 +162,15 @@ func TestRemoteStore(t *testing.T) {
 	s, err := store.NewRemoteStore(fetch.NewMemFetcher(data))
 	a.So(err, should.BeNil)
 
-	t.Run("TestListBrands", func(t *testing.T) {
+	t.Run("TestGetBrands", func(t *testing.T) {
 
 		t.Run("Limit", func(t *testing.T) {
-			list, err := s.ListBrands(store.ListBrandsRequest{
+			list, err := s.GetBrands(store.GetBrandsRequest{
 				Paths: []string{
 					"brand_id",
 					"name",
 				},
-				Limit: &pbtypes.UInt32Value{
-					Value: 1,
-				},
+				Limit: 1,
 			})
 			a.So(err, should.BeNil)
 			a.So(list.Brands, should.Resemble, []*ttnpb.EndDeviceBrand{
@@ -183,15 +181,14 @@ func TestRemoteStore(t *testing.T) {
 			})
 		})
 
-		t.Run("Offset", func(t *testing.T) {
-			list, err := s.ListBrands(store.ListBrandsRequest{
+		t.Run("SecondPage", func(t *testing.T) {
+			list, err := s.GetBrands(store.GetBrandsRequest{
 				Paths: []string{
 					"brand_id",
 					"name",
 				},
-				Offset: &pbtypes.UInt32Value{
-					Value: 1,
-				},
+				Limit: 1,
+				Page:  2,
 			})
 			a.So(err, should.BeNil)
 			a.So(list.Brands, should.Resemble, []*ttnpb.EndDeviceBrand{
@@ -203,20 +200,20 @@ func TestRemoteStore(t *testing.T) {
 		})
 
 		t.Run("Paths", func(t *testing.T) {
-			list, err := s.ListBrands(store.ListBrandsRequest{
+			list, err := s.GetBrands(store.GetBrandsRequest{
 				Paths: ttnpb.EndDeviceBrandFieldPathsNested,
 			})
 			a.So(err, should.BeNil)
 			a.So(list.Brands, should.Resemble, []*ttnpb.EndDeviceBrand{
 				{
-					BrandID:  "foo-vendor",
-					Name:     "Foo Vendor",
-					VendorID: 42,
+					BrandID:              "foo-vendor",
+					Name:                 "Foo Vendor",
+					LoRaAllianceVendorID: 42,
 				},
 				{
 					BrandID:                       "full-vendor",
 					Name:                          "Full Vendor",
-					VendorID:                      44,
+					LoRaAllianceVendorID:          44,
 					Email:                         "mail@example.com",
 					Website:                       "example.org",
 					PrivateEnterpriseNumber:       42,
@@ -227,9 +224,9 @@ func TestRemoteStore(t *testing.T) {
 		})
 	})
 
-	t.Run("TestListModels", func(t *testing.T) {
+	t.Run("TestGetModels", func(t *testing.T) {
 		t.Run("AllBrands", func(t *testing.T) {
-			list, err := s.ListModels(store.ListModelsRequest{
+			list, err := s.GetModels(store.GetModelsRequest{
 				Paths: []string{
 					"brand_id",
 					"model_id",
@@ -257,11 +254,9 @@ func TestRemoteStore(t *testing.T) {
 		})
 
 		t.Run("Limit", func(t *testing.T) {
-			list, err := s.ListModels(store.ListModelsRequest{
+			list, err := s.GetModels(store.GetModelsRequest{
 				BrandID: "foo-vendor",
-				Limit: &pbtypes.UInt32Value{
-					Value: 1,
-				},
+				Limit:   1,
 				Paths: []string{
 					"brand_id",
 					"model_id",
@@ -279,11 +274,10 @@ func TestRemoteStore(t *testing.T) {
 		})
 
 		t.Run("Offset", func(t *testing.T) {
-			list, err := s.ListModels(store.ListModelsRequest{
+			list, err := s.GetModels(store.GetModelsRequest{
 				BrandID: "foo-vendor",
-				Offset: &pbtypes.UInt32Value{
-					Value: 1,
-				},
+				Limit:   1,
+				Page:    2,
 				Paths: []string{
 					"brand_id",
 					"model_id",
@@ -301,7 +295,7 @@ func TestRemoteStore(t *testing.T) {
 		})
 
 		t.Run("Paths", func(t *testing.T) {
-			list, err := s.ListModels(store.ListModelsRequest{
+			list, err := s.GetModels(store.GetModelsRequest{
 				BrandID: "foo-vendor",
 				Paths:   ttnpb.EndDeviceModelFieldPathsNested,
 			})
@@ -312,7 +306,7 @@ func TestRemoteStore(t *testing.T) {
 					ModelID:     "dev1",
 					Name:        "Device 1",
 					Description: "My Description",
-					HardwareVersions: []*ttnpb.EndDeviceModel_Version{
+					HardwareVersions: []*ttnpb.EndDeviceModel_HardwareVersion{
 						{
 							Version:    "1.0",
 							Numeric:    1,
@@ -321,8 +315,8 @@ func TestRemoteStore(t *testing.T) {
 					},
 					FirmwareVersions: []*ttnpb.EndDeviceModel_FirmwareVersion{
 						{
-							Version:          "1.0",
-							HardwareVersions: []string{"1.0"},
+							Version:                   "1.0",
+							SupportedHardwareVersions: []string{"1.0"},
 							Profiles: map[string]*ttnpb.EndDeviceModel_FirmwareVersion_Profile{
 								"EU_863_870": {
 									ProfileID:        "profile1",
@@ -342,7 +336,7 @@ func TestRemoteStore(t *testing.T) {
 					ModelID:     "dev2",
 					Name:        "Device 2",
 					Description: "My Description 2",
-					HardwareVersions: []*ttnpb.EndDeviceModel_Version{
+					HardwareVersions: []*ttnpb.EndDeviceModel_HardwareVersion{
 						{
 							Version:    "2.0",
 							Numeric:    2,
@@ -351,8 +345,8 @@ func TestRemoteStore(t *testing.T) {
 					},
 					FirmwareVersions: []*ttnpb.EndDeviceModel_FirmwareVersion{
 						{
-							Version:          "1.1",
-							HardwareVersions: []string{"2.0"},
+							Version:                   "1.1",
+							SupportedHardwareVersions: []string{"2.0"},
 							Profiles: map[string]*ttnpb.EndDeviceModel_FirmwareVersion_Profile{
 								"EU_433": {
 									CodecID:          "foo-codec",
@@ -369,7 +363,7 @@ func TestRemoteStore(t *testing.T) {
 
 		t.Run("Full", func(t *testing.T) {
 			a := assertions.New(t)
-			list, err := s.ListModels(store.ListModelsRequest{
+			list, err := s.GetModels(store.GetModelsRequest{
 				BrandID: "full-vendor",
 				Paths:   ttnpb.EndDeviceModelFieldPathsNested,
 			})
@@ -379,7 +373,7 @@ func TestRemoteStore(t *testing.T) {
 				ModelID:     "full-device",
 				Name:        "Full Device",
 				Description: "A description",
-				HardwareVersions: []*ttnpb.EndDeviceModel_Version{
+				HardwareVersions: []*ttnpb.EndDeviceModel_HardwareVersion{
 					{
 						Version:    "0.1",
 						Numeric:    1,
@@ -393,8 +387,8 @@ func TestRemoteStore(t *testing.T) {
 				},
 				FirmwareVersions: []*ttnpb.EndDeviceModel_FirmwareVersion{
 					{
-						Version:          "1.0",
-						HardwareVersions: []string{"0.1", "0.2"},
+						Version:                   "1.0",
+						SupportedHardwareVersions: []string{"0.1", "0.2"},
 						Profiles: map[string]*ttnpb.EndDeviceModel_FirmwareVersion_Profile{
 							"EU_863_870": {
 								CodecID:   "",
@@ -440,8 +434,8 @@ func TestRemoteStore(t *testing.T) {
 					},
 				},
 				IPCode:          "IP67",
-				KeyProvisioning: []string{"custom"},
-				KeySecurity:     "security",
+				KeyProvisioning: []ttnpb.KeyProvisioning{ttnpb.KEY_PROVISIONING_CUSTOM},
+				KeySecurity:     ttnpb.KEY_SECURITY_NONE,
 				Photos: &ttnpb.EndDeviceModel_Photos{
 					Main:  "a.jpg",
 					Other: []string{"b.jpg", "c.jpg"},
