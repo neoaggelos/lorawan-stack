@@ -7537,7 +7537,7 @@
             },
             {
               "name": "numeric",
-              "description": "Numeric firwmare revision number.",
+              "description": "Numeric firmware revision number.",
               "label": "",
               "type": "uint32",
               "longType": "uint32",

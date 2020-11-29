@@ -492,7 +492,7 @@ func (m *EndDeviceModel_HardwareVersion) GetPartNumber() string {
 type EndDeviceModel_FirmwareVersion struct {
 	// Firmware version string.
 	Version string `protobuf:"bytes,1,opt,name=version,proto3" json:"version,omitempty"`
-	// Numeric firwmare revision number.
+	// Numeric firmware revision number.
 	Numeric uint32 `protobuf:"varint,2,opt,name=numeric,proto3" json:"numeric,omitempty"`
 	// Hardware versions supported by this firmware version.
 	SupportedHardwareVersions []string `protobuf:"bytes,3,rep,name=supported_hardware_versions,json=supportedHardwareVersions,proto3" json:"supported_hardware_versions,omitempty"`

@@ -2989,7 +2989,7 @@
   },
   "error:pkg/devicerepository/store:firmware_version_not_found": {
     "translations": {
-      "en": "firwmare version `{firmware_version}` for model `{brand_id}/{model_id}` not found"
+      "en": "firmware version `{firmware_version}` for model `{brand_id}/{model_id}` not found"
     },
     "description": {
       "package": "pkg/devicerepository/store",

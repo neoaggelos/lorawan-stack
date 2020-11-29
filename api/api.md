@@ -2116,7 +2116,7 @@ PeerInfo
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | `version` | [`string`](#string) |  | Firmware version string. |
-| `numeric` | [`uint32`](#uint32) |  | Numeric firwmare revision number. |
+| `numeric` | [`uint32`](#uint32) |  | Numeric firmware revision number. |
 | `supported_hardware_versions` | [`string`](#string) | repeated | Hardware versions supported by this firmware version. |
 | `profiles` | [`EndDeviceModel.FirmwareVersion.ProfilesEntry`](#ttn.lorawan.v3.EndDeviceModel.FirmwareVersion.ProfilesEntry) | repeated | Device profiles for each supported region (band). |
 

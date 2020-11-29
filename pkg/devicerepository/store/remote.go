@@ -164,7 +164,7 @@ func (s *remoteStore) GetModels(req GetModelsRequest) (*GetModelsResponse, error
 
 var (
 	errModelNotFound           = errors.DefineNotFound("model_not_found", "model `{brand_id}/{model_id}` not found")
-	errFirmwareVersionNotFound = errors.DefineNotFound("firmware_version_not_found", "firwmare version `{firmware_version}` for model `{brand_id}/{model_id}` not found")
+	errFirmwareVersionNotFound = errors.DefineNotFound("firmware_version_not_found", "firmware version `{firmware_version}` for model `{brand_id}/{model_id}` not found")
 )
 
 // GetTemplate retrieves an end device template for an end device definition.

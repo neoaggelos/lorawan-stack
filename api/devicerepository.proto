@@ -104,7 +104,7 @@ message EndDeviceModel {
     }
     // Firmware version string.
     string version = 1;
-    // Numeric firwmare revision number.
+    // Numeric firmware revision number.
     uint32 numeric = 2;
     // Hardware versions supported by this firmware version.
     repeated string supported_hardware_versions = 3;

@@ -8606,7 +8606,7 @@
         "numeric": {
           "type": "integer",
           "format": "int64",
-          "description": "Numeric firwmare revision number."
+          "description": "Numeric firmware revision number."
         },
         "supported_hardware_versions": {
           "type": "array",
