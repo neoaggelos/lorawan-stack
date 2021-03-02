@@ -9902,6 +9902,14 @@
         }
       }
     },
+    "lorawanv3BoolValue": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "boolean"
+        }
+      }
+    },
     "lorawanv3ContactInfoValidation": {
       "type": "object",
       "properties": {
@@ -11704,6 +11712,15 @@
         }
       }
     },
+    "v3DataRateOffsetValue": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
     "v3DecodeDownlinkRequest": {
       "type": "object",
       "properties": {
@@ -12565,6 +12582,15 @@
         }
       }
     },
+    "v3FrequencyValue": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
     "v3Gateway": {
       "type": "object",
       "properties": {
@@ -13409,11 +13435,11 @@
           "description": "Configured uplink channels and optionally Rx1 frequency."
         },
         "uplink_dwell_time": {
-          "type": "boolean",
+          "$ref": "#/definitions/lorawanv3BoolValue",
           "description": "Whether uplink dwell time is set (400ms).\nIf this field is not set, then the value is either unknown or irrelevant(Network Server cannot modify it)."
         },
         "downlink_dwell_time": {
-          "type": "boolean",
+          "$ref": "#/definitions/lorawanv3BoolValue",
           "description": "Whether downlink dwell time is set (400ms).\nIf this field is not set, then the value is either unknown or irrelevant(Network Server cannot modify it)."
         },
         "adr_ack_limit_exponent": {
@@ -13498,13 +13524,11 @@
           "description": "Data rate index of the class B ping slot.\nIf unset, the default value from Network Server configuration will be used."
         },
         "ping_slot_frequency": {
-          "type": "string",
-          "format": "uint64",
+          "$ref": "#/definitions/v3FrequencyValue",
           "description": "Frequency of the class B ping slot (Hz).\nIf unset, the default value from Network Server configuration will be used."
         },
         "beacon_frequency": {
-          "type": "string",
-          "format": "uint64",
+          "$ref": "#/definitions/v3FrequencyValue",
           "description": "Frequency of the class B beacon (Hz).\nIf unset, the default value from Network Server configuration will be used."
         },
         "class_c_timeout": {
@@ -13516,8 +13540,7 @@
           "description": "Class A Rx1 delay.\nIf unset, the default value from Network Server configuration or regional parameters specification will be used."
         },
         "rx1_data_rate_offset": {
-          "type": "integer",
-          "format": "int64",
+          "$ref": "#/definitions/v3DataRateOffsetValue",
           "description": "Rx1 data rate offset.\nIf unset, the default value from Network Server configuration will be used."
         },
         "rx2_data_rate_index": {
@@ -13525,8 +13548,7 @@
           "description": "Data rate index for Rx2.\nIf unset, the default value from Network Server configuration or regional parameters specification will be used."
         },
         "rx2_frequency": {
-          "type": "string",
-          "format": "uint64",
+          "$ref": "#/definitions/v3FrequencyValue",
           "description": "Frequency for Rx2 (Hz).\nIf unset, the default value from Network Server configuration or regional parameters specification will be used."
         },
         "factory_preset_frequencies": {
@@ -13542,11 +13564,11 @@
           "description": "Maximum uplink duty cycle (of all channels)."
         },
         "supports_32_bit_f_cnt": {
-          "type": "boolean",
+          "$ref": "#/definitions/lorawanv3BoolValue",
           "description": "Whether the device supports 32-bit frame counters.\nIf unset, the default value from Network Server configuration will be used."
         },
         "use_adr": {
-          "type": "boolean",
+          "$ref": "#/definitions/lorawanv3BoolValue",
           "description": "Whether the Network Server should use ADR for the device.\nIf unset, the default value from Network Server configuration will be used."
         },
         "adr_margin": {
@@ -13555,7 +13577,7 @@
           "description": "The ADR margin tells the network server how much margin it should add in ADR requests.\nA bigger margin is less efficient, but gives a better chance of successful reception.\nIf unset, the default value from Network Server configuration will be used."
         },
         "resets_f_cnt": {
-          "type": "boolean",
+          "$ref": "#/definitions/lorawanv3BoolValue",
           "description": "Whether the device resets the frame counters (not LoRaWAN compliant).\nIf unset, the default value from Network Server configuration will be used."
         },
         "status_time_periodicity": {
@@ -13572,8 +13594,7 @@
           "description": "The Rx1 delay Network Server should configure device to use via MAC commands or Join-Accept.\nIf unset, the default value from Network Server configuration or regional parameters specification will be used."
         },
         "desired_rx1_data_rate_offset": {
-          "type": "integer",
-          "format": "int64",
+          "$ref": "#/definitions/v3DataRateOffsetValue",
           "description": "The Rx1 data rate offset Network Server should configure device to use via MAC commands or Join-Accept.\nIf unset, the default value from Network Server configuration will be used."
         },
         "desired_rx2_data_rate_index": {
@@ -13581,8 +13602,7 @@
           "description": "The Rx2 data rate index Network Server should configure device to use via MAC commands or Join-Accept.\nIf unset, the default value from frequency plan, Network Server configuration or regional parameters specification will be used."
         },
         "desired_rx2_frequency": {
-          "type": "string",
-          "format": "uint64",
+          "$ref": "#/definitions/v3FrequencyValue",
           "description": "The Rx2 frequency index Network Server should configure device to use via MAC commands.\nIf unset, the default value from frequency plan, Network Server configuration or regional parameters specification will be used."
         },
         "desired_max_duty_cycle": {
@@ -13602,13 +13622,11 @@
           "description": "The data rate index of the class B ping slot Network Server should configure device to use via MAC commands.\nIf unset, the default value from Network Server configuration will be used."
         },
         "desired_ping_slot_frequency": {
-          "type": "string",
-          "format": "uint64",
+          "$ref": "#/definitions/v3FrequencyValue",
           "description": "The frequency of the class B ping slot (Hz) Network Server should configure device to use via MAC commands.\nIf unset, the default value from Network Server configuration or regional parameters specification will be used."
         },
         "desired_beacon_frequency": {
-          "type": "string",
-          "format": "uint64",
+          "$ref": "#/definitions/v3FrequencyValue",
           "description": "The frequency of the class B beacon (Hz) Network Server should configure device to use via MAC commands.\nIf unset, the default value from Network Server configuration will be used."
         }
       }
