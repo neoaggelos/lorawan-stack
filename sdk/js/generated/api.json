@@ -11055,16 +11055,16 @@
               "name": "rx1_data_rate_offset",
               "description": "Data rate offset for Rx1.",
               "label": "",
-              "type": "uint32",
-              "longType": "uint32",
-              "fullType": "uint32",
+              "type": "DataRateOffset",
+              "longType": "DataRateOffset",
+              "fullType": "ttn.lorawan.v3.DataRateOffset",
               "ismap": false,
               "defaultValue": "",
               "options": {
                 "validate.rules": [
                   {
-                    "name": "uint32.lte",
-                    "value": 7
+                    "name": "enum.defined_only",
+                    "value": true
                   }
                 ]
               }
@@ -18937,6 +18937,54 @@
           ]
         },
         {
+          "name": "DataRateOffset",
+          "longName": "DataRateOffset",
+          "fullName": "ttn.lorawan.v3.DataRateOffset",
+          "description": "",
+          "values": [
+            {
+              "name": "DATA_RATE_OFFSET_0",
+              "number": "0",
+              "description": ""
+            },
+            {
+              "name": "DATA_RATE_OFFSET_1",
+              "number": "1",
+              "description": ""
+            },
+            {
+              "name": "DATA_RATE_OFFSET_2",
+              "number": "2",
+              "description": ""
+            },
+            {
+              "name": "DATA_RATE_OFFSET_3",
+              "number": "3",
+              "description": ""
+            },
+            {
+              "name": "DATA_RATE_OFFSET_4",
+              "number": "4",
+              "description": ""
+            },
+            {
+              "name": "DATA_RATE_OFFSET_5",
+              "number": "5",
+              "description": ""
+            },
+            {
+              "name": "DATA_RATE_OFFSET_6",
+              "number": "6",
+              "description": ""
+            },
+            {
+              "name": "DATA_RATE_OFFSET_7",
+              "number": "7",
+              "description": ""
+            }
+          ]
+        },
+        {
           "name": "DeviceEIRP",
           "longName": "DeviceEIRP",
           "fullName": "ttn.lorawan.v3.DeviceEIRP",
@@ -19955,16 +20003,16 @@
               "name": "rx1_dr_offset",
               "description": "",
               "label": "",
-              "type": "uint32",
-              "longType": "uint32",
-              "fullType": "uint32",
+              "type": "DataRateOffset",
+              "longType": "DataRateOffset",
+              "fullType": "ttn.lorawan.v3.DataRateOffset",
               "ismap": false,
               "defaultValue": "",
               "options": {
                 "validate.rules": [
                   {
-                    "name": "uint32.lte",
-                    "value": 7
+                    "name": "enum.defined_only",
+                    "value": true
                   }
                 ]
               }
@@ -20072,16 +20120,16 @@
               "name": "value",
               "description": "",
               "label": "",
-              "type": "uint32",
-              "longType": "uint32",
-              "fullType": "uint32",
+              "type": "DataRateOffset",
+              "longType": "DataRateOffset",
+              "fullType": "ttn.lorawan.v3.DataRateOffset",
               "ismap": false,
               "defaultValue": "",
               "options": {
                 "validate.rules": [
                   {
-                    "name": "uint32.lte",
-                    "value": 7
+                    "name": "enum.defined_only",
+                    "value": true
                   }
                 ]
               }
@@ -22020,16 +22068,16 @@
               "name": "rx1_data_rate_offset",
               "description": "",
               "label": "",
-              "type": "uint32",
-              "longType": "uint32",
-              "fullType": "uint32",
+              "type": "DataRateOffset",
+              "longType": "DataRateOffset",
+              "fullType": "ttn.lorawan.v3.DataRateOffset",
               "ismap": false,
               "defaultValue": "",
               "options": {
                 "validate.rules": [
                   {
-                    "name": "uint32.lte",
-                    "value": 7
+                    "name": "enum.defined_only",
+                    "value": true
                   }
                 ]
               }
