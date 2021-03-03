@@ -161,7 +161,10 @@ func isAtomicType(t reflect.Type, maskOnly bool) bool {
 			"ADRAckDelayExponentValue",
 			"ADRAckLimitExponentValue",
 			"AggregatedDutyCycleValue",
+			"BoolValue",
 			"DataRateIndexValue",
+			"DataRateOffsetValue",
+			"FrequencyValue",
 			"GatewayAntennaIdentifiers",
 			"Picture",
 			"PingSlotPeriodValue",
@@ -277,6 +280,7 @@ func addField(fs *pflag.FlagSet, name string, t reflect.Type, maskOnly bool) {
 			"ADRAckLimitExponentValue",
 			"AggregatedDutyCycleValue",
 			"DataRateIndexValue",
+			"DataRateOffsetValue",
 			"PingSlotPeriodValue",
 			"RxDelayValue":
 			enumType := unwrapLoRaWANEnumType(typeName)
@@ -290,6 +294,14 @@ func addField(fs *pflag.FlagSet, name string, t reflect.Type, maskOnly bool) {
 
 		case "Picture":
 			// Not supported
+			return
+
+		case "FrequencyValue":
+			fs.Uint64(name, 0, "")
+			return
+
+		case "BoolValue":
+			fs.Bool(name, false, "")
 			return
 		}
 		if t.Kind() == reflect.Int32 {
@@ -572,6 +584,11 @@ func setField(rv reflect.Value, path []string, v reflect.Value) error {
 					}
 				case ft.PkgPath() == "go.thethings.network/lorawan-stack/v3/pkg/ttnpb":
 					switch typeName := ft.Name(); typeName {
+					case "BoolValue":
+						field.Set(reflect.ValueOf(ttnpb.BoolValue{Value: v.Bool()}))
+					case "FrequencyValue":
+						field.Set(reflect.ValueOf(ttnpb.FrequencyValue{Value: v.Uint()}))
+
 					case "DataRateIndexValue":
 						if enumValue, ok := proto.EnumValueMap(unwrapLoRaWANEnumType(typeName))[v.String()]; ok {
 							field.Set(reflect.ValueOf(ttnpb.DataRateIndexValue{Value: ttnpb.DataRateIndex(enumValue)}))
@@ -580,6 +597,17 @@ func setField(rv reflect.Value, path []string, v reflect.Value) error {
 						var enum ttnpb.DataRateIndex
 						if err := enum.UnmarshalText([]byte(v.String())); err != nil {
 							field.Set(reflect.ValueOf(ttnpb.DataRateIndexValue{Value: enum}))
+							break
+						}
+						return fmt.Errorf(`invalid value "%s" for %s`, v.String(), typeName)
+					case "DataRateOffsetValue":
+						if enumValue, ok := proto.EnumValueMap(unwrapLoRaWANEnumType(typeName))[v.String()]; ok {
+							field.Set(reflect.ValueOf(ttnpb.DataRateOffsetValue{Value: ttnpb.DataRateOffset(enumValue)}))
+							break
+						}
+						var enum ttnpb.DataRateOffset
+						if err := enum.UnmarshalText([]byte(v.String())); err != nil {
+							field.Set(reflect.ValueOf(ttnpb.DataRateOffsetValue{Value: enum}))
 							break
 						}
 						return fmt.Errorf(`invalid value "%s" for %s`, v.String(), typeName)
