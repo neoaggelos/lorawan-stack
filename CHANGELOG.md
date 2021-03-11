@@ -20,6 +20,7 @@ For details about compatibility between different releases, see the **Commitment
 - UDP connection error caching. The duration can be configured via the `gs.udp.connection-error-expires` configuration entry.
 - Option to require individual gateways to use authenticated connections.
   - This requires a database schema migration (`ttn-lw-stack is-db migrate`) because of the added columns.
+- Session and MAC state import functionality. This means that devices can be migrated without rejoin.
 
 ### Changed
 
@@ -28,6 +29,7 @@ For details about compatibility between different releases, see the **Commitment
 - All external HTTP calls are now using TLS client configuration. This fixes issues where HTTP calls would fail if custom (e.g. self-signed) CAs were used.
 - All external HTTP calls are now using a default timeout. This fixes issues where HTTP calls would stall for a long time.
 - All value wrappers now are encoded and decoded as the value being wrapped in JSON. That means, that, e.g. format of `mac_settings.rx1_delay` is changed from `{"value": 2}` to just `2`.
+- Network Server now performs more strict validation and will disallow creation and updates of invalid devices.
 
 ### Deprecated
 
