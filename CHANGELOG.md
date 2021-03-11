@@ -13,11 +13,13 @@ For details about compatibility between different releases, see the **Commitment
 
 - `sentry.environment` configuration option to set the `environment` tag on Sentry reports.
 - TR005 QR code format, with ID `tr005`.
+- Session and MAC state import functionality. This means that devices can be migrated without rejoin.
 
 ### Changed
 
 - Default value of `gs.udp.addr-change-block` is now 0, which disables the IP firewall for UDP traffic. Deployments that need to enforce the IP check should set a value greater than 0. Note that the new default value makes UDP connections less secure.
 - Prevent flooding logs with "Packet Filtered" messages when UDP gateways exceed the maximum rate limit. Only one message per minute will be printed for each gateway.
+- Network Server now performs more strict validation and will disallow creation and updates of invalid devices.
 
 ### Deprecated
 
