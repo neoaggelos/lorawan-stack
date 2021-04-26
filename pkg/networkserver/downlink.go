@@ -891,7 +891,8 @@ func (ns *NetworkServer) scheduleDownlinkByPaths(ctx context.Context, req *sched
 	default:
 		panic(fmt.Sprintf("attempt to schedule downlink with invalid MType '%s'", req.Payload.MType))
 	}
-	ctx = events.ContextWithCorrelationID(ctx, fmt.Sprintf("ns:downlink:%s", events.NewCorrelationID()))
+	cid := events.NewCorrelationID()
+	ctx = events.ContextWithCorrelationID(ctx, fmt.Sprintf("ns:downlink:%s", cid))
 	errs := make([]error, 0, len(attempts))
 	eventIDOpt := events.WithIdentifiers(&req.EndDeviceIdentifiers)
 	for _, a := range attempts {
@@ -922,6 +923,16 @@ func (ns *NetworkServer) scheduleDownlinkByPaths(ctx context.Context, req *sched
 			"transmission_delay", delay,
 			"transmit_at", transmitAt,
 		)).Debug("Scheduled downlink")
+		// TODO (akolaitis): Consider storing metadata before the downlink is scheduled.
+		if true { // TODO: only for application downlinks
+			if err := ns.scheduledDownlinks.StoreMetadata(ctx, &ttnpb.DownlinkMessage{
+				Payload:      req.Payload,
+				EndDeviceIDs: &req.EndDeviceIdentifiers,
+				RawPayload:   req.RawPayload,
+			}, cid); err != nil {
+				log.FromContext(ctx).WithError(err).Debug("Failed to store metadata for scheduled downlink message")
+			}
+		}
 		queuedEvents = append(queuedEvents, events.Builders(append([]events.Builder{
 			successEvent.With(
 				events.WithData(&ttnpb.ScheduleDownlinkResponse{

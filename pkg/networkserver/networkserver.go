@@ -124,6 +124,8 @@ type NetworkServer struct {
 
 	deviceKEKLabel        string
 	downlinkQueueCapacity int
+
+	scheduledDownlinks ScheduledDownlinks
 }
 
 // Option configures the NetworkServer.

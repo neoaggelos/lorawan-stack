@@ -1270,8 +1270,34 @@ func (ns *NetworkServer) HandleUplink(ctx context.Context, up *ttnpb.UplinkMessa
 	return ttnpb.Empty, nil
 }
 
+// ScheduledDownlinks temporarily stores downlinks that have been sent by the Network Server.
+type ScheduledDownlinks interface {
+	// StoreMetadata stores the EndDeviceIdentifiers and the MACPayload for a newly-scheduled downlink message.
+	// StoreMetadata returns an error if the operation fails.
+	StoreMetadata(ctx context.Context, down *ttnpb.DownlinkMessage, cid string) error
+
+	// WithMetadata tries to match the downlink message from the Gateway Server (containing the transmission settings used)
+	// with the end device identifiers and the MACPayload previously saved with StoreMetadata). The match is made
+	// using the `ns:downlink:(CID)` correlation ID. If no relevant metadata is stored, then the implementation should
+	// return a nil message and an error.
+	WithMetadata(context.Context, *ttnpb.DownlinkMessage) (*ttnpb.ApplicationUp, error)
+}
+
 // ReportTxAcknowledgment is called by the Gateway Server when a tx acknowledgment arrives.
 func (ns *NetworkServer) ReportTxAcknowledgment(ctx context.Context, up *ttnpb.GatewayTxAcknowledgment) (_ *pbtypes.Empty, err error) {
 	// TODO: Send ApplicationDownlinkSent event from Tx acknowledgment (https://github.com/TheThingsNetwork/lorawan-stack/issues/56)
+	if up.TxAck.Result != ttnpb.TxAcknowledgment_SUCCESS {
+		return ttnpb.Empty, nil
+	}
+
+	applicationDown, err := ns.scheduledDownlinks.WithMetadata(ctx, up.TxAck.DownlinkMessage)
+	if err != nil {
+		log.FromContext(ctx).WithError(err).Debug("Received TxAck that does not match any downlink messages")
+		return ttnpb.Empty, nil
+	}
+
+	if err := ns.applicationUplinks.Add(ctx, applicationDown); err != nil {
+		log.FromContext(ctx).WithError(err).Debug("Failed to forward DownlinkSent message to Application Server")
+	}
 	return ttnpb.Empty, nil
 }
